@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/explorer.iml" filepath="$PROJECT_DIR$/explorer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/lambda/lambda.iml" filepath="$PROJECT_DIR$/dsl/lambda/lambda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/lua/lua.iml" filepath="$PROJECT_DIR$/dsl/lua/lua.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+    </modules>
+  </component>
+</project>
