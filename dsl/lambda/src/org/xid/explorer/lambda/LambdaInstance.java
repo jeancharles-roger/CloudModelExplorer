@@ -20,7 +20,7 @@ public class LambdaInstance implements DslInstance {
     }
 
     @Override
-    public boolean next(DslState source, DslState target) {
-        return transition.next(source, target);
+    public boolean next(DslState target) {
+        return transition.next(target);
     }
 }

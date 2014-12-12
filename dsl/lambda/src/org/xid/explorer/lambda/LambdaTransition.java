@@ -7,5 +7,5 @@ import org.xid.explorer.dsl.DslState;
  */
 @FunctionalInterface
 public interface LambdaTransition {
-    boolean next(DslState source, DslState target);
+    boolean next(DslState target);
 }

@@ -7,6 +7,6 @@ public interface DslInstance {
 
     DslState createInitialState();
 
-    boolean next(DslState source, DslState target);
+    boolean next(DslState target);
 
 }
