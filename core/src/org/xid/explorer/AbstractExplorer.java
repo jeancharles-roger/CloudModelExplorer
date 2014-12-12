@@ -1,7 +1,7 @@
 package org.xid.explorer;
 
-import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.dsl.DslInstance;
+import org.xid.explorer.dsl.DslState;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,37 +11,37 @@ import java.util.Map;
  */
 public abstract class AbstractExplorer {
 
-    protected final DslInstance[] instances;
+    protected final ModelInstance modelInstance;
 
-    private final Map<ExplorationState, ExplorationState> known = new HashMap<>();
+    private final Map<ModelState, ModelState> known = new HashMap<>();
 
-    public AbstractExplorer(DslInstance[] instances) {
-        this.instances = instances;
+    public AbstractExplorer(ModelInstance modelInstance) {
+        this.modelInstance = modelInstance;
     }
 
     public void explore() {
         long start = System.currentTimeMillis();
-        ExplorationState initialState = createInitialState();
+        ModelState initialState = createInitialState();
         registerState(initialState);
         exploreFrom(initialState);
         long end = System.currentTimeMillis();
         System.out.println("Explored "+ known.size() +" states in "+ (end-start) +"ms.");
     }
 
-    protected abstract void exploreFrom(ExplorationState initialState);
+    protected abstract void exploreFrom(ModelState initialState);
 
-    protected ExplorationState createInitialState() {
+    protected ModelState createInitialState() {
+        DslInstance[] instances = modelInstance.instances;
         DslState[] dslStates = new DslState[instances.length];
         for (int i = 0; i < instances.length; i++) {
             dslStates[i] = instances[i].createInitialState();
         }
-
-        return new ExplorationState(dslStates);
+        return new ModelState(dslStates);
     }
 
-    protected ExplorationState registerState(ExplorationState newState) {
+    protected ModelState registerState(ModelState newState) {
         // searches in known
-        ExplorationState existingState = known.get(newState);
+        ModelState existingState = known.get(newState);
         if (existingState != null) return existingState;
 
         // doesn't exist, id it and register it.
@@ -53,6 +53,6 @@ public abstract class AbstractExplorer {
     }
 
     /** This method is called when a new state is registered. */
-    protected abstract void newState(ExplorationState newState);
+    protected abstract void newState(ModelState newState);
 
 }

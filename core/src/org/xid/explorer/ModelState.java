@@ -7,20 +7,20 @@ import java.util.Arrays;
 /**
  * Represents a State for an exploration.
  */
-public class ExplorationState {
+public class ModelState {
 
     public int id = -1;
 
     public final DslState[] states;
 
-    public ExplorationState(DslState[] states) {
+    public ModelState(DslState[] states) {
         this.states = states;
     }
 
-    public ExplorationState copy(int index, DslState modifiedState) {
+    public ModelState copy(int index, DslState modifiedState) {
         DslState[] statesCopy = Arrays.copyOf(states, states.length);
         statesCopy[index] = modifiedState;
-        return new ExplorationState(statesCopy);
+        return new ModelState(statesCopy);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ExplorationState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExplorationState state = (ExplorationState) o;
+        ModelState state = (ModelState) o;
 
         if (!Arrays.equals(states, state.states)) return false;
 

@@ -11,18 +11,19 @@ import java.util.List;
  */
 public class BFSExplorer extends AbstractExplorer {
 
-    private List<ExplorationState> toSee = new ArrayList<>();
+    private List<ModelState> toSee = new ArrayList<>();
 
-    public BFSExplorer(DslInstance[] instances) {
-        super(instances);
+    public BFSExplorer(ModelInstance modelInstance) {
+        super(modelInstance);
     }
 
     @Override
-    protected void exploreFrom(ExplorationState initialState) {
+    protected void exploreFrom(ModelState initialState) {
 
         while (toSee.size() > 0) {
-            ExplorationState toExplore = toSee.remove(0);
+            ModelState toExplore = toSee.remove(0);
 
+            DslInstance[] instances = modelInstance.instances;
             for (int i = 0; i < instances.length; i++) {
                 DslState target = toExplore.states[i].copy();
                 if (instances[i].next(target)) {
@@ -33,7 +34,7 @@ public class BFSExplorer extends AbstractExplorer {
     }
 
     @Override
-    protected void newState(ExplorationState newState) {
+    protected void newState(ModelState newState) {
         toSee.add(newState);
     }
 }

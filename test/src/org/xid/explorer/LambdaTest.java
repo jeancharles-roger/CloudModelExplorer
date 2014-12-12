@@ -26,7 +26,7 @@ public class LambdaTest {
                 instance, instance, instance
         };
 
-        BFSExplorer explorer = new BFSExplorer(instances);
+        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
         explorer.explore();
     }
 }
