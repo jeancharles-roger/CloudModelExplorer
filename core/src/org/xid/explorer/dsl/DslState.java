@@ -18,9 +18,7 @@ public class DslState {
     }
 
     public int getInt(int index) {
-        int i1 = buffer[index] << 16;
-        int i2 = buffer[index + 1];
-        return i1 | i2;
+        return buffer[index] << 16 | (int) buffer[index + 1];
     }
 
     public void setInt(int index, int value) {
