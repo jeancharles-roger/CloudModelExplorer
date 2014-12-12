@@ -15,8 +15,8 @@ public class LambdaTest {
             }
 
             @Override
-            public boolean next(DslState source, DslState target) {
-                int count = source.getInt(0);
+            public boolean next(DslState target) {
+                int count = target.getInt(0);
                 int newCount = count < 100 ? count + 1 : 0;
                 target.setInt(0, newCount);
                 return true;

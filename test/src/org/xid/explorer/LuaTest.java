@@ -16,12 +16,12 @@ public class LuaTest {
     @Test
     public void test1() throws IOException {
         Globals lua = JsePlatform.standardGlobals();
-        lua.load(new StateLib());
+         new StateLib().call(lua);
 
         String script = new String(Files.readAllBytes(Paths.get("resource/test1.lua")));
-        DslInstance instance = new LuaInstance(4, script, lua);
+        DslInstance instance = new LuaInstance(2, script, lua);
         DslInstance[] instances = new DslInstance[] {
-                instance //, instance, instance
+                instance, instance, instance
         };
 
         BFSExplorer explorer = new BFSExplorer(instances);

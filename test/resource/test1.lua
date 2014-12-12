@@ -1,15 +1,11 @@
 --
--- Created by IntelliJ IDEA.
--- User: j5r
--- Date: 20/11/2014
--- Time: 22:18
--- To change this template use File | Settings | File Templates.
+-- Simple counter from 0 to 10
 --
 
-print("--- Yoyo ---");
-print(source);
-print(target);
-
--- target.setInt(0, 12);
-
-return false;
+local count = state.getInt(current, 0);
+if count < 10 then
+    state.setInt(current, 0, count + 1);
+    return true;
+else
+    return false;
+end
