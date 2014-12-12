@@ -8,15 +8,18 @@ import org.xid.explorer.dsl.DslState;
  */
 public class LambdaInstance implements DslInstance {
 
+    private final int size;
+
     private final LambdaTransition transition;
 
-    public LambdaInstance(LambdaTransition transition) {
+    public LambdaInstance(int size, LambdaTransition transition) {
+        this.size = size;
         this.transition = transition;
     }
 
     @Override
     public DslState createInitialState() {
-        return new DslState(4);
+        return new DslState(size);
     }
 
     @Override
