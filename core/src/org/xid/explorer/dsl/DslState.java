@@ -47,5 +47,4 @@ public class DslState {
         return new DslState(buffer == null ? null : Arrays.copyOf(buffer, buffer.length));
     }
 
-
 }
