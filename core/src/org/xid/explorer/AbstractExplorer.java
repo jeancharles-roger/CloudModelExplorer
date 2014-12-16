@@ -47,7 +47,7 @@ public abstract class AbstractExplorer {
     protected abstract void exploreFrom(ModelState initialState);
 
     protected ModelState createInitialState() {
-        DslInstance[] instances = modelInstance.instances;
+        DslInstance[] instances = modelInstance.getInstances();
         DslState[] dslStates = new DslState[instances.length];
         for (int i = 0; i < instances.length; i++) {
             dslStates[i] = instances[i].createInitialState();
@@ -61,7 +61,7 @@ public abstract class AbstractExplorer {
         if (existingState != null) return existingState;
 
         // doesn't exist, id it and register it.
-        newState.id = known.size();
+        newState.setId(known.size());
 
         known.put(newState, newState);
         newState(newState);

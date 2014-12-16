@@ -23,9 +23,13 @@ import org.xid.explorer.dsl.DslInstance;
  */
 public class ModelInstance {
 
-    public final DslInstance[] instances;
+    private final DslInstance[] instances;
 
     public ModelInstance(DslInstance[] instances) {
         this.instances = instances;
+    }
+
+    public DslInstance[] getInstances() {
+        return instances;
     }
 }

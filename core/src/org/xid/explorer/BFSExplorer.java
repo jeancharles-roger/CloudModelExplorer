@@ -39,9 +39,9 @@ public class BFSExplorer extends AbstractExplorer {
         while (toSee.size() > 0) {
             ModelState toExplore = toSee.remove(0);
 
-            DslInstance[] instances = modelInstance.instances;
+            DslInstance[] instances = modelInstance.getInstances();
             for (int i = 0; i < instances.length; i++) {
-                DslState target = toExplore.states[i].copy();
+                DslState target = toExplore.getState(i).copy();
                 if (instances[i].next(target)) {
                     registerState(toExplore.copy(i, target));
                 }

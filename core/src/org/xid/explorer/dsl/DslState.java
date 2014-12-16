@@ -23,7 +23,7 @@ import java.util.Arrays;
  */
 public class DslState {
 
-    private char[] buffer;
+    private final char[] buffer;
 
     public DslState(int size) {
         buffer = new char[size];
@@ -31,10 +31,6 @@ public class DslState {
 
     public DslState(char[] buffer) {
         this.buffer = buffer;
-    }
-
-    public int getInt(int index) {
-        return buffer[index] << 16 | (int) buffer[index + 1];
     }
 
     public void setInt(int index, int value) {

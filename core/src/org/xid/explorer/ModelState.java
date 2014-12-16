@@ -25,9 +25,9 @@ import java.util.Arrays;
  */
 public class ModelState {
 
-    public int id = -1;
+    private int id = -1;
 
-    public final DslState[] states;
+    private final DslState[] states;
 
     public ModelState(DslState[] states) {
         this.states = states;
@@ -37,6 +37,22 @@ public class ModelState {
         DslState[] statesCopy = Arrays.copyOf(states, states.length);
         statesCopy[index] = modifiedState;
         return new ModelState(statesCopy);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public DslState getState(int index) {
+        return states[index];
+    }
+
+    public DslState[] getStates() {
+        return states;
     }
 
     @Override

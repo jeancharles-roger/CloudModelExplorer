@@ -21,7 +21,23 @@ package org.xid.explorer;
  */
 public class Transition {
 
-    String[] actions;
+    private String[] actions;
 
-    int targetId;
+    private int targetId;
+
+    public String[] getActions() {
+        return actions;
+    }
+
+    public void setActions(String[] actions) {
+        this.actions = actions;
+    }
+
+    public int getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(int targetId) {
+        this.targetId = targetId;
+    }
 }
