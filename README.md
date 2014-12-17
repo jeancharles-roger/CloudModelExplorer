@@ -2,10 +2,6 @@
 
 CloudModelExplorer is a project that aim be a flexible and a scalable model explorer.
 
-Links:
-- You’ll find here the [Project Description](http://minibilles.fr/ "Project Description").
-- You’ll find here the [GitHub Project page](https://github.com/jeancharles-roger/CloudModelExplorer "GitHub Project page").
-
 
 ## The project
 I wan’t to build a piece of software that is able to explore a model to check for properties. It will feature:
@@ -38,3 +34,8 @@ If you are interested to participate please contact me **TODO**.
 ## References
 
 **TODO**
+
+Links:
+- You’ll find here the [Project Description](http://minibilles.fr/ "Project Description").
+- You'll find here the [Blog Posts](http://minibilles.fr/category/cloudmodelexplorer/ "Blog Posts")
+- You’ll find here the [GitHub Project page](https://github.com/jeancharles-roger/CloudModelExplorer "GitHub Project page").
