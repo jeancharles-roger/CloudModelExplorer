@@ -31,10 +31,10 @@ public class LambdaTest {
             }
 
             @Override
-            public boolean next(DslState target) {
-                int count = target.getInt(0);
+            public boolean next(DslState state) {
+                int count = state.getInt(0);
                 int newCount = count < 10 ? count + 1 : 0;
-                target.setInt(0, newCount);
+                state.setInt(0, newCount);
                 return true;
             }
         };

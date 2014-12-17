@@ -56,8 +56,8 @@ public class LuaInstance implements DslInstance {
     }
 
     @Override
-    public boolean next(DslState target) {
-        LuaUserdata current = LuaValue.userdataOf(target);
+    public boolean next(DslState state) {
+        LuaUserdata current = LuaValue.userdataOf(state);
         Varargs result = function.call(current);
         return result.toboolean(1);
     }

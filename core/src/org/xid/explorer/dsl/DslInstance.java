@@ -17,12 +17,17 @@
 package org.xid.explorer.dsl;
 
 /**
- * Created by j5r on 19/11/2014.
+ * A DslInstance represents a behavior, it's a transition function from a source DslState to a target one.
  */
 public interface DslInstance {
 
     DslState createInitialState();
 
-    boolean next(DslState target);
+    /**
+     *
+     * @param state
+     * @return
+     */
+    boolean next(DslState state);
 
 }
