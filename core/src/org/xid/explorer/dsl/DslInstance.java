@@ -22,12 +22,16 @@ package org.xid.explorer.dsl;
  */
 public interface DslInstance {
 
+    /**
+     * Creates the initial state for the instance.
+     * @return a new DslState considered as the initial instance state.
+     */
     DslState createInitialState();
 
     /**
-     *
-     * @param state
-     * @return
+     * Computes next state for instance.
+     * @param state a copy of the source state. It's maybe changed by next to create a new state. If no change is made
+     *              the explore will consider that the instance has nothing to do.
      */
     void next(DslState state);
 

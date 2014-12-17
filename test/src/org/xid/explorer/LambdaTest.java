@@ -23,6 +23,9 @@ import org.xid.explorer.lambda.LambdaInstance;
 
 public class LambdaTest {
 
+    /**
+     * Simple test with a basic lambda.
+     */
     @Test
     public void test1() {
         DslInstance instance = new LambdaInstance(2, (DslState state) -> {
@@ -30,9 +33,28 @@ public class LambdaTest {
             int newCount = count < 10 ? count + 1 : 0;
             state.setInt(0, newCount);
         });
-        DslInstance[] instances = new DslInstance[] {
-                instance, instance, instance
-        };
+        DslInstance[] instances = new DslInstance[] { instance, instance, instance};
+
+        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
+        explorer.explore();
+    }
+
+    private static int countMethod(int count, int max) {
+        return count < max ? count + 1 : 0;
+    }
+
+    /**
+     * Test with an existing transition to apply from the instance.
+     */
+    @Test
+    public void test2() {
+        DslInstance instance = new LambdaInstance(2, (DslState state) -> {
+            int count = state.getInt(0);
+            int newCount = countMethod(count, 10);
+            state.setInt(0, newCount);
+        });
+
+        DslInstance[] instances = new DslInstance[] { instance, instance, instance };
 
         BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
         explorer.explore();
