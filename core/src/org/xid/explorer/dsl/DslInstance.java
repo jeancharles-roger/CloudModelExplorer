@@ -18,6 +18,7 @@ package org.xid.explorer.dsl;
 
 /**
  * A DslInstance represents a behavior, it's a transition function from a source DslState to a target one.
+ * All DslInstance act independently from the others.
  */
 public interface DslInstance {
 

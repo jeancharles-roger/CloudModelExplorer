@@ -19,7 +19,7 @@ package org.xid.explorer;
 import org.xid.explorer.dsl.DslInstance;
 
 /**
- * Created by j5r on 12/12/2014.
+ * A ModelInstance represents an instantiated model to explore. A model instance is composed of a set of DslInstance.
  */
 public class ModelInstance {
 
