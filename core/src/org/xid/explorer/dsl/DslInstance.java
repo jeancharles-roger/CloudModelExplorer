@@ -28,6 +28,6 @@ public interface DslInstance {
      * @param state
      * @return
      */
-    boolean next(DslState state);
+    void next(DslState state);
 
 }

@@ -33,6 +33,14 @@ public class DslState {
         this.buffer = buffer;
     }
 
+    // ///////////////////////////////////////////////////
+    // Low level access methods
+    // ///////////////////////////////////////////////////
+
+    public int getInt(int index) {
+        return buffer[index] << 16 | (int) buffer[index + 1];
+    }
+
     public void setInt(int index, int value) {
          buffer[index] = (char) (value >> 16);
          buffer[index+1] = (char) value;

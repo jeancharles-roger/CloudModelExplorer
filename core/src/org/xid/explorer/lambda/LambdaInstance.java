@@ -19,6 +19,8 @@ package org.xid.explorer.lambda;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
+import java.util.function.Consumer;
+
 /**
  * Created by j5r on 19/11/2014.
  */
@@ -26,9 +28,9 @@ public class LambdaInstance implements DslInstance {
 
     private final int size;
 
-    private final LambdaTransition transition;
+    private final Consumer<DslState> transition;
 
-    public LambdaInstance(int size, LambdaTransition transition) {
+    public LambdaInstance(int size, Consumer<DslState> transition) {
         this.size = size;
         this.transition = transition;
     }
@@ -39,7 +41,7 @@ public class LambdaInstance implements DslInstance {
     }
 
     @Override
-    public boolean next(DslState state) {
-        return transition.next(state);
+    public void next(DslState state) {
+        transition.accept(state);
     }
 }

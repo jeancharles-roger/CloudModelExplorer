@@ -41,8 +41,12 @@ public class BFSExplorer extends AbstractExplorer {
 
             DslInstance[] instances = modelInstance.getInstances();
             for (int i = 0; i < instances.length; i++) {
-                DslState target = toExplore.getState(i).copy();
-                if (instances[i].next(target)) {
+                DslState source = toExplore.getState(i);
+                DslState target = source.copy();
+                // computes next
+                instances[i].next(target);
+                if (target.equals(source) == false) {
+                    // transition changed state, checks if a new model state has been found
                     registerState(toExplore.copy(i, target));
                 }
             }

@@ -19,25 +19,17 @@ package org.xid.explorer;
 import org.junit.Test;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.lambda.LambdaInstance;
 
 public class LambdaTest {
 
     @Test
     public void test1() {
-        DslInstance instance = new DslInstance() {
-            @Override
-            public DslState createInitialState() {
-                return new DslState(2);
-            }
-
-            @Override
-            public boolean next(DslState state) {
-                int count = state.getInt(0);
-                int newCount = count < 10 ? count + 1 : 0;
-                state.setInt(0, newCount);
-                return true;
-            }
-        };
+        DslInstance instance = new LambdaInstance(2, (DslState state) -> {
+            int count = state.getInt(0);
+            int newCount = count < 10 ? count + 1 : 0;
+            state.setInt(0, newCount);
+        });
         DslInstance[] instances = new DslInstance[] {
                 instance, instance, instance
         };

@@ -17,9 +17,7 @@
 package org.xid.explorer.lua;
 
 import org.luaj.vm2.Globals;
-import org.luaj.vm2.LuaUserdata;
 import org.luaj.vm2.LuaValue;
-import org.luaj.vm2.Varargs;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
@@ -56,9 +54,7 @@ public class LuaInstance implements DslInstance {
     }
 
     @Override
-    public boolean next(DslState state) {
-        LuaUserdata current = LuaValue.userdataOf(state);
-        Varargs result = function.call(current);
-        return result.toboolean(1);
+    public void next(DslState state) {
+        function.call(LuaValue.userdataOf(state));
     }
 }
