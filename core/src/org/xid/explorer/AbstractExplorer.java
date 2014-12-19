@@ -52,7 +52,7 @@ public abstract class AbstractExplorer {
         for (int i = 0; i < instances.length; i++) {
             dslStates[i] = instances[i].createInitialState();
         }
-        return new ModelState(dslStates);
+        return new ModelState(dslStates, null);
     }
 
     protected ModelState registerState(ModelState newState) {

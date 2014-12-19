@@ -27,16 +27,20 @@ public class ModelState {
 
     private int id = -1;
 
+    /** Arrays of states */
     private final DslState[] states;
 
-    public ModelState(DslState[] states) {
+    private final Mailboxes mailboxes;
+
+    public ModelState(DslState[] states, Mailboxes mailboxes) {
         this.states = states;
+        this.mailboxes = mailboxes == null ? new Mailboxes(null) : mailboxes;
     }
 
-    public ModelState copy(int index, DslState modifiedState) {
+    public ModelState copy(int index, DslState modifiedState, Mailboxes  mailboxes) {
         DslState[] statesCopy = Arrays.copyOf(states, states.length);
         statesCopy[index] = modifiedState;
-        return new ModelState(statesCopy);
+        return new ModelState(statesCopy, mailboxes);
     }
 
     public int getId() {
@@ -55,20 +59,27 @@ public class ModelState {
         return states;
     }
 
+    public Mailboxes getMailboxes() {
+        return mailboxes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ModelState state = (ModelState) o;
+        ModelState that = (ModelState) o;
 
-        if (!Arrays.equals(states, state.states)) return false;
+        if (!mailboxes.equals(that.mailboxes)) return false;
+        if (!Arrays.equals(states, that.states)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(states);
+        int result = states != null ? Arrays.hashCode(states) : 0;
+        result = 31 * result + mailboxes.hashCode();
+        return result;
     }
 }

@@ -18,6 +18,7 @@ package org.xid.explorer.lua;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
+import org.xid.explorer.Mailboxes;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
@@ -54,7 +55,7 @@ public class LuaInstance implements DslInstance {
     }
 
     @Override
-    public void next(DslState state) {
+    public void next(DslState state, Mailboxes mailboxes) {
         function.call(LuaValue.userdataOf(state));
     }
 }

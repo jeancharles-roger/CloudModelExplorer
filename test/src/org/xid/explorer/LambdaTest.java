@@ -27,6 +27,22 @@ public class LambdaTest {
      * Simple test with a basic lambda.
      */
     @Test
+    public void test0() {
+        DslInstance instance = new LambdaInstance(2, (DslState state) -> {
+            int count = state.getInt(0);
+            int newCount = count < 2 ? count + 1 : 0;
+            state.setInt(0, newCount);
+        });
+        DslInstance[] instances = new DslInstance[] {instance};
+
+        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
+        explorer.explore();
+    }
+
+    /**
+     * Simple test with a basic lambda and several instances
+     */
+    @Test
     public void test1() {
         DslInstance instance = new LambdaInstance(2, (DslState state) -> {
             int count = state.getInt(0);

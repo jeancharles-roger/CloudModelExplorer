@@ -16,6 +16,8 @@
 
 package org.xid.explorer.dsl;
 
+import org.xid.explorer.Mailboxes;
+
 /**
  * A DslInstance represents a behavior, it's a transition function from a source DslState to a target one.
  * All DslInstance act independently from the others.
@@ -32,7 +34,8 @@ public interface DslInstance {
      * Computes next state for instance.
      * @param state a copy of the source state. It's maybe changed by next to create a new state. If no change is made
      *              the explore will consider that the instance has nothing to do.
+     * @param mailboxes contents of all mailboxes.
      */
-    void next(DslState state);
+    void next(DslState state, Mailboxes mailboxes);
 
 }

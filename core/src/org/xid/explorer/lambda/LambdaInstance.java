@@ -16,6 +16,7 @@
 
 package org.xid.explorer.lambda;
 
+import org.xid.explorer.Mailboxes;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
@@ -41,7 +42,7 @@ public class LambdaInstance implements DslInstance {
     }
 
     @Override
-    public void next(DslState state) {
+    public void next(DslState state, Mailboxes mailboxes) {
         transition.accept(state);
     }
 }
