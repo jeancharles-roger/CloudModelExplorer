@@ -82,4 +82,23 @@ public class ModelState {
         result = 31 * result + mailboxes.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        text.append(id);
+        text.append("\n");
+        text.append("[Instances]\n");
+        for (int i = 0; i < states.length; i++) {
+            DslState state = states[i];
+            text.append("- (");
+            text.append(i);
+            text.append(") ");
+            text.append(state);
+            text.append("\n");
+        }
+        text.append("[Mailboxes]\n");
+        text.append(mailboxes);
+        return text.toString();
+    }
 }

@@ -29,6 +29,33 @@ public class Mailboxes {
         this.mailboxes = mailboxes;
     }
 
+    public String[] getMailbox(int index) {
+        return mailboxes[index];
+    }
+
+    public String removeFirst(int index) {
+        String[] mailbox = mailboxes[index];
+        String message = null;
+        if (mailbox != null && mailbox.length > 0) {
+            message = mailbox[0];
+            mailbox = Arrays.copyOfRange(mailbox, 1, mailbox.length);
+        }
+        mailboxes[index] = mailbox == null || mailbox.length == 0 ? null : mailbox;
+        return message;
+    }
+
+    public void addLast(int index, String message) {
+        String[] mailbox = mailboxes[index];
+        if (mailbox == null) {
+            mailbox = new String[] { message};
+        } else {
+            mailbox = Arrays.copyOf(mailbox, mailbox.length+1);
+            mailbox[mailbox.length-1] = message;
+        }
+        mailboxes[index] = mailbox;
+    }
+
+
     public Mailboxes copy() {
         String[][] mailboxesCopy = null;
         if (mailboxes != null) {
@@ -67,5 +94,23 @@ public class Mailboxes {
             }
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        if (mailboxes == null) {
+            text.append("empty\n");
+        } else {
+            for (int i = 0; i < mailboxes.length; i++) {
+                String[] mailbox = mailboxes[i];
+                text.append("- (");
+                text.append(i);
+                text.append(") ");
+                text.append(Arrays.toString(mailbox));
+                text.append("\n");
+            }
+        }
+        return text.toString();
     }
 }

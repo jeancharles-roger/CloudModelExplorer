@@ -67,4 +67,14 @@ public class DslState {
         return new DslState(buffer == null ? null : Arrays.copyOf(buffer, buffer.length));
     }
 
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        text.append("[");
+        for (int i = 0; i < buffer.length; i++) {
+            text.append((int) buffer[i]);
+        }
+        text.append("]");
+        return text.toString();
+    }
 }
