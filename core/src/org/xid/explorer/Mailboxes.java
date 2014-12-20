@@ -129,6 +129,16 @@ public class Mailboxes {
     }
 
     /**
+     * Removes first message of a mailbox at given index.
+     *
+     * @param index mailbox index.
+     * @return null if the mailbox doesn't exist or is empty.
+     */
+    public String removeFirst(int index) {
+        return removeFirstIf(index, null);
+    }
+
+    /**
      * Removes first message of a mailbox at given index if the predicate returns true. The test always return false if
      * the mailbox at given index doesn't exist (out of bounds) or is empty. There is a defensive code to avoid the test
      * of null message.

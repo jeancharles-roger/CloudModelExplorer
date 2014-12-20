@@ -72,7 +72,7 @@ public class MailboxesTest {
 
         // removes the message from each mailbox
         for (int i = 0; i < 10; i++) {
-            String message = mailboxes.removeFirstIf(i, null);
+            String message = mailboxes.removeFirst(i);
             assertEquals("Hello", message);
             assertEquals(i == 9, mailboxes.isEmpty());
         }
@@ -94,7 +94,7 @@ public class MailboxesTest {
 
         // removes the message from each mailbox
         for (int i = 0; i < 10; i++) {
-            String message = mailboxes.removeFirstIf(i, null);
+            String message = mailboxes.removeFirst(i);
             assertEquals("Hello", message);
             assertEquals(true, mailboxes.isMailboxEmpty(i));
         }

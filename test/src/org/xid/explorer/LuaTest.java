@@ -19,6 +19,7 @@ package org.xid.explorer;
 import org.junit.Test;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
+import org.luaj.vm2.luajc.LuaJC;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lua.LuaInstance;
 
@@ -31,12 +32,30 @@ public class LuaTest {
     @Test
     public void test1() throws IOException {
         Globals lua = JsePlatform.standardGlobals();
+        LuaJC.install(lua);
 
-        String script = new String(Files.readAllBytes(Paths.get("resource/test1.lua")));
+        String script = new String(Files.readAllBytes(Paths.get("resource/test1/test1.lua")));
         DslInstance instance = new LuaInstance(2, script, lua);
         DslInstance[] instances = new DslInstance[] {
                 instance, instance, instance
         };
+
+        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
+        explorer.explore();
+    }
+
+    @Test
+    public void test2() throws IOException {
+        Globals lua = JsePlatform.standardGlobals();
+        LuaJC.install(lua);
+
+        String sourceScript = new String(Files.readAllBytes(Paths.get("resource/test2/source.lua")));
+        DslInstance source = new LuaInstance(2, sourceScript, lua);
+
+        String targetScript = new String(Files.readAllBytes(Paths.get("resource/test2/target.lua")));
+        DslInstance target = new LuaInstance(2, targetScript, lua);
+
+        DslInstance[] instances = new DslInstance[] { source, target };
 
         BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
         explorer.explore();

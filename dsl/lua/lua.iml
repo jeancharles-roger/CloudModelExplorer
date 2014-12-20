@@ -12,6 +12,7 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/libs/luaj-jse-3.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/bcel-5.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>

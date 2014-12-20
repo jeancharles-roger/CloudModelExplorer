@@ -42,7 +42,7 @@ public class MixedTest {
         // Lua instance
         Globals lua = JsePlatform.standardGlobals();
 
-        String script = new String(Files.readAllBytes(Paths.get("resource/test1.lua")));
+        String script = new String(Files.readAllBytes(Paths.get("resource/test1/test1.lua")));
         DslInstance luaInstance = new LuaInstance(2, script, lua);
 
 
