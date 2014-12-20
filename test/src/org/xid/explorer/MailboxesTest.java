@@ -16,6 +16,8 @@
 
 package org.xid.explorer;
 
+import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -170,6 +172,32 @@ public class MailboxesTest {
                 }
             );
             assertEquals(true, result);
+        }
+    }
+
+    @Test
+    public void testCopyPerformances() throws Exception {
+        Mailboxes mailboxes = new Mailboxes();
+
+        // creates 1000 mailbox with 1000 messages each
+        for (int i = 0; i < 1000; i++) {
+            mailboxes.createMailbox();
+            for (int j = 0; j < 1000; j++) {
+                mailboxes.addLast(i, "m" + j);
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            long start = System.currentTimeMillis();
+            int n = 1_000;
+            // copy n times these mailboxes
+            for (int j = 0; j < n; j++) {
+                Mailboxes copy = mailboxes.copy();
+                assertEquals(false, copy.isEmpty());
+            }
+
+            long end = System.currentTimeMillis();
+            System.out.println("Copied "+ n +" times in "+ (end-start) +"ms.");
         }
     }
 }
