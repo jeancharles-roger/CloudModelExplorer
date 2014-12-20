@@ -22,7 +22,6 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lambda.LambdaInstance;
 import org.xid.explorer.lua.LuaInstance;
-import org.xid.explorer.lua.StateLib;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,7 +41,6 @@ public class MixedTest {
 
         // Lua instance
         Globals lua = JsePlatform.standardGlobals();
-        new StateLib().call(lua);
 
         String script = new String(Files.readAllBytes(Paths.get("resource/test1.lua")));
         DslInstance luaInstance = new LuaInstance(2, script, lua);

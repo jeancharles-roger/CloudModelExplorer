@@ -18,6 +18,7 @@ package org.xid.explorer.lua;
 
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.xid.explorer.Mailboxes;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
@@ -42,7 +43,7 @@ public class LuaInstance implements DslInstance {
 
         StringBuilder functionString = new StringBuilder();
         functionString.append("return function (");
-        functionString.append("current");
+        functionString.append("state, mailboxes");
         functionString.append(");\n");
         functionString.append(script);
         functionString.append("\nend");
@@ -56,6 +57,6 @@ public class LuaInstance implements DslInstance {
 
     @Override
     public void next(DslState state, Mailboxes mailboxes) {
-        function.call(LuaValue.userdataOf(state));
+        function.call(CoerceJavaToLua.coerce(state), CoerceJavaToLua.coerce(mailboxes));
     }
 }
