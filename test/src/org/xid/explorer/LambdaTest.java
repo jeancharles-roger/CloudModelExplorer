@@ -18,7 +18,6 @@ package org.xid.explorer;
 
 import org.junit.Test;
 import org.xid.explorer.dsl.DslInstance;
-import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.lambda.LambdaInstance;
 
 public class LambdaTest {
@@ -28,7 +27,7 @@ public class LambdaTest {
      */
     @Test
     public void test0() {
-        DslInstance instance = new LambdaInstance(2, (DslState state) -> {
+        DslInstance instance = new LambdaInstance(2, (state, mailboxes) -> {
             int count = state.getInt(0);
             int newCount = count < 2 ? count + 1 : 0;
             state.setInt(0, newCount);
@@ -44,7 +43,7 @@ public class LambdaTest {
      */
     @Test
     public void test1() {
-        DslInstance instance = new LambdaInstance(2, (DslState state) -> {
+        DslInstance instance = new LambdaInstance(2, (state, mailboxes) -> {
             int count = state.getInt(0);
             int newCount = count < 10 ? count + 1 : 0;
             state.setInt(0, newCount);
@@ -64,7 +63,7 @@ public class LambdaTest {
      */
     @Test
     public void test2() {
-        DslInstance instance = new LambdaInstance(2, (DslState state) -> {
+        DslInstance instance = new LambdaInstance(2, (state, mailboxes) -> {
             int count = state.getInt(0);
             int newCount = countMethod(count, 10);
             state.setInt(0, newCount);
@@ -75,4 +74,43 @@ public class LambdaTest {
         BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
         explorer.explore();
     }
+
+    /**
+     * Simple test with a basic lambda and 2 instances that communicates using a mailbox.
+     */
+    @Test
+    public void test3() {
+        DslInstance instanceSource = new LambdaInstance(2, (state, mailboxes) -> {
+            if (mailboxes.getMailboxesCount() == 0) {
+                int index = mailboxes.createMailbox();
+                mailboxes.addLast(index, "start");
+                state.setInt(0, index);
+            } else {
+                int index = state.getInt(0);
+                String result = mailboxes.removeFirstIf(index, (message) -> "end".equals(message));
+                if (result != null) mailboxes.addLast(index, "start");
+            }
+        });
+        DslInstance instanceTarget = new LambdaInstance(2, (state, mailboxes) -> {
+            int count = state.getInt(0);
+            if (count == 0) {
+                if (mailboxes.getMailboxesCount() > 0) {
+                    String result = mailboxes.removeFirstIf(0, (message) -> "start".equals(message));
+                    if (result != null) count = 1;
+                }
+            } else if (count >= 10) {
+                count = 0;
+                mailboxes.addLast(0, "end");
+            } else {
+                count = count + 1;
+            }
+            state.setInt(0, count);
+        });
+
+        DslInstance[] instances = new DslInstance[] { instanceSource, instanceTarget };
+
+        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
+        explorer.explore();
+    }
+
 }

@@ -34,10 +34,10 @@ public class MixedTest {
     public void test1() throws IOException {
 
         // Lambda instance
-        DslInstance lambdaInstance = new LambdaInstance(2, (target) -> {
-            int count = target.getInt(0);
+        DslInstance lambdaInstance = new LambdaInstance(2, (state, mailboxes) -> {
+            int count = state.getInt(0);
             int newCount = count < 10 ? count + 1 : 0;
-            target.setInt(0, newCount);
+            state.setInt(0, newCount);
         });
 
         // Lua instance

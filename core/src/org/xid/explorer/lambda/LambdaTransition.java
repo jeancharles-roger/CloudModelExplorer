@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 to CloudModelExplorer
+ * Copyright 2015 to CloudModelExplorer authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,30 +17,12 @@
 package org.xid.explorer.lambda;
 
 import org.xid.explorer.Mailboxes;
-import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
 /**
- * LambdaInstance is a DslInstance that embeds a Java lambda as a next function.
+ * Prototype for next method for LambdaInstance
  */
-public class LambdaInstance implements DslInstance {
-
-    private final int size;
-
-    private final LambdaTransition transition;
-
-    public LambdaInstance(int size, LambdaTransition transition) {
-        this.size = size;
-        this.transition = transition;
-    }
-
-    @Override
-    public DslState createInitialState() {
-        return new DslState(size);
-    }
-
-    @Override
-    public void next(DslState state, Mailboxes mailboxes) {
-        transition.next(state, mailboxes);
-    }
+@FunctionalInterface
+public interface LambdaTransition {
+    void next(DslState state, Mailboxes mailboxes);
 }
