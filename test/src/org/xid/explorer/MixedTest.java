@@ -50,7 +50,7 @@ public class MixedTest {
                 luaInstance, lambdaInstance
         };
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        TestUtil.explore(new ModelInstance(instances), 121, 231);
+
     }
 }
