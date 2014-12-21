@@ -14,30 +14,22 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
+package org.xid.explorer.model;
+
+import org.xid.explorer.dsl.DslInstance;
 
 /**
- * Created by j5r on 19/11/2014.
+ * A ModelInstance represents an instantiated model to explore. A model instance is composed of a set of DslInstance.
  */
-public final class ModelTransition {
+public final class ModelInstance {
 
-    private String[] actions;
+    private final DslInstance[] instances;
 
-    private int targetId;
-
-    public String[] getActions() {
-        return actions;
+    public ModelInstance(DslInstance[] instances) {
+        this.instances = instances;
     }
 
-    public void setActions(String[] actions) {
-        this.actions = actions;
-    }
-
-    public int getTargetId() {
-        return targetId;
-    }
-
-    public void setTargetId(int targetId) {
-        this.targetId = targetId;
+    public DslInstance[] getInstances() {
+        return instances;
     }
 }

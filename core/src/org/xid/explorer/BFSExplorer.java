@@ -18,6 +18,8 @@ package org.xid.explorer;
 
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.model.ModelInstance;
+import org.xid.explorer.model.ModelState;
 
 import java.util.ArrayList;
 import java.util.List;

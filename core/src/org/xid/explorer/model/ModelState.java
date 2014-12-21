@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
+package org.xid.explorer.model;
 
+import org.xid.explorer.Mailboxes;
 import org.xid.explorer.dsl.DslState;
 
 import java.util.Arrays;

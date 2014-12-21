@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
+package org.xid.explorer.model;
 
 /**
  * ModelExploration stores the complete result for an exploration. It contains all the explored ModelState, the

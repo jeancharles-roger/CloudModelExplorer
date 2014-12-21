@@ -16,6 +16,9 @@
 
 package org.xid.explorer;
 
+import org.xid.explorer.model.ModelExploration;
+import org.xid.explorer.model.ModelInstance;
+
 import static org.junit.Assert.assertEquals;
 
 /**

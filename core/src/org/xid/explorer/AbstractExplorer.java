@@ -16,9 +16,12 @@
 
 package org.xid.explorer;
 
-import org.xid.explorer.ModelExploration.CompletionStatus;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.model.ModelExploration;
+import org.xid.explorer.model.ModelExploration.CompletionStatus;
+import org.xid.explorer.model.ModelInstance;
+import org.xid.explorer.model.ModelState;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -19,6 +19,7 @@ package org.xid.explorer;
 import org.junit.Test;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lambda.LambdaInstance;
+import org.xid.explorer.model.ModelInstance;
 
 public class LambdaTest {
 

@@ -22,6 +22,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import org.luaj.vm2.luajc.LuaJC;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lua.LuaInstance;
+import org.xid.explorer.model.ModelInstance;
 
 import java.io.IOException;
 import java.nio.file.Files;
