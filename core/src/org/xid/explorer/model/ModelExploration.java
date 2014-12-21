@@ -24,6 +24,8 @@ public class ModelExploration {
 
     public static enum CompletionStatus { complete, stoppedByUser, stoppedByHeuristic, reachedMemoryLimit, errorOccurred}
 
+    private final ModelDescription description;
+
     private final CompletionStatus status;
 
     private final int stateCount;
@@ -33,11 +35,16 @@ public class ModelExploration {
     /** Exploration duration in milliseconds. */
     private final long duration;
 
-    public ModelExploration(CompletionStatus status, long duration, int stateCount, int transitionCount) {
+    public ModelExploration(ModelDescription description, CompletionStatus status, long duration, int stateCount, int transitionCount) {
+        this.description = description;
         this.status = status;
         this.duration = duration;
         this.stateCount = stateCount;
         this.transitionCount = transitionCount;
+    }
+
+    public ModelDescription getDescription() {
+        return description;
     }
 
     public CompletionStatus getStatus() {
@@ -56,4 +63,18 @@ public class ModelExploration {
         return transitionCount;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        text.append("Explored model ");
+        text.append(description.getName());
+        text.append(" with ");
+        text.append(stateCount);
+        text.append(" states and ");
+        text.append(transitionCount);
+        text.append(" transitions in ");
+        text.append(duration);
+        text.append(" ms.");
+        return text.toString();
+    }
 }

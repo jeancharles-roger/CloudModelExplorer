@@ -16,19 +16,22 @@
 
 package org.xid.explorer;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.jse.JsePlatform;
 import org.luaj.vm2.luajc.LuaJC;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lua.LuaInstance;
-import org.xid.explorer.model.ModelInstance;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class LuaTest {
+
+    @Rule
+    public ModelName modelName = new ModelName();
 
     @Test
     public void test1() throws IOException {
@@ -42,7 +45,7 @@ public class LuaTest {
         };
 
         // TODO transition count is different from same model in Lambda, to check.
-        TestUtil.explore(new ModelInstance(instances), 1331, 3630);
+        TestUtil.explore(modelName.getName(), instances, 1331, 3630);
     }
 
     @Test
@@ -59,6 +62,8 @@ public class LuaTest {
         DslInstance[] instances = new DslInstance[] { source, target };
 
         // TODO states and transition count are different from same model in Lambda, to check.
-        TestUtil.explore(new ModelInstance(instances), 14, 15);
+
+        TestUtil.explore(modelName.getName(), instances, 14, 15);
     }
+
 }

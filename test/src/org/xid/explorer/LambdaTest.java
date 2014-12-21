@@ -16,12 +16,16 @@
 
 package org.xid.explorer;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lambda.LambdaInstance;
-import org.xid.explorer.model.ModelInstance;
 
 public class LambdaTest {
+
+    @Rule
+    public ModelName modelName = new ModelName();
+
 
     /**
      * Simple test with a basic lambda.
@@ -35,7 +39,7 @@ public class LambdaTest {
         });
         DslInstance[] instances = new DslInstance[] {instance};
 
-        TestUtil.explore(new ModelInstance(instances), 3, 3);
+        TestUtil.explore(modelName.getName(), instances, 3, 3);
     }
 
     /**
@@ -50,7 +54,7 @@ public class LambdaTest {
         });
         DslInstance[] instances = new DslInstance[] { instance, instance, instance};
 
-        TestUtil.explore(new ModelInstance(instances), 1331, 3993);
+        TestUtil.explore(modelName.getName(), instances, 1331, 3993);
     }
 
     private static int countMethod(int count, int max) {
@@ -70,7 +74,7 @@ public class LambdaTest {
 
         DslInstance[] instances = new DslInstance[] { instance, instance, instance };
 
-        TestUtil.explore(new ModelInstance(instances), 1331, 3993);
+        TestUtil.explore(modelName.getName(), instances, 1331, 3993);
     }
 
     /**
@@ -107,7 +111,7 @@ public class LambdaTest {
 
         DslInstance[] instances = new DslInstance[] { instanceSource, instanceTarget };
 
-        TestUtil.explore(new ModelInstance(instances), 13, 13);
+        TestUtil.explore(modelName.getName(), instances, 13, 13);
     }
 
 }

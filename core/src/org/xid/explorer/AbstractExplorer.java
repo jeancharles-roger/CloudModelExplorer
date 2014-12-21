@@ -48,7 +48,7 @@ public abstract class AbstractExplorer {
         exploreFrom(initialState);
         long end = System.currentTimeMillis();
 
-        return new ModelExploration(CompletionStatus.complete, (end-start), known.size(), transitionCount);
+        return new ModelExploration(modelInstance.getDescription(), CompletionStatus.complete, (end-start), known.size(), transitionCount);
     }
 
     protected abstract void exploreFrom(ModelState initialState);

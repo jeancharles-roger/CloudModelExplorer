@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 to CloudModelExplorer
+ * Copyright 2015 to CloudModelExplorer authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,26 @@
 
 package org.xid.explorer.model;
 
-import org.xid.explorer.dsl.DslInstance;
-
 /**
- * A ModelInstance represents an instantiated model to explore. A model instance is composed of a set of DslInstance.
+ * ModelDescription stores descriptive information about a model. It contains all needed information to create a
+ * ModelInstance.
  */
-public final class ModelInstance {
+public class ModelDescription {
 
-    private final ModelDescription description;
+    private final String id;
 
-    private final DslInstance[] instances;
+    private final String name;
 
-    public ModelInstance(ModelDescription description, DslInstance[] instances) {
-        this.description = description;
-        this.instances = instances;
+    public ModelDescription(String id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
-    public ModelDescription getDescription() {
-        return description;
+    public String getId() {
+        return id;
     }
 
-    public DslInstance[] getInstances() {
-        return instances;
+    public String getName() {
+        return name;
     }
 }

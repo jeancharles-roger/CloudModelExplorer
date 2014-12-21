@@ -16,6 +16,8 @@
 
 package org.xid.explorer;
 
+import org.xid.explorer.dsl.DslInstance;
+import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelExploration;
 import org.xid.explorer.model.ModelInstance;
 
@@ -26,13 +28,28 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestUtil {
 
+    public static ModelInstance createModel(String name, DslInstance[] instances) {
+        return new ModelInstance(new ModelDescription(name, name), instances);
+    }
+
+    public static void explore(String name, DslInstance[] instances, int expectedStates, int expectedTransitions) {
+        explore(createModel(name, instances), expectedStates, expectedTransitions);
+    }
+
     public static void explore(ModelInstance model, int expectedStates, int expectedTransitions) {
         BFSExplorer explorer = new BFSExplorer(model);
         ModelExploration modelExploration = explorer.explore();
 
-        System.out.println("Explored model " + "TODO" + " with " + modelExploration.getStateCount() + " states and " + modelExploration.getTransitionCount() + " transitions in " + modelExploration.getDuration() + " ms.");
+        System.out.println(modelExploration);
 
-        assertEquals("Expected " + expectedStates + " states but explored " + modelExploration.getStateCount(), expectedStates, modelExploration.getStateCount());
-        assertEquals("Expected " + expectedTransitions + " transitions but explored " + modelExploration.getTransitionCount(), expectedTransitions, modelExploration.getTransitionCount());
+        assertEquals(
+                "Expected " + expectedStates + " states but explored " + modelExploration.getStateCount(),
+                expectedStates, modelExploration.getStateCount()
+        );
+
+        assertEquals(
+                "Expected " + expectedTransitions + " transitions but explored " + modelExploration.getTransitionCount(),
+                expectedTransitions, modelExploration.getTransitionCount()
+        );
     }
 }

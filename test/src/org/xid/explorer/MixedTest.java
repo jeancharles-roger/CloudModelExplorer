@@ -22,6 +22,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.lambda.LambdaInstance;
 import org.xid.explorer.lua.LuaInstance;
+import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 
 import java.io.IOException;
@@ -47,11 +48,13 @@ public class MixedTest {
         DslInstance luaInstance = new LuaInstance(2, script, lua);
 
 
+        ModelDescription description = new ModelDescription("Mixed.test1", "Mixed.test1");
         DslInstance[] instances = new DslInstance[] {
                 luaInstance, lambdaInstance
         };
 
-        TestUtil.explore(new ModelInstance(instances), 121, 231);
+
+        TestUtil.explore(new ModelInstance(description, instances), 121, 231);
 
     }
 }
