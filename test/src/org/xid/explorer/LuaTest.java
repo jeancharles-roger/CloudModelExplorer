@@ -40,8 +40,8 @@ public class LuaTest {
                 instance, instance, instance
         };
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        // TODO transition count is different from same model in Lambda, to check.
+        TestUtil.explore(new ModelInstance(instances), 1331, 3630);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class LuaTest {
 
         DslInstance[] instances = new DslInstance[] { source, target };
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        // TODO states and transition count are different from same model in Lambda, to check.
+        TestUtil.explore(new ModelInstance(instances), 14, 15);
     }
 }

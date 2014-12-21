@@ -34,8 +34,7 @@ public class LambdaTest {
         });
         DslInstance[] instances = new DslInstance[] {instance};
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        TestUtil.explore(new ModelInstance(instances), 3, 3);
     }
 
     /**
@@ -50,8 +49,7 @@ public class LambdaTest {
         });
         DslInstance[] instances = new DslInstance[] { instance, instance, instance};
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        TestUtil.explore(new ModelInstance(instances), 1331, 3993);
     }
 
     private static int countMethod(int count, int max) {
@@ -71,8 +69,7 @@ public class LambdaTest {
 
         DslInstance[] instances = new DslInstance[] { instance, instance, instance };
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        TestUtil.explore(new ModelInstance(instances), 1331, 3993);
     }
 
     /**
@@ -109,8 +106,7 @@ public class LambdaTest {
 
         DslInstance[] instances = new DslInstance[] { instanceSource, instanceTarget };
 
-        BFSExplorer explorer = new BFSExplorer(new ModelInstance(instances));
-        explorer.explore();
+        TestUtil.explore(new ModelInstance(instances), 13, 13);
     }
 
 }

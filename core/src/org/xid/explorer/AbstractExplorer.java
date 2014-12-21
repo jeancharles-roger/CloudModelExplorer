@@ -16,6 +16,7 @@
 
 package org.xid.explorer;
 
+import org.xid.explorer.ModelExploration.CompletionStatus;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
@@ -31,17 +32,20 @@ public abstract class AbstractExplorer {
 
     private final Map<ModelState, ModelState> known = new HashMap<>();
 
+    private int transitionCount = 0;
+
     public AbstractExplorer(ModelInstance modelInstance) {
         this.modelInstance = modelInstance;
     }
 
-    public void explore() {
+    public ModelExploration explore() {
         long start = System.currentTimeMillis();
         ModelState initialState = createInitialState();
         registerState(initialState);
         exploreFrom(initialState);
         long end = System.currentTimeMillis();
-        System.out.println("Explored "+ known.size() +" states in "+ (end-start) +"ms.");
+
+        return new ModelExploration(CompletionStatus.complete, (end-start), known.size(), transitionCount);
     }
 
     protected abstract void exploreFrom(ModelState initialState);
@@ -53,6 +57,10 @@ public abstract class AbstractExplorer {
             dslStates[i] = instances[i].createInitialState();
         }
         return new ModelState(dslStates, null);
+    }
+
+    protected void registerTransition(ModelState source, ModelState target) {
+        transitionCount += 1;
     }
 
     protected ModelState registerState(ModelState newState) {

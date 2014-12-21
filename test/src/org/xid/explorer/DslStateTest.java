@@ -16,9 +16,10 @@
 
 package org.xid.explorer;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.xid.explorer.dsl.DslState;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by j5r on 19/11/2014.
@@ -29,18 +30,18 @@ public class DslStateTest {
     public void testInt() {
         DslState state = new DslState(4);
         state.setInt(0, 0x0000ffff);
-        Assert.assertEquals(0x0000ffff, state.getInt(0));
+        assertEquals(0x0000ffff, state.getInt(0));
 
         state.setInt(0, 4);
-        Assert.assertEquals(4, state.getInt(0));
+        assertEquals(4, state.getInt(0));
 
         state.setInt(2, -42);
-        Assert.assertEquals(4, state.getInt(0));
-        Assert.assertEquals(-42, state.getInt(2));
+        assertEquals(4, state.getInt(0));
+        assertEquals(-42, state.getInt(2));
 
         state.setInt(2, Integer.MAX_VALUE);
-        Assert.assertEquals(4, state.getInt(0));
-        Assert.assertEquals(Integer.MAX_VALUE, state.getInt(2));
+        assertEquals(4, state.getInt(0));
+        assertEquals(Integer.MAX_VALUE, state.getInt(2));
     }
 
     @Test
@@ -48,9 +49,9 @@ public class DslStateTest {
         DslState state = new DslState(4);
         for (int i=0; i<100_000_000; i++) {
             state.setInt(0, i);
-            Assert.assertEquals(i, state.getInt(0));
+            assertEquals(i, state.getInt(0));
             state.setInt(2, Integer.MAX_VALUE - i);
-            Assert.assertEquals(Integer.MAX_VALUE - i, state.getInt(2));
+            assertEquals(Integer.MAX_VALUE - i, state.getInt(2));
         }
     }
 }

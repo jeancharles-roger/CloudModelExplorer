@@ -21,7 +21,7 @@ import org.xid.explorer.dsl.DslInstance;
 /**
  * A ModelInstance represents an instantiated model to explore. A model instance is composed of a set of DslInstance.
  */
-public class ModelInstance {
+public final class ModelInstance {
 
     private final DslInstance[] instances;
 

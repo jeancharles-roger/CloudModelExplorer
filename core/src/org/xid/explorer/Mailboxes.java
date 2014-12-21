@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  * Mailboxes handles as set of String based messages mailboxes (event queues). It exposes a set of high-level methods
  * to create/test/destroy mailboxes and to add/removes messages from mailboxes.
  */
-public class Mailboxes {
+public final class Mailboxes {
 
     /** Arrays of array of string to handle mailboxes. */
     private String[][] mailboxes;

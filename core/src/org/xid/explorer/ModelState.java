@@ -23,7 +23,7 @@ import java.util.Arrays;
 /**
  * Represents a State for an exploration.
  */
-public class ModelState {
+public final class ModelState {
 
     private int id = -1;
 

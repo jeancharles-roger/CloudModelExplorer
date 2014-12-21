@@ -43,15 +43,16 @@ public class BFSExplorer extends AbstractExplorer {
             Mailboxes mailboxes = toExplore.getMailboxes();
 
             for (int i = 0; i < instances.length; i++) {
-                DslState source = toExplore.getState(i);
-                DslState target = source.copy();
+                DslState dslSource = toExplore.getState(i);
+                DslState dslTarget = dslSource.copy();
 
                 // computes next
                 Mailboxes mailboxesCopy = mailboxes.copy();
-                instances[i].next(target, mailboxesCopy);
-                if (target.equals(source) == false || mailboxesCopy.equals(mailboxes) == false) {
+                instances[i].next(dslTarget, mailboxesCopy);
+                if (dslTarget.equals(dslSource) == false || mailboxesCopy.equals(mailboxes) == false) {
                     // transition changed state, checks if a new model state has been found
-                    registerState(toExplore.copy(i, target, mailboxesCopy));
+                    ModelState target = registerState(toExplore.copy(i, dslTarget, mailboxesCopy));
+                    registerTransition(toExplore, target);
                 }
             }
         }
