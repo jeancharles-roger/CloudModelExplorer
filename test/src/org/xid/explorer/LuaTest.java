@@ -18,13 +18,9 @@ package org.xid.explorer;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.luaj.vm2.Globals;
-import org.luaj.vm2.lib.jse.JsePlatform;
-import org.luaj.vm2.luajc.LuaJC;
-import org.xid.explorer.dsl.DslInstance;
-import org.xid.explorer.lua.LuaInstance;
+import org.xid.explorer.model.ModelDescription;
+import org.xid.explorer.model.ModelInstance;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -34,36 +30,21 @@ public class LuaTest {
     public ModelName modelName = new ModelName();
 
     @Test
-    public void test1() throws IOException {
-        Globals lua = JsePlatform.standardGlobals();
-        LuaJC.install(lua);
-
-        String script = new String(Files.readAllBytes(Paths.get("resource/test1/test1.lua")));
-        DslInstance instance = new LuaInstance(2, script, lua);
-        DslInstance[] instances = new DslInstance[] {
-                instance, instance, instance
-        };
+    public void test1() throws Exception {
+        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get("resource/lua/test1/" + path));
 
         // TODO transition count is different from same model in Lambda, to check.
-        TestUtil.explore(modelName.getName(), instances, 1331, 3630);
+        ModelDescription description = ModelDescription.loadDescription(resourceResolver.resolve("model.json"));
+        TestUtil.explore(ModelInstance.load(description, resourceResolver), 1331, 3630);
     }
 
     @Test
-    public void test2() throws IOException {
-        Globals lua = JsePlatform.standardGlobals();
-        LuaJC.install(lua);
-
-        String sourceScript = new String(Files.readAllBytes(Paths.get("resource/test2/source.lua")));
-        DslInstance source = new LuaInstance(2, sourceScript, lua);
-
-        String targetScript = new String(Files.readAllBytes(Paths.get("resource/test2/target.lua")));
-        DslInstance target = new LuaInstance(2, targetScript, lua);
-
-        DslInstance[] instances = new DslInstance[] { source, target };
+    public void test2() throws Exception {
+        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get("resource/lua/test2/" + path));
 
         // TODO states and transition count are different from same model in Lambda, to check.
-
-        TestUtil.explore(modelName.getName(), instances, 14, 15);
+        ModelDescription description = ModelDescription.loadDescription(resourceResolver.resolve("model.json"));
+        TestUtil.explore(ModelInstance.load(description, resourceResolver), 14, 15);
     }
 
 }
