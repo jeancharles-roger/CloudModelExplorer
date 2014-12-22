@@ -16,11 +16,25 @@
 
 package org.xid.explorer.dsl;
 
+import org.xid.explorer.ResourceResolver;
+
 /**
  * A DslRuntime implements the evaluation for a given Dsl. It's able to evaluate transition from a source to an other
  * and checks a expression value.
  */
 public interface DslRuntime {
 
+    /** Returns the Dsl id, must be unique. */
+    String getId();
+
+    /**
+     * Creates a new DslInstance from given JSON description.
+     *
+     * @param description instance description
+     * @param resourceResolver function that take a String and returns an open InputStream (or null).
+     * @return a newly created DslInstance.
+     * @throws Exception if the description isn't sound or some resources aren't present.
+     */
+    DslInstance createInstance(DslInstanceDescription description, ResourceResolver resourceResolver) throws Exception;
 
 }

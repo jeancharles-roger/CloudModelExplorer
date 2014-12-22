@@ -16,26 +16,59 @@
 
 package org.xid.explorer.model;
 
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
+import org.xid.explorer.dsl.DslInstanceDescription;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 /**
  * ModelDescription stores descriptive information about a model. It contains all needed information to create a
  * ModelInstance.
  */
 public class ModelDescription {
 
-    private final String id;
+    private String name;
 
-    private final String name;
+    private List<DslInstanceDescription> instances;
 
-    public ModelDescription(String id, String name) {
-        this.id = id;
-        this.name = name;
+    public ModelDescription() {
     }
 
-    public String getId() {
-        return id;
+    public ModelDescription(String name) {
+        this.name = name;
     }
 
     public String getName() {
         return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<DslInstanceDescription> getInstances() {
+        return instances;
+    }
+
+    public void setInstances(List<DslInstanceDescription> instances) {
+        this.instances = instances;
+    }
+
+
+    public static ModelDescription loadDescription(InputStream stream) throws IOException {
+        try {
+            JSONParser parser = new JSONParser(JSONParser.MODE_RFC4627);
+            return parser.parse(stream, ModelDescription.class);
+        } catch (ParseException e) {
+            throw new IOException(e.getMessage());
+        } finally {
+            stream.close();
+        }
+    }
 }
+
+
+

@@ -16,7 +16,15 @@
 
 package org.xid.explorer.model;
 
+import org.xid.explorer.ResourceResolver;
 import org.xid.explorer.dsl.DslInstance;
+import org.xid.explorer.dsl.DslInstanceDescription;
+import org.xid.explorer.dsl.DslRuntime;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
 
 /**
  * A ModelInstance represents an instantiated model to explore. A model instance is composed of a set of DslInstance.
@@ -39,4 +47,41 @@ public final class ModelInstance {
     public DslInstance[] getInstances() {
         return instances;
     }
+
+    /**
+     * Loads a ModelInstance from a ModelDescription.
+     * @param description description to load.
+     * @param resourceResolver function that take a String and returns an open InputStream (or null).
+     * @return a ModelInstance
+     * @throws Exception if the description isn't found or some resources aren't present.
+     */
+    public static ModelInstance load(ModelDescription description, ResourceResolver resourceResolver) throws Exception {
+
+        // collects all runtimes declared in classpath.
+        Map<String, DslRuntime> runtimes = new HashMap<>();
+        for (DslRuntime runtime : ServiceLoader.load(DslRuntime.class)) {
+            runtimes.put(runtime.getId(), runtime);
+        }
+
+
+        List<DslInstanceDescription> instanceDescriptions = description.getInstances();
+        if (instanceDescriptions == null || instanceDescriptions.isEmpty()) {
+            throw new Exception("No instance declared for model.");
+        }
+
+
+        DslInstance[] dslInstances = new DslInstance[instanceDescriptions.size()];
+        // creates a DslInstance for each DslInstanceDescription
+        for (int i = 0; i < instanceDescriptions.size(); i++) {
+            DslInstanceDescription instanceDescription = instanceDescriptions.get(i);
+
+            DslRuntime runtime = runtimes.get(instanceDescription.getDsl());
+            if (runtime == null) throw new Exception("No runtime '"+ instanceDescription.getDsl() +"' found");
+
+            dslInstances[i] = runtime.createInstance(instanceDescription, resourceResolver);
+
+        }
+        return new ModelInstance(description, dslInstances);
+    }
+
 }
