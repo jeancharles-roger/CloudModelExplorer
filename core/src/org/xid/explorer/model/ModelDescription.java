@@ -22,6 +22,7 @@ import org.xid.explorer.dsl.DslInstanceDescription;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ModelDescription {
 
     private String name;
 
-    private List<DslInstanceDescription> instances;
+    private List<DslInstanceDescription> instances = new ArrayList<>();
 
     public ModelDescription() {
     }
