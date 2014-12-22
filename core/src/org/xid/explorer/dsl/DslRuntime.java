@@ -28,7 +28,7 @@ public interface DslRuntime {
     String getId();
 
     /**
-     * Creates a new DslInstance from given JSON description.
+     * Creates a new DslInstance from given DslInstanceDescription.
      *
      * @param description instance description
      * @param resourceResolver function that take a String and returns an open InputStream (or null).
