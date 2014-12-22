@@ -24,12 +24,12 @@ import org.xid.explorer.model.ModelInstance;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by j5r on 21/12/2014.
+ * Set of utility methods for tests.
  */
 public class TestUtil {
 
     public static ModelInstance createModel(String name, DslInstance[] instances) {
-        return new ModelInstance(new ModelDescription(name, name), instances);
+        return new ModelInstance(new ModelDescription(name), instances);
     }
 
     public static void explore(String name, DslInstance[] instances, int expectedStates, int expectedTransitions) {
