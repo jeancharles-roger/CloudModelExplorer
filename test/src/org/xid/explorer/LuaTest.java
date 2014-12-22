@@ -18,11 +18,6 @@ package org.xid.explorer;
 
 import org.junit.Rule;
 import org.junit.Test;
-import org.xid.explorer.model.ModelDescription;
-import org.xid.explorer.model.ModelInstance;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class LuaTest {
 
@@ -31,20 +26,14 @@ public class LuaTest {
 
     @Test
     public void test1() throws Exception {
-        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get("resource/lua/test1/" + path));
-
         // TODO transition count is different from same model in Lambda, to check.
-        ModelDescription description = ModelDescription.loadDescription(resourceResolver.resolve("model.json"));
-        TestUtil.explore(ModelInstance.load(description, resourceResolver), 1331, 3630);
+        TestUtil.explore("resource/lua/test1/", 1331, 3630);
     }
 
     @Test
     public void test2() throws Exception {
-        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get("resource/lua/test2/" + path));
-
         // TODO states and transition count are different from same model in Lambda, to check.
-        ModelDescription description = ModelDescription.loadDescription(resourceResolver.resolve("model.json"));
-        TestUtil.explore(ModelInstance.load(description, resourceResolver), 14, 15);
+        TestUtil.explore("resource/lua/test2/", 14, 15);
     }
 
 }

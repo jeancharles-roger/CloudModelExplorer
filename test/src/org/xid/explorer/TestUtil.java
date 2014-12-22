@@ -16,10 +16,12 @@
 
 package org.xid.explorer;
 
-import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelExploration;
 import org.xid.explorer.model.ModelInstance;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,12 +30,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestUtil {
 
-    public static ModelInstance createModel(String name, DslInstance[] instances) {
-        return new ModelInstance(new ModelDescription(name), instances);
-    }
-
-    public static void explore(String name, DslInstance[] instances, int expectedStates, int expectedTransitions) {
-        explore(createModel(name, instances), expectedStates, expectedTransitions);
+    public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
+        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get(modelPath + path));
+        ModelDescription description = ModelDescription.loadDescription(resourceResolver.resolve("model.json"));
+        explore(ModelInstance.load(description, resourceResolver), expectedStates, expectedTransitions);
     }
 
     public static void explore(ModelInstance model, int expectedStates, int expectedTransitions) {

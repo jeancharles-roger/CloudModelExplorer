@@ -16,102 +16,91 @@
 
 package org.xid.explorer;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.xid.explorer.dsl.DslInstance;
-import org.xid.explorer.lambda.LambdaInstance;
+import org.xid.explorer.lambda.LambdaTransition;
 
 public class LambdaTest {
 
-    @Rule
-    public ModelName modelName = new ModelName();
+    public static final LambdaTransition TRANSITION_TEST0_1 = (state, mailboxes) -> {
+        int count = state.getInt(0);
+        int newCount = count < 2 ? count + 1 : 0;
+        state.setInt(0, newCount);
+    };
 
+    public static final LambdaTransition TRANSITION_TEST1_1 = (state, mailboxes) -> {
+        int count = state.getInt(0);
+        int newCount = count < 10 ? count + 1 : 0;
+        state.setInt(0, newCount);
+    };
+
+    private static int countMethod(int count, int max) {
+        return count < max ? count + 1 : 0;
+    }
+
+    public static final LambdaTransition TRANSITION_TEST2_1 = (state, mailboxes) -> {
+        int count = state.getInt(0);
+        int newCount = countMethod(count, 10);
+        state.setInt(0, newCount);
+    };
+
+    public static final LambdaTransition TRANSITION_TEST3_1 = (state, mailboxes) -> {
+        if (mailboxes.getMailboxesCount() == 0) {
+            int index = mailboxes.createMailbox();
+            mailboxes.addLast(index, "start");
+            state.setInt(0, index);
+        } else {
+            int index = state.getInt(0);
+            String result = mailboxes.removeFirstIf(index, (message) -> "end".equals(message));
+            if (result != null) mailboxes.addLast(index, "start");
+        }
+    };
+
+    public static final LambdaTransition TRANSITION_TEST3_2 = (state, mailboxes) -> {
+        int count = state.getInt(0);
+        if (count == 0) {
+            if (mailboxes.getMailboxesCount() > 0) {
+                String result = mailboxes.removeFirstIf(0, (message) -> "start".equals(message));
+                if (result != null) count = 1;
+            }
+        } else if (count >= 10) {
+            count = 0;
+            mailboxes.addLast(0, "end");
+        } else {
+            count = count + 1;
+        }
+        state.setInt(0, count);
+    };
 
     /**
      * Simple test with a basic lambda.
      */
     @Test
-    public void test0() {
-        DslInstance instance = new LambdaInstance(2, (state, mailboxes) -> {
-            int count = state.getInt(0);
-            int newCount = count < 2 ? count + 1 : 0;
-            state.setInt(0, newCount);
-        });
-        DslInstance[] instances = new DslInstance[] {instance};
-
-        TestUtil.explore(modelName.getName(), instances, 3, 3);
+    public void test0() throws Exception {
+        TestUtil.explore("resource/lambda/test0/", 3, 3);
     }
 
     /**
      * Simple test with a basic lambda and several instances
      */
     @Test
-    public void test1() {
-        DslInstance instance = new LambdaInstance(2, (state, mailboxes) -> {
-            int count = state.getInt(0);
-            int newCount = count < 10 ? count + 1 : 0;
-            state.setInt(0, newCount);
-        });
-        DslInstance[] instances = new DslInstance[] { instance, instance, instance};
-
-        TestUtil.explore(modelName.getName(), instances, 1331, 3993);
-    }
-
-    private static int countMethod(int count, int max) {
-        return count < max ? count + 1 : 0;
+    public void test1() throws Exception {
+        TestUtil.explore("resource/lambda/test1/", 1331, 3993);
     }
 
     /**
      * Test with an existing transition to apply from the instance.
      */
     @Test
-    public void test2() {
-        DslInstance instance = new LambdaInstance(2, (state, mailboxes) -> {
-            int count = state.getInt(0);
-            int newCount = countMethod(count, 10);
-            state.setInt(0, newCount);
-        });
-
-        DslInstance[] instances = new DslInstance[] { instance, instance, instance };
-
-        TestUtil.explore(modelName.getName(), instances, 1331, 3993);
+    public void test2() throws Exception {
+        TestUtil.explore("resource/lambda/test2/", 1331, 3993);
     }
 
     /**
      * Simple test with a basic lambda and 2 instances that communicates using a mailbox.
      */
     @Test
-    public void test3() {
-        DslInstance instanceSource = new LambdaInstance(2, (state, mailboxes) -> {
-            if (mailboxes.getMailboxesCount() == 0) {
-                int index = mailboxes.createMailbox();
-                mailboxes.addLast(index, "start");
-                state.setInt(0, index);
-            } else {
-                int index = state.getInt(0);
-                String result = mailboxes.removeFirstIf(index, (message) -> "end".equals(message));
-                if (result != null) mailboxes.addLast(index, "start");
-            }
-        });
-        DslInstance instanceTarget = new LambdaInstance(2, (state, mailboxes) -> {
-            int count = state.getInt(0);
-            if (count == 0) {
-                if (mailboxes.getMailboxesCount() > 0) {
-                    String result = mailboxes.removeFirstIf(0, (message) -> "start".equals(message));
-                    if (result != null) count = 1;
-                }
-            } else if (count >= 10) {
-                count = 0;
-                mailboxes.addLast(0, "end");
-            } else {
-                count = count + 1;
-            }
-            state.setInt(0, count);
-        });
-
-        DslInstance[] instances = new DslInstance[] { instanceSource, instanceTarget };
-
-        TestUtil.explore(modelName.getName(), instances, 13, 13);
+    public void test3() throws Exception {
+        TestUtil.explore("resource/lambda/test3/", 13, 13);
     }
 
 }

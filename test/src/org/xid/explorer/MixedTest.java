@@ -17,44 +17,43 @@
 package org.xid.explorer;
 
 import org.junit.Test;
-import org.luaj.vm2.Globals;
-import org.luaj.vm2.lib.jse.JsePlatform;
-import org.xid.explorer.dsl.DslInstance;
-import org.xid.explorer.lambda.LambdaInstance;
-import org.xid.explorer.lua.LuaInstance;
+import org.xid.explorer.dsl.DslInstanceDescription;
 import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class MixedTest {
 
     @Test
-    public void test1() throws IOException {
+    public void test1() throws Exception {
+        // creates description by API for test.
+        ModelDescription description = new ModelDescription();
+        description.setName("MixedTest.test1");
 
-        // Lambda instance
-        DslInstance lambdaInstance = new LambdaInstance(2, (state, mailboxes) -> {
-            int count = state.getInt(0);
-            int newCount = count < 10 ? count + 1 : 0;
-            state.setInt(0, newCount);
-        });
-
-        // Lua instance
-        Globals lua = JsePlatform.standardGlobals();
-
-        String script = new String(Files.readAllBytes(Paths.get("resource/test1/test1.lua")));
-        DslInstance luaInstance = new LuaInstance(2, script, lua);
+        DslInstanceDescription lambdaInstance = new DslInstanceDescription();
+        lambdaInstance.setDsl("explorer.lambda");
+        lambdaInstance.setName("one");
+        lambdaInstance.setSize(2);
+        lambdaInstance.getParameters().put("class", "org.xid.explorer.LambdaTest");
+        lambdaInstance.getParameters().put("field", "TRANSITION_TEST1_1");
+        description.getInstances().add(lambdaInstance);
 
 
-        ModelDescription description = new ModelDescription("Mixed.test1", "Mixed.test1");
-        DslInstance[] instances = new DslInstance[] {
-                luaInstance, lambdaInstance
-        };
+        DslInstanceDescription luaInstance = new DslInstanceDescription();
+        luaInstance.setDsl("explorer.lua");
+        luaInstance.setName("two");
+        luaInstance.setSize(2);
+        luaInstance.getResources().add("test1.lua");
+        description.getInstances().add(luaInstance);
 
+        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get("resource/lua/test1/" + path));
+        TestUtil.explore(ModelInstance.load(description, resourceResolver), 121, 231);
+    }
 
-        TestUtil.explore(new ModelInstance(description, instances), 121, 231);
-
+    @Test
+    public void test2() throws Exception {
+        TestUtil.explore("resource/mixed/test2/", 14, 14);
     }
 }

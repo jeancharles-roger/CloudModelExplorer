@@ -1,0 +1,23 @@
+{
+  "name": "LuaTest.test1",
+  "instances": [
+    {
+      "dsl": "explorer.lambda",
+      "name": "source",
+      "size": 2,
+      "parameters": {
+        "class": "org.xid.explorer.LambdaTest",
+        "field": "TRANSITION_TEST3_1"
+      }
+    },
+    {
+      "dsl": "explorer.lambda",
+      "name": "target",
+      "size": 2,
+      "parameters": {
+        "class": "org.xid.explorer.LambdaTest",
+        "field": "TRANSITION_TEST3_2"
+      }
+    }
+  ]
+}

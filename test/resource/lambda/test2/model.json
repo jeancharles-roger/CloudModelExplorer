@@ -1,0 +1,32 @@
+{
+  "name": "LuaTest.test1",
+  "instances": [
+    {
+      "dsl": "explorer.lambda",
+      "name": "one",
+      "size": 2,
+      "parameters": {
+        "class": "org.xid.explorer.LambdaTest",
+        "field": "TRANSITION_TEST2_1"
+      }
+    },
+    {
+      "dsl": "explorer.lambda",
+      "name": "one",
+      "size": 2,
+      "parameters": {
+        "class": "org.xid.explorer.LambdaTest",
+        "field": "TRANSITION_TEST2_1"
+      }
+    },
+    {
+      "dsl": "explorer.lambda",
+      "name": "one",
+      "size": 2,
+      "parameters": {
+        "class": "org.xid.explorer.LambdaTest",
+        "field": "TRANSITION_TEST2_1"
+      }
+    }
+  ]
+}
