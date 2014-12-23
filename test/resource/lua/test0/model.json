@@ -1,0 +1,11 @@
+{
+  "name": "LuaTest.test1",
+  "instances": [
+    {
+      "dsl": "explorer.lua",
+      "name": "one",
+      "size": 2,
+      "resources": ["test1.lua"]
+    }
+  ]
+}

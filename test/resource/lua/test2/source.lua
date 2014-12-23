@@ -8,6 +8,7 @@ if mailboxes:getMailboxesCount() == 0 then
     state:setInt(0, index);
 else
     local index = state:getInt(0);
-    local result = mailboxes:removeFirst(index);
-    if result == "end" then mailboxes:addLast(index, "start"); end
+    if mailboxes:removeFirstIfEquals(index, "end") ~= nil then
+        mailboxes:addLast(index, "start");
+    end
 end

@@ -17,8 +17,8 @@
 package org.xid.explorer;
 
 import org.xid.explorer.model.ModelDescription;
-import org.xid.explorer.model.ModelExploration;
 import org.xid.explorer.model.ModelInstance;
+import org.xid.explorer.result.ModelExploration;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

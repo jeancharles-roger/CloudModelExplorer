@@ -20,6 +20,7 @@ import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
+import org.xid.explorer.result.ModelExplorationHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,10 @@ public class BFSExplorer extends AbstractExplorer {
 
     public BFSExplorer(ModelInstance modelInstance) {
         super(modelInstance);
+    }
+
+    public BFSExplorer(ModelInstance modelInstance, ModelExplorationHandler explorationHandler) {
+        super(modelInstance, explorationHandler);
     }
 
     @Override

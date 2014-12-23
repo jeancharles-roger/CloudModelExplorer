@@ -16,13 +16,14 @@
 
 package org.xid.explorer;
 
-import org.junit.Rule;
 import org.junit.Test;
 
 public class LuaTest {
 
-    @Rule
-    public ModelName modelName = new ModelName();
+    @Test
+    public void test0() throws Exception {
+        TestUtil.explore("resource/lua/test0/", 3, 3);
+    }
 
     @Test
     public void test1() throws Exception {
@@ -32,8 +33,7 @@ public class LuaTest {
 
     @Test
     public void test2() throws Exception {
-        // TODO states and transition count are different from same model in Lambda, to check.
-        TestUtil.explore("resource/lua/test2/", 14, 15);
+        TestUtil.explore("resource/lua/test2/", 13, 13);
     }
 
 }

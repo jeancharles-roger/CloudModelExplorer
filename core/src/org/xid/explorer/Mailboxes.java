@@ -132,10 +132,21 @@ public final class Mailboxes {
      * Removes first message of a mailbox at given index.
      *
      * @param index mailbox index.
-     * @return null if the mailbox doesn't exist or is empty.
+     * @return the removed message or null if the mailbox doesn't exist or is empty.
      */
     public String removeFirst(int index) {
         return removeFirstIf(index, null);
+    }
+
+    /**
+     * Removes first message of a mailbox at given index if equals to given value.
+     *
+     * @param index mailbox index.
+     * @param value value to test with
+     * @return he removed message or null if the mailbox doesn't exist or is empty.
+     */
+    public String removeFirstIfEquals(int index, String value) {
+        return removeFirstIf(index, (message) -> (message.equals(value)));
     }
 
     /**
@@ -145,7 +156,7 @@ public final class Mailboxes {
      *
      * @param index mailbox index.
      * @param predicate the predicate to test the first message with. If the predicate is null it's considered true.
-     * @return null if the mailbox doesn't exist or is empty or the result of the predicate.
+     * @return he removed message or null if the mailbox doesn't exist or is empty or the result of the predicate.
      */
     public String removeFirstIf(int index, Predicate<String> predicate) {
         if (mailboxes == null || index < 0 || index >= mailboxes.length) return null;

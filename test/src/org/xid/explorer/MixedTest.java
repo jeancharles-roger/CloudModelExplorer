@@ -54,6 +54,6 @@ public class MixedTest {
 
     @Test
     public void test2() throws Exception {
-        TestUtil.explore("resource/mixed/test2/", 14, 14);
+        TestUtil.explore("resource/mixed/test2/", 13, 13);
     }
 }

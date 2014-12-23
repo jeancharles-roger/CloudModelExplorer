@@ -18,10 +18,11 @@ package org.xid.explorer;
 
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
-import org.xid.explorer.model.ModelExploration;
-import org.xid.explorer.model.ModelExploration.CompletionStatus;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
+import org.xid.explorer.result.ModelExploration;
+import org.xid.explorer.result.ModelExploration.CompletionStatus;
+import org.xid.explorer.result.ModelExplorationHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,17 +36,30 @@ public abstract class AbstractExplorer {
 
     private final Map<ModelState, ModelState> known = new HashMap<>();
 
+    private final ModelExplorationHandler explorationHandler;
+
     private int transitionCount = 0;
 
     public AbstractExplorer(ModelInstance modelInstance) {
+        this(modelInstance, null);
+    }
+
+    public AbstractExplorer(ModelInstance modelInstance, ModelExplorationHandler explorationHandler) {
         this.modelInstance = modelInstance;
+        this.explorationHandler = explorationHandler == null ? ModelExplorationHandler.EMPTY : explorationHandler;
     }
 
     public ModelExploration explore() {
         long start = System.currentTimeMillis();
         ModelState initialState = createInitialState();
+
+        explorationHandler.begin();
+
         registerState(initialState);
         exploreFrom(initialState);
+
+        explorationHandler.end();
+
         long end = System.currentTimeMillis();
 
         return new ModelExploration(modelInstance.getDescription(), CompletionStatus.complete, (end-start), known.size(), transitionCount);
@@ -64,6 +78,9 @@ public abstract class AbstractExplorer {
 
     protected void registerTransition(ModelState source, ModelState target) {
         transitionCount += 1;
+
+        // sends transition to exploration handler
+        explorationHandler.transition(source, null, target);
     }
 
     protected ModelState registerState(ModelState newState) {
@@ -76,6 +93,10 @@ public abstract class AbstractExplorer {
 
         known.put(newState, newState);
         newState(newState);
+
+        // sends new state to exploration handler.
+        explorationHandler.state(newState);
+
         return newState;
     }
 

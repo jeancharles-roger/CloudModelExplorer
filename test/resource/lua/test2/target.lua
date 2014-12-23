@@ -5,8 +5,9 @@
 local count = state:getInt(0);
 if count == 0 then
     if mailboxes:getMailboxesCount() > 0 then
-        local result = mailboxes:removeFirst(0);
-        if result == "start" then count = 1; end
+        if mailboxes:removeFirstIfEquals(0, "start") ~= nil then
+            count = 1;
+        end
     end
 elseif count >= 10 then
     count = 0;
