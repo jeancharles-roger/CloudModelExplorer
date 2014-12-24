@@ -48,7 +48,7 @@ public class MixedTest {
         description.getInstances().add(luaInstance);
 
         ResourceResolver resourceResolver = new PathResourceResolver(Paths.get("resource/lua/test1/"));
-        TestUtil.explore(ModelInstance.load(description, resourceResolver), 121, 231);
+        TestUtil.explore(ModelInstance.load(description, resourceResolver), null, 121, 231);
     }
 
     @Test

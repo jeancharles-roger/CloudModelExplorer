@@ -22,7 +22,7 @@ import org.xid.explorer.model.ModelTransition;
 import java.io.PrintWriter;
 
 /**
- * Created by j5r on 23/12/2014.
+ * ModelExplorationDotPrinter generate a dot format from the exploration result.
  */
 public class ModelExplorationDotPrinter implements ModelExplorationHandler {
 

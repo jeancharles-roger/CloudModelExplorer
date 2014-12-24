@@ -19,7 +19,10 @@ package org.xid.explorer;
 import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.result.ModelExploration;
+import org.xid.explorer.result.ModelExplorationDotPrinter;
+import org.xid.explorer.result.ModelExplorationHandler;
 
+import java.io.PrintWriter;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
@@ -32,11 +35,12 @@ public class TestUtil {
     public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
         ResourceResolver resourceResolver = new PathResourceResolver(Paths.get(modelPath));
         ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
-        explore(ModelInstance.load(description, resourceResolver), expectedStates, expectedTransitions);
+        ModelExplorationHandler resultHandler = new ModelExplorationDotPrinter(new PrintWriter(resourceResolver.writeEntry("exploration.dot")), true);
+        explore(ModelInstance.load(description, resourceResolver), resultHandler, expectedStates, expectedTransitions);
     }
 
-    public static void explore(ModelInstance model, int expectedStates, int expectedTransitions) {
-        BFSExplorer explorer = new BFSExplorer(model);
+    public static void explore(ModelInstance model, ModelExplorationHandler resultHandler, int expectedStates, int expectedTransitions) {
+        BFSExplorer explorer = new BFSExplorer(model, resultHandler);
         ModelExploration modelExploration = explorer.explore();
 
         System.out.println(modelExploration);
