@@ -20,7 +20,6 @@ import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.result.ModelExploration;
 
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static org.junit.Assert.assertEquals;
@@ -31,8 +30,8 @@ import static org.junit.Assert.assertEquals;
 public class TestUtil {
 
     public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
-        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get(modelPath + path));
-        ModelDescription description = ModelDescription.loadDescription(resourceResolver.resolve("model.json"));
+        ResourceResolver resourceResolver = new PathResourceResolver(Paths.get(modelPath));
+        ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
         explore(ModelInstance.load(description, resourceResolver), expectedStates, expectedTransitions);
     }
 

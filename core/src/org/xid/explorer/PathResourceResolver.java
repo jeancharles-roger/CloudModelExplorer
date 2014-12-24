@@ -19,11 +19,31 @@ package org.xid.explorer;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
- * ResourceResolver provides methods to read and write files in context of a resource.
+ * Created by j5r on 24/12/2014.
  */
-public interface ResourceResolver {
-    InputStream readEntry(String path) throws IOException;
-    OutputStream writeEntry(String path) throws IOException;
+public class PathResourceResolver implements ResourceResolver {
+
+    private final Path root;
+
+    public PathResourceResolver(Path root) {
+        this.root = root;
+    }
+
+    public Path getRoot() {
+        return root;
+    }
+
+    @Override
+    public InputStream readEntry(String path) throws IOException {
+        return Files.newInputStream(root.resolve(path));
+    }
+
+    @Override
+    public OutputStream writeEntry(String path) throws IOException {
+        return Files.newOutputStream(root.resolve(path));
+    }
 }

@@ -21,7 +21,6 @@ import org.xid.explorer.dsl.DslInstanceDescription;
 import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class MixedTest {
@@ -48,7 +47,7 @@ public class MixedTest {
         luaInstance.getResources().add("test1.lua");
         description.getInstances().add(luaInstance);
 
-        ResourceResolver resourceResolver = path -> Files.newInputStream(Paths.get("resource/lua/test1/" + path));
+        ResourceResolver resourceResolver = new PathResourceResolver(Paths.get("resource/lua/test1/"));
         TestUtil.explore(ModelInstance.load(description, resourceResolver), 121, 231);
     }
 

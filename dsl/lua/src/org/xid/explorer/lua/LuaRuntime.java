@@ -47,7 +47,7 @@ public class LuaRuntime implements DslRuntime {
 
         StringBuilder script = new StringBuilder();
         for (String resource : description.getResources()) {
-            InputStream stream = resourceResolver.resolve(resource);
+            InputStream stream = resourceResolver.readEntry(resource);
             if (stream == null) throw new IOException("Can't find resource '"+ resource +"'");
             script.append(StreamUtil.collectStream(stream, Charset.forName(StandardCharsets.UTF_8.name())));
             script.append("\n");
