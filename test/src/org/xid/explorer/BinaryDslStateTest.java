@@ -17,6 +17,7 @@
 package org.xid.explorer;
 
 import org.junit.Test;
+import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslState;
 
 import static org.junit.Assert.assertEquals;
@@ -24,11 +25,11 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by j5r on 19/11/2014.
  */
-public class DslStateTest {
+public class BinaryDslStateTest {
 
     @Test
     public void testInt() {
-        DslState state = new DslState(4);
+        DslState state = new BinaryDslState(4);
         state.setInt(0, 0x0000ffff);
         assertEquals(0x0000ffff, state.getInt(0));
 
@@ -46,7 +47,7 @@ public class DslStateTest {
 
     @Test
     public void testPerformance() {
-        DslState state = new DslState(4);
+        DslState state = new BinaryDslState(4);
         for (int i=0; i<100_000_000; i++) {
             state.setInt(0, i);
             assertEquals(i, state.getInt(0));

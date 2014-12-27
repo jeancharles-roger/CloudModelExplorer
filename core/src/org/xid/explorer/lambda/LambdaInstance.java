@@ -17,6 +17,7 @@
 package org.xid.explorer.lambda;
 
 import org.xid.explorer.Mailboxes;
+import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
@@ -36,11 +37,12 @@ public class LambdaInstance implements DslInstance {
 
     @Override
     public DslState createInitialState() {
-        return new DslState(size);
+        return new BinaryDslState(size);
     }
 
     @Override
     public void next(DslState state, Mailboxes mailboxes) {
         transition.next(state, mailboxes);
     }
+
 }

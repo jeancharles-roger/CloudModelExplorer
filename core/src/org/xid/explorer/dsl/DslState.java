@@ -16,65 +16,23 @@
 
 package org.xid.explorer.dsl;
 
-import java.util.Arrays;
-
 /**
  * A DslState represents the state of a Dsl instance. It stores all the data needed to identify the state.
  */
-public class DslState {
-
-    private final char[] buffer;
-
-    public DslState(int size) {
-        buffer = new char[size];
-    }
-
-    public DslState(char[] buffer) {
-        this.buffer = buffer;
-    }
+public interface DslState {
 
     // ///////////////////////////////////////////////////
     // Low level access methods
     // ///////////////////////////////////////////////////
 
-    public int getInt(int index) {
-        return buffer[index] << 16 | (int) buffer[index + 1];
-    }
+    int getInt(int index);
 
-    public void setInt(int index, int value) {
-         buffer[index] = (char) (value >> 16);
-         buffer[index+1] = (char) value;
-    }
+    void setInt(int index, int value);
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    boolean equals(Object o);
 
-        DslState dslState = (DslState) o;
+    int hashCode();
 
-        if (!Arrays.equals(buffer, dslState.buffer)) return false;
+    DslState copy();
 
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return buffer != null ? Arrays.hashCode(buffer) : 0;
-    }
-
-    public DslState copy() {
-        return new DslState(buffer == null ? null : Arrays.copyOf(buffer, buffer.length));
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder text = new StringBuilder();
-        text.append("[");
-        for (int i = 0; i < buffer.length; i++) {
-            text.append((int) buffer[i]);
-        }
-        text.append("]");
-        return text.toString();
-    }
 }

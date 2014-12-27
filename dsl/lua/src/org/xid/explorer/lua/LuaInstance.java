@@ -20,6 +20,7 @@ import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.xid.explorer.Mailboxes;
+import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 
@@ -52,7 +53,7 @@ public class LuaInstance implements DslInstance {
 
     @Override
     public DslState createInitialState() {
-        return new DslState(stateSize);
+        return new BinaryDslState(stateSize);
     }
 
     @Override
