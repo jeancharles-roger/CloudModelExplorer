@@ -34,7 +34,7 @@ public class MixedTest {
         DslInstanceDescription lambdaInstance = new DslInstanceDescription();
         lambdaInstance.setDsl("explorer.lambda");
         lambdaInstance.setName("one");
-        lambdaInstance.setSize(2);
+        lambdaInstance.setSize(4);
         lambdaInstance.getParameters().put("class", "org.xid.explorer.LambdaTest");
         lambdaInstance.getParameters().put("field", "TRANSITION_TEST1_1");
         description.getInstances().add(lambdaInstance);
@@ -43,7 +43,7 @@ public class MixedTest {
         DslInstanceDescription luaInstance = new DslInstanceDescription();
         luaInstance.setDsl("explorer.lua");
         luaInstance.setName("two");
-        luaInstance.setSize(2);
+        luaInstance.setSize(4);
         luaInstance.getResources().add("test1.lua");
         description.getInstances().add(luaInstance);
 

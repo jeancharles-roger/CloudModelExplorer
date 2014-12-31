@@ -4,7 +4,7 @@
     {
       "dsl": "explorer.lambda",
       "name": "one",
-      "size": 2,
+      "size": 4,
       "parameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST0_1"

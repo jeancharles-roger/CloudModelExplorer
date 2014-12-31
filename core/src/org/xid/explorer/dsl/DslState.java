@@ -25,6 +25,9 @@ public interface DslState {
     // Low level access methods
     // ///////////////////////////////////////////////////
 
+    byte[] getBytes();
+    void setBytes(byte[] buffer);
+
     int getInt(int index);
 
     void setInt(int index, int value);

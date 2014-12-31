@@ -5,7 +5,7 @@
     {
       "dsl": "explorer.lambda",
       "name": "source",
-      "size": 2,
+      "size": 4,
       "parameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST3_1"
@@ -14,7 +14,7 @@
     {
       "dsl": "explorer.lua",
       "name": "target",
-      "size": 2,
+      "size": 4,
       "resources": ["target.lua"]
     }
   ]

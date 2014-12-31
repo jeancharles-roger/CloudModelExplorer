@@ -23,13 +23,14 @@ import java.util.Arrays;
  */
 public final class BinaryDslState implements DslState {
 
-    private final char[] buffer;
+    private byte[] buffer;
 
     public BinaryDslState(int size) {
-        buffer = new char[size];
+        buffer = new byte[size];
+        Arrays.fill(buffer, Byte.MIN_VALUE);
     }
 
-    public BinaryDslState(char[] buffer) {
+    public BinaryDslState(byte[] buffer) {
         this.buffer = buffer;
     }
 
@@ -37,14 +38,31 @@ public final class BinaryDslState implements DslState {
     // Low level access methods
     // ///////////////////////////////////////////////////
 
+
+    @Override
+    public byte[] getBytes() {
+        return buffer;
+    }
+
+    @Override
+    public void setBytes(byte[] buffer) {
+        this.buffer = buffer;
+    }
+
     @Override
     public int getInt(int index) {
-        return buffer[index] << 16 | (int) buffer[index + 1];
+        int one   = (buffer[index  ] - Byte.MIN_VALUE) << 24;
+        int two   = (buffer[index+1] - Byte.MIN_VALUE) << 16;
+        int three = (buffer[index+2] - Byte.MIN_VALUE) << 8;
+        int four  =  buffer[index+3] - Byte.MIN_VALUE;
+        return one | two | three | four;
     }
 
     public void setInt(int index, int value) {
-        buffer[index] = (char) (value >> 16);
-        buffer[index+1] = (char) value;
+        buffer[index]  =  (byte) ((value>>24) + Byte.MIN_VALUE);
+        buffer[index+1] = (byte) ((value>>16) + Byte.MIN_VALUE);
+        buffer[index+2] = (byte) ((value>> 8) + Byte.MIN_VALUE);
+        buffer[index+3] = (byte) ( value      + Byte.MIN_VALUE);
     }
 
     @Override
@@ -72,9 +90,17 @@ public final class BinaryDslState implements DslState {
     @Override
     public String toString() {
         StringBuilder text = new StringBuilder();
-        text.append("[");
+        text.append("State(");
+        text.append(buffer.length);
+        text.append(")[");
+        /*
         for (int i = 0; i < buffer.length; i++) {
-            text.append((int) buffer[i]);
+            text.append(Integer.toHexString((int) buffer[i]));
+        }
+        */
+        for (int i = 0; i < buffer.length / 4; i++) {
+            if (i>0) text.append(",");
+            text.append(getInt(i));
         }
         text.append("]");
         return text.toString();

@@ -5,13 +5,13 @@
     {
       "dsl": "explorer.lua",
       "name": "source",
-      "size": 2,
+      "size": 4,
       "resources": ["source.lua"]
     },
     {
       "dsl": "explorer.lua",
       "name": "target",
-      "size": 2,
+      "size": 4,
       "resources": ["target.lua"]
     }
   ]

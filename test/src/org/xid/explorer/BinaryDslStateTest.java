@@ -20,7 +20,7 @@ import org.junit.Test;
 import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslState;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by j5r on 19/11/2014.
@@ -29,30 +29,64 @@ public class BinaryDslStateTest {
 
     @Test
     public void testInt() {
-        DslState state = new BinaryDslState(4);
+        DslState state = new BinaryDslState(8);
         state.setInt(0, 0x0000ffff);
         assertEquals(0x0000ffff, state.getInt(0));
 
         state.setInt(0, 4);
         assertEquals(4, state.getInt(0));
 
-        state.setInt(2, -42);
+        state.setInt(4, -42);
         assertEquals(4, state.getInt(0));
-        assertEquals(-42, state.getInt(2));
+        assertEquals(-42, state.getInt(4));
 
-        state.setInt(2, Integer.MAX_VALUE);
+        state.setInt(4, Integer.MAX_VALUE);
         assertEquals(4, state.getInt(0));
-        assertEquals(Integer.MAX_VALUE, state.getInt(2));
+        assertEquals(Integer.MAX_VALUE, state.getInt(4));
     }
 
     @Test
-    public void testPerformance() {
+    public void testIntToMax() {
         DslState state = new BinaryDslState(4);
+        int step = Integer.MAX_VALUE / 10000;
+        for (long i = 0; i < Integer.MAX_VALUE; i+= step) {
+            state.setInt(0, (int) i);
+            assertEquals(i, state.getInt(0));
+        }
+
+    }
+
+
+    @Test
+    public void testEquals() {
+        DslState state1 = new BinaryDslState(4);
+        DslState state2 = new BinaryDslState(4);
+
+        assertTrue(state1.equals(state1));
+        assertTrue(state1.equals(state2));
+        assertTrue(state2.equals(state1));
+        assertEquals(state1.hashCode(), state2.hashCode());
+
+        state1.setInt(0, 1234567890);
+        assertFalse(state1.equals(state2));
+        assertFalse(state2.equals(state1));
+        assertNotEquals(state1.hashCode(), state2.hashCode());
+
+        state2.setInt(0, 1234567890);
+        assertTrue(state1.equals(state2));
+        assertTrue(state2.equals(state1));
+        assertEquals(state1.hashCode(), state2.hashCode());
+    }
+
+
+    @Test
+    public void testPerformance() {
+        DslState state = new BinaryDslState(8);
         for (int i=0; i<100_000_000; i++) {
             state.setInt(0, i);
             assertEquals(i, state.getInt(0));
-            state.setInt(2, Integer.MAX_VALUE - i);
-            assertEquals(Integer.MAX_VALUE - i, state.getInt(2));
+            state.setInt(4, Integer.MAX_VALUE - i);
+            assertEquals(Integer.MAX_VALUE - i, state.getInt(4));
         }
     }
 }
