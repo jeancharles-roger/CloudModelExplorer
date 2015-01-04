@@ -26,11 +26,14 @@ import org.xid.explorer.dsl.DslState;
  */
 public class LambdaInstance implements DslInstance {
 
+    private final String name;
+
     private final int size;
 
     private final LambdaTransition transition;
 
-    public LambdaInstance(int size, LambdaTransition transition) {
+    public LambdaInstance(String name, int size, LambdaTransition transition) {
+        this.name = name;
         this.size = size;
         this.transition = transition;
     }
@@ -38,6 +41,11 @@ public class LambdaInstance implements DslInstance {
     @Override
     public DslState createInitialState() {
         return new BinaryDslState(size);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

@@ -31,6 +31,7 @@ import java.io.IOException;
  */
 public class LuaInstance implements DslInstance {
 
+    private final String name;
 
     private final int stateSize;
 
@@ -38,7 +39,8 @@ public class LuaInstance implements DslInstance {
 
     private final LuaValue function;
 
-    public LuaInstance(int stateSize, String script, Globals lua) throws IOException {
+    public LuaInstance(String name, int stateSize, String script, Globals lua) throws IOException {
+        this.name = name;
         this.stateSize = stateSize;
         this.script = script;
 
@@ -54,6 +56,11 @@ public class LuaInstance implements DslInstance {
     @Override
     public DslState createInitialState() {
         return new BinaryDslState(stateSize);
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

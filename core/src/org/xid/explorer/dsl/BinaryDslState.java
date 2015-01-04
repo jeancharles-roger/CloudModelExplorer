@@ -105,4 +105,20 @@ public final class BinaryDslState implements DslState {
         text.append("]");
         return text.toString();
     }
+
+    @Override
+    public void printOn(DslInstance instance, StringBuilder result) {
+        result.append(instance.getName());
+        result.append("[");
+        /*
+        for (int i = 0; i < buffer.length; i++) {
+            result.append(Integer.toHexString((int) buffer[i]));
+        }
+        */
+        for (int i = 0; i < buffer.length / 4; i++) {
+            if (i>0) result.append(",");
+            result.append(Integer.toHexString(getInt(i)));
+        }
+        result.append("]");
+    }
 }

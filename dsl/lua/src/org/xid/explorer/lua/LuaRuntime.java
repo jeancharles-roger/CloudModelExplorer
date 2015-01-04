@@ -52,6 +52,6 @@ public class LuaRuntime implements DslRuntime {
             script.append(StreamUtil.collectStream(stream, Charset.forName(StandardCharsets.UTF_8.name())));
             script.append("\n");
         }
-        return new LuaInstance(description.getSize(), script.toString(), lua);
+        return new LuaInstance(description.getName(), description.getSize(), script.toString(), lua);
     }
 }

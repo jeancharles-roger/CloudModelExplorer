@@ -44,7 +44,7 @@ public class LambdaRuntime implements DslRuntime {
 
         String fieldName = description.getParameters().get("field");
         LambdaTransition transition = findTransition(className, fieldName, loader);
-        return new LambdaInstance(description.getSize(), transition);
+        return new LambdaInstance(description.getName(), description.getSize(), transition);
     }
 
     private LambdaTransition findTransition(String className, String fieldName, ClassLoader loader) throws Exception {

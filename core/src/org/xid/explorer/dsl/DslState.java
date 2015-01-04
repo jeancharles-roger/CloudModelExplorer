@@ -38,4 +38,6 @@ public interface DslState {
 
     DslState copy();
 
+    void printOn(DslInstance instance, StringBuilder result);
+
 }

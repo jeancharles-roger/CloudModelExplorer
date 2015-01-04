@@ -31,6 +31,11 @@ public interface DslInstance {
     DslState createInitialState();
 
     /**
+     * @return the name of the instance.
+     */
+    String getName();
+
+    /**
      * Computes next state for instance.
      * @param state a copy of the source state. It's maybe changed by next to create a new state. If no change is made
      *              the explore will consider that the instance has nothing to do.

@@ -16,6 +16,7 @@
 
 package org.xid.explorer.result;
 
+import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.model.ModelTransition;
 
@@ -26,11 +27,14 @@ import java.io.PrintWriter;
  */
 public class ModelExplorationDotPrinter implements ModelExplorationHandler {
 
+    private final ModelInstance modelInstance;
+
     private final PrintWriter writer;
 
     private final boolean detailed;
 
-    public ModelExplorationDotPrinter(PrintWriter writer, boolean detailed) {
+    public ModelExplorationDotPrinter(ModelInstance modelInstance, PrintWriter writer, boolean detailed) {
+        this.modelInstance = modelInstance;
         this.writer = writer;
         this.detailed = detailed;
     }
@@ -46,7 +50,9 @@ public class ModelExplorationDotPrinter implements ModelExplorationHandler {
         writer.print(state.getId());
 
         if (detailed) {
-            String label = state.toString().replaceAll("\n", "\\\\n");
+            StringBuilder stateText = new StringBuilder();
+            state.printOn(modelInstance, stateText);
+            String label = stateText.toString().replaceAll("\n", "\\\\n");
             writer.print(" [label=\"" + label + "\"]");
         }
 

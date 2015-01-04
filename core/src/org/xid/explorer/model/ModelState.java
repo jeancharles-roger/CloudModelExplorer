@@ -102,4 +102,20 @@ public final class ModelState {
         text.append(mailboxes);
         return text.toString();
     }
+
+    public void printOn(ModelInstance instance, StringBuilder text) {
+        text.append(id);
+        text.append("\n");
+        text.append("[Instances]\n");
+        for (int i = 0; i < states.length; i++) {
+            DslState state = states[i];
+            text.append("- ");
+            text.append(i);
+            text.append(":");
+           state.printOn(instance.getInstances()[i], text);
+            text.append("\n");
+        }
+        text.append("[Mailboxes]\n");
+        text.append(mailboxes);
+    }
 }

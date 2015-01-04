@@ -35,8 +35,9 @@ public class TestUtil {
     public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
         ResourceResolver resourceResolver = new PathResourceResolver(Paths.get(modelPath));
         ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
-        ModelExplorationHandler resultHandler = new ModelExplorationDotPrinter(new PrintWriter(resourceResolver.writeEntry("exploration.dot")), true);
-        explore(ModelInstance.load(description, resourceResolver), resultHandler, expectedStates, expectedTransitions);
+        ModelInstance modelInstance = ModelInstance.load(description, resourceResolver);
+        ModelExplorationHandler resultHandler = new ModelExplorationDotPrinter(modelInstance, new PrintWriter(resourceResolver.writeEntry("exploration.dot")), true);
+        explore(modelInstance, resultHandler, expectedStates, expectedTransitions);
     }
 
     public static void explore(ModelInstance model, ModelExplorationHandler resultHandler, int expectedStates, int expectedTransitions) {
