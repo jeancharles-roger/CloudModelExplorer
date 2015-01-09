@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 to CloudModelExplorer
+ * Copyright 2015 to CloudModelExplorer authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,23 +16,20 @@
 
 package org.xid.explorer.dsl;
 
+import org.xid.explorer.Mailboxes;
+
 /**
- * A DslInstance represents a behavior, it's a transition function from a source DslState to a target one.
- * All DslInstance act independently from the others.
+ * Created by j5r on 08/01/2015.
  */
-public interface DslInstance {
+@FunctionalInterface
+public interface DslTransition {
 
     /**
-     * Creates the initial state for the instance.
-     * @return a new DslState considered as the initial instance state.
+     * Computes next state for instance.
+     * @param state a copy of the source state. It's maybe changed by next to create a new state. If no change is made
+     *              the explore will consider that the instance has nothing to do.
+     * @param mailboxes contents of all mailboxes.
      */
-    DslState createInitialState();
-
-    /**
-     * @return the name of the instance.
-     */
-    String getName();
-
-    DslTransition[] getTransitions();
+    void next(DslState state, Mailboxes mailboxes);
 
 }

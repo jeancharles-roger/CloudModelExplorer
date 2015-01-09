@@ -20,6 +20,7 @@ import org.xid.explorer.ResourceResolver;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslInstanceDescription;
 import org.xid.explorer.dsl.DslRuntime;
+import org.xid.explorer.dsl.DslTransition;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -43,12 +44,12 @@ public class LambdaRuntime implements DslRuntime {
         if (className == null) throw new Exception("No class parameter provided.");
 
         String fieldName = description.getParameters().get("field");
-        LambdaTransition transition = findTransition(className, fieldName, loader);
+        DslTransition transition = findTransition(className, fieldName, loader);
         return new LambdaInstance(description.getName(), description.getSize(), transition);
     }
 
-    private LambdaTransition findTransition(String className, String fieldName, ClassLoader loader) throws Exception {
-        Class<LambdaTransition> transitionClass = LambdaTransition.class;
+    private DslTransition findTransition(String className, String fieldName, ClassLoader loader) throws Exception {
+        Class<DslTransition> transitionClass = DslTransition.class;
         Class<?> clazz = loader.loadClass(className);
         if (fieldName != null) {
             // searches an instantiated static field
@@ -57,7 +58,7 @@ public class LambdaRuntime implements DslRuntime {
             field.setAccessible(true);
             //  checks if field is static (already instantiated)
             if (Modifier.isStatic(field.getModifiers()) == false) throw new Exception("Field '" + className + ":" + fieldName +"' isn't static.");
-            //  checks if field type is LambdaTransition
+            //  checks if field type is DslTransition
             if (transitionClass.isAssignableFrom(field.getType()) == false) throw new Exception("Field '" + className + ":" + fieldName +"' isn't of type "+ transitionClass.getName() +".");
             return transitionClass.cast(field.get(null));
 

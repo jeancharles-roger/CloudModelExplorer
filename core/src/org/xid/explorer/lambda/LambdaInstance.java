@@ -16,10 +16,10 @@
 
 package org.xid.explorer.lambda;
 
-import org.xid.explorer.Mailboxes;
 import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.dsl.DslTransition;
 
 /**
  * LambdaInstance is a DslInstance that embeds a Java lambda as a next function.
@@ -30,9 +30,9 @@ public class LambdaInstance implements DslInstance {
 
     private final int size;
 
-    private final LambdaTransition transition;
+    private final DslTransition transition;
 
-    public LambdaInstance(String name, int size, LambdaTransition transition) {
+    public LambdaInstance(String name, int size, DslTransition transition) {
         this.name = name;
         this.size = size;
         this.transition = transition;
@@ -49,8 +49,9 @@ public class LambdaInstance implements DslInstance {
     }
 
     @Override
-    public void next(DslState state, Mailboxes mailboxes) {
-        transition.next(state, mailboxes);
+    public DslTransition[] getTransitions() {
+        return new DslTransition[] {
+                (state, mailboxes) -> transition.next(state, mailboxes)
+        };
     }
-
 }

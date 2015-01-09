@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 to CloudModelExplorer
+ * Copyright 2015 to CloudModelExplorer authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package org.xid.explorer.dsl;
+package org.xid.explorer.context;
+
+import org.xid.explorer.dsl.DslInstanceDescription;
 
 /**
- * A DslInstance represents a behavior, it's a transition function from a source DslState to a target one.
- * All DslInstance act independently from the others.
- */
-public interface DslInstance {
-
-    /**
-     * Creates the initial state for the instance.
-     * @return a new DslState considered as the initial instance state.
-     */
-    DslState createInitialState();
-
-    /**
-     * @return the name of the instance.
-     */
-    String getName();
-
-    DslTransition[] getTransitions();
+* DslInstanceDescription contains information to create a DslInstance.
+*/
+public class EnvironmentInstanceDescription extends DslInstanceDescription {
 
 }

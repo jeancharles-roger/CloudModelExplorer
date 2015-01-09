@@ -19,10 +19,10 @@ package org.xid.explorer.lua;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
-import org.xid.explorer.Mailboxes;
 import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.dsl.DslTransition;
 
 import java.io.IOException;
 
@@ -64,7 +64,9 @@ public class LuaInstance implements DslInstance {
     }
 
     @Override
-    public void next(DslState state, Mailboxes mailboxes) {
-        function.call(CoerceJavaToLua.coerce(state), CoerceJavaToLua.coerce(mailboxes));
+    public DslTransition[] getTransitions() {
+        return new DslTransition[] {
+                (state, mailboxes) -> function.call(CoerceJavaToLua.coerce(state), CoerceJavaToLua.coerce(mailboxes))
+        };
     }
 }

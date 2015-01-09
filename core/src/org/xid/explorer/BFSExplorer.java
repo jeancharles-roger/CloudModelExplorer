@@ -18,6 +18,7 @@ package org.xid.explorer;
 
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.dsl.DslTransition;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.result.ModelExplorationHandler;
@@ -43,23 +44,36 @@ public class BFSExplorer extends AbstractExplorer {
     @Override
     protected void exploreFrom(ModelState initialState) {
 
+        // find
+        DslInstance[] instances = modelInstance.getInstances();
+        DslTransition[][] transitions = new DslTransition[instances.length][];
+        for (int i = 0; i < instances.length; i++) {
+            transitions[i] = instances[i].getTransitions();
+        }
+
         while (toSee.size() > 0) {
             ModelState toExplore = toSee.remove(0);
 
-            DslInstance[] instances = modelInstance.getInstances();
             Mailboxes mailboxes = toExplore.getMailboxes();
 
             for (int i = 0; i < instances.length; i++) {
                 DslState dslSource = toExplore.getState(i);
                 DslState dslTarget = dslSource.copy();
-
-                // computes next
                 Mailboxes mailboxesCopy = mailboxes.copy();
-                instances[i].next(dslTarget, mailboxesCopy);
-                if (dslTarget.equals(dslSource) == false || mailboxesCopy.equals(mailboxes) == false) {
-                    // transition changed state, checks if a new model state has been found
-                    ModelState target = registerState(toExplore.copy(i, dslTarget, mailboxesCopy));
-                    registerTransition(toExplore, target);
+
+                boolean copy = true;
+                for (int j = 0; j < transitions[i].length; j++) {
+                    copy = false;
+
+                    // computes next
+                    transitions[i][j].next(dslTarget, mailboxesCopy);
+                    if (dslTarget.equals(dslSource) == false || mailboxesCopy.equals(mailboxes) == false) {
+                        // transition changed state, checks if a new model state has been found
+                        ModelState target = registerState(toExplore.copy(i, dslTarget, mailboxesCopy));
+                        registerTransition(toExplore, target);
+
+                        copy = true;
+                    }
                 }
             }
         }

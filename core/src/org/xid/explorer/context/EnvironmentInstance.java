@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package org.xid.explorer.lambda;
+package org.xid.explorer.context;
 
-import org.xid.explorer.Mailboxes;
-import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.dsl.DslInstance;
 
 /**
- * Prototype for next method for LambdaInstance
+ * Created by j5r on 08/01/2015.
  */
-@FunctionalInterface
-public interface LambdaTransition {
-    void next(DslState state, Mailboxes mailboxes);
+public interface EnvironmentInstance extends DslInstance {
+
 }
