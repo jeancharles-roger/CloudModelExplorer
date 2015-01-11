@@ -21,13 +21,13 @@ import org.xid.explorer.dsl.DslTransition;
 
 public class LambdaTest {
 
-    public static final DslTransition TRANSITION_TEST0_1 = (state, mailboxes) -> {
+    public static final DslTransition TRANSITION_TEST0_1 = (context, state, mailboxes) -> {
         int count = state.getInt(0);
         int newCount = count < 2 ? count + 1 : 0;
         state.setInt(0, newCount);
     };
 
-    public static final DslTransition TRANSITION_TEST1_1 = (state, mailboxes) -> {
+    public static final DslTransition TRANSITION_TEST1_1 = (context, state, mailboxes) -> {
         int count = state.getInt(0);
         int newCount = count < 10 ? count + 1 : 0;
         state.setInt(0, newCount);
@@ -37,13 +37,13 @@ public class LambdaTest {
         return count < max ? count + 1 : 0;
     }
 
-    public static final DslTransition TRANSITION_TEST2_1 = (state, mailboxes) -> {
+    public static final DslTransition TRANSITION_TEST2_1 = (context, state, mailboxes) -> {
         int count = state.getInt(0);
         int newCount = countMethod(count, 10);
         state.setInt(0, newCount);
     };
 
-    public static final DslTransition TRANSITION_TEST3_1 = (state, mailboxes) -> {
+    public static final DslTransition TRANSITION_TEST3_1 = (context, state, mailboxes) -> {
         if (mailboxes.getMailboxesCount() == 0) {
             int index = mailboxes.createMailbox();
             mailboxes.addLast(index, "start");
@@ -55,7 +55,7 @@ public class LambdaTest {
         }
     };
 
-    public static final DslTransition TRANSITION_TEST3_2 = (state, mailboxes) -> {
+    public static final DslTransition TRANSITION_TEST3_2 = (context, state, mailboxes) -> {
         int count = state.getInt(0);
         if (count == 0) {
             if (mailboxes.getMailboxesCount() > 0) {

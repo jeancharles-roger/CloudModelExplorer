@@ -51,7 +51,7 @@ public class LambdaInstance implements DslInstance {
     @Override
     public DslTransition[] getTransitions() {
         return new DslTransition[] {
-                (state, mailboxes) -> transition.next(state, mailboxes)
+                (context, state, mailboxes) -> transition.next(context, state, mailboxes)
         };
     }
 }

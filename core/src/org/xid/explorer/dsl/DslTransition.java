@@ -16,6 +16,7 @@
 
 package org.xid.explorer.dsl;
 
+import org.xid.explorer.ExplorationContext;
 import org.xid.explorer.Mailboxes;
 
 /**
@@ -26,10 +27,11 @@ public interface DslTransition {
 
     /**
      * Computes next state for instance.
+     * @param context
      * @param state a copy of the source state. It's maybe changed by next to create a new state. If no change is made
      *              the explore will consider that the instance has nothing to do.
      * @param mailboxes contents of all mailboxes.
      */
-    void next(DslState state, Mailboxes mailboxes);
+    void next(ExplorationContext context, DslState state, Mailboxes mailboxes);
 
 }

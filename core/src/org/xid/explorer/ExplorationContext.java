@@ -16,14 +16,20 @@
 
 package org.xid.explorer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.xid.explorer.dsl.DslInstanceDescription;
+import org.xid.explorer.model.ModelInstance;
 
 /**
- * ResourceResolver provides methods to read and write files in environment of a resource.
+ * ExplorationContext stores information for a running exploration
  */
-public interface ResourceResolver {
-    InputStream readEntry(String path) throws IOException;
-    OutputStream writeEntry(String path) throws IOException;
+public interface ExplorationContext {
+
+    ModelInstance getModelInstance();
+
+
+    // TODO Handle instances description
+    DslInstanceDescription getInstanceDescription(int id);
+
+    // TODO Handle mailboxes names
+
 }

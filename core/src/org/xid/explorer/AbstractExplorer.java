@@ -17,6 +17,7 @@
 package org.xid.explorer;
 
 import org.xid.explorer.dsl.DslInstance;
+import org.xid.explorer.dsl.DslInstanceDescription;
 import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
@@ -30,7 +31,7 @@ import java.util.Map;
 /**
  * Created by j5r on 19/11/2014.
  */
-public abstract class AbstractExplorer {
+public abstract class AbstractExplorer implements ExplorationContext {
 
     protected final ModelInstance modelInstance;
 
@@ -47,6 +48,18 @@ public abstract class AbstractExplorer {
     public AbstractExplorer(ModelInstance modelInstance, ModelExplorationHandler explorationHandler) {
         this.modelInstance = modelInstance;
         this.explorationHandler = explorationHandler == null ? ModelExplorationHandler.EMPTY : explorationHandler;
+    }
+
+    @Override
+    public final ModelInstance getModelInstance() {
+        return modelInstance;
+    }
+
+    @Override
+    public final DslInstanceDescription getInstanceDescription(int id) {
+        // TODO handle wrong id
+        // TODO handle newly created instances
+        return modelInstance.getDescription().getInstances().get(id);
     }
 
     public ModelExploration explore() {

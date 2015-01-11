@@ -66,7 +66,7 @@ public class LuaInstance implements DslInstance {
     @Override
     public DslTransition[] getTransitions() {
         return new DslTransition[] {
-                (state, mailboxes) -> function.call(CoerceJavaToLua.coerce(state), CoerceJavaToLua.coerce(mailboxes))
+                (context, state, mailboxes) -> function.call(CoerceJavaToLua.coerce(state), CoerceJavaToLua.coerce(mailboxes))
         };
     }
 }
