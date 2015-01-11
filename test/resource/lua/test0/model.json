@@ -1,5 +1,5 @@
 {
-  "name": "LuaTest.test1",
+  "name": "LuaTest.test0",
   "instances": [
     {
       "dsl": "explorer.lua",

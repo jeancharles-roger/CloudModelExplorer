@@ -1,5 +1,5 @@
 {
-  "name": "LuaTest.test1",
+  "name": "LambdaTest.test1",
   "instances": [
     {
       "dsl": "explorer.lambda",
@@ -12,7 +12,7 @@
     },
     {
       "dsl": "explorer.lambda",
-      "name": "one",
+      "name": "two",
       "size": 4,
       "parameters": {
         "class": "org.xid.explorer.LambdaTest",
@@ -21,7 +21,7 @@
     },
     {
       "dsl": "explorer.lambda",
-      "name": "one",
+      "name": "three",
       "size": 4,
       "parameters": {
         "class": "org.xid.explorer.LambdaTest",

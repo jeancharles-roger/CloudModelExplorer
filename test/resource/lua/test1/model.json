@@ -9,13 +9,13 @@
     },
     {
       "dsl": "explorer.lua",
-      "name": "one",
+      "name": "two",
       "size": 4,
       "resources": ["test1.lua"]
     },
     {
       "dsl": "explorer.lua",
-      "name": "one",
+      "name": "three",
       "size": 4,
       "resources": ["test1.lua"]
     }
