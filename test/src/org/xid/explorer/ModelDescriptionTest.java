@@ -63,6 +63,28 @@ public class ModelDescriptionTest {
         long start = System.currentTimeMillis();
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < m; i++) {
+                int id = description.getInstanceId("instance" + i);
+                Assert.assertEquals(i, id);
+                count += 1;
+            }
+        }
+        long end = System.currentTimeMillis();
+
+        System.out.println("Instance id from name " + count + " times in " + (end-start) + " ms.");
+    }
+
+    @Test
+    public void testGetParameter() {
+        final int m = 10;
+        int n = 100_000;
+
+        ModelDescription description = new ModelDescription();
+        description.setInstances(createInstanceDescriptionList(m));
+
+        int count = 0;
+        long start = System.currentTimeMillis();
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < m; i++) {
                 for (int j = 0; j < i * 5; j++) {
                     int value = description.getParameterValue("instance"+ i, "p"+j, Integer.class, -1);
                     Assert.assertEquals(j, value);
@@ -72,6 +94,6 @@ public class ModelDescriptionTest {
         }
         long end = System.currentTimeMillis();
 
-        System.out.println("Get integer parameter value " + count + " in " + (end-start) + " ms.");
+        System.out.println("Get integer parameter value " + count + " times in " + (end-start) + " ms.");
     }
 }
