@@ -24,6 +24,7 @@ import org.xid.explorer.dsl.DslTransition;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 /**
  * LambdaRuntime is the runtime for Lambda Dsl.
@@ -40,10 +41,11 @@ public class LambdaRuntime implements DslRuntime {
         ClassLoader loader = LambdaRuntime.class.getClassLoader();
         // TODO checks for classpath add-on with a new ClassLoader
 
-        String className = description.getParameters().get("class");
+        final Map<String, String> dslParameters = description.getDslParameters();
+        String className = dslParameters.get("class");
         if (className == null) throw new Exception("No class parameter provided.");
 
-        String fieldName = description.getParameters().get("field");
+        String fieldName = dslParameters.get("field");
         DslTransition transition = findTransition(className, fieldName, loader);
         return new LambdaInstance(description.getName(), description.getSize(), transition);
     }

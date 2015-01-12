@@ -81,12 +81,18 @@ public class BinaryDslStateTest {
 
     @Test
     public void testPerformance() {
+        final int n = 100_000_000;
+
+        long start = System.currentTimeMillis();
         DslState state = new BinaryDslState(8);
-        for (int i=0; i<100_000_000; i++) {
+        for (int i=0; i< n; i++) {
             state.setInt(0, i);
             assertEquals(i, state.getInt(0));
             state.setInt(4, Integer.MAX_VALUE - i);
             assertEquals(Integer.MAX_VALUE - i, state.getInt(4));
         }
+        long end = System.currentTimeMillis();
+
+        System.out.println("Get and set " + n + " integers in " + (end-start) + " ms.");
     }
 }

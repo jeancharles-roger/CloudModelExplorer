@@ -6,7 +6,7 @@
       "dsl": "explorer.lambda",
       "name": "source",
       "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST3_1"
       }

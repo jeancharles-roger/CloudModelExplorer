@@ -23,7 +23,10 @@ import org.xid.explorer.dsl.DslInstanceDescription;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ModelDescription stores descriptive information about a model. It contains all needed information to create a
@@ -35,11 +38,9 @@ public class ModelDescription {
 
     private List<DslInstanceDescription> instances = new ArrayList<>();
 
-    public ModelDescription() {
-    }
+    private transient Map<String, Integer> instanceNameToId = Collections.emptyMap();
 
-    public ModelDescription(String name) {
-        this.name = name;
+    public ModelDescription() {
     }
 
     public String getName() {
@@ -51,13 +52,46 @@ public class ModelDescription {
     }
 
     public List<DslInstanceDescription> getInstances() {
-        return instances;
+        return Collections.unmodifiableList(instances);
     }
 
     public void setInstances(List<DslInstanceDescription> instances) {
         this.instances = instances;
+
+        // stores id for each instance name
+        instanceNameToId = new HashMap<>(instances != null ? instances.size() : 0);
+        if (instances != null) {
+            for (int i = 0; i < instances.size(); i++) {
+                instanceNameToId.put(instances.get(i).getName(), i);
+            }
+        }
     }
 
+    public int getInstanceId(String name) {
+        Integer id = instanceNameToId.get(name);
+        return id != null ? id : -1;
+    }
+
+    public final DslInstanceDescription getInstanceDescription(int id) {
+        // TODO handle newly created instances
+        if (id < 0 || id > instances.size()) return null;
+        return instances.get(id);
+    }
+
+
+    public final <T> T getParameterValue(String instance, String name, Class<T> type, T defaultValue) {
+        if (instance == null || name == null) return defaultValue;
+        int id = getInstanceId(instance);
+        if (id < 0) return null;
+
+        DslInstanceDescription description = getInstanceDescription(id);
+        if (description == null) return null;
+
+        Object value = description.getInstanceParameter(name);
+        if (value == null) return defaultValue;
+        if (type.isInstance(value) == false) return defaultValue;
+        return type.cast(value);
+    }
 
     public static ModelDescription loadDescription(InputStream stream) throws IOException {
         try {

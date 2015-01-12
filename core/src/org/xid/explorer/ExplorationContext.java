@@ -16,7 +16,7 @@
 
 package org.xid.explorer;
 
-import org.xid.explorer.dsl.DslInstanceDescription;
+import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 
 /**
@@ -26,10 +26,10 @@ public interface ExplorationContext {
 
     ModelInstance getModelInstance();
 
-
-    // TODO Handle instances description
-    DslInstanceDescription getInstanceDescription(int id);
-
     // TODO Handle mailboxes names
 
+
+    default ModelDescription getModelDescription() {
+        return getModelInstance().getDescription();
+    }
 }

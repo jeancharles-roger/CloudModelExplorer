@@ -5,7 +5,7 @@
       "dsl": "explorer.lambda",
       "name": "source",
       "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST3_1"
       }
@@ -14,7 +14,7 @@
       "dsl": "explorer.lambda",
       "name": "target",
       "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST3_2"
       }

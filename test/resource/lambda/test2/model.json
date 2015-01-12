@@ -5,7 +5,7 @@
       "dsl": "explorer.lambda",
       "name": "one",
       "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST2_1"
       }
@@ -14,7 +14,7 @@
       "dsl": "explorer.lambda",
       "name": "two",
       "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST2_1"
       }
@@ -23,7 +23,7 @@
       "dsl": "explorer.lambda",
       "name": "three",
       "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST2_1"
       }

@@ -3,11 +3,15 @@
   "instances": [
     {
       "dsl": "explorer.lambda",
-      "name": "one",
-      "size": 4,
-      "parameters": {
+      "dslParameters": {
         "class": "org.xid.explorer.LambdaTest",
         "field": "TRANSITION_TEST0_1"
+      },
+
+      "name": "one",
+      "size": 4,
+      "instanceParameters": {
+        "n": 2
       }
     }
   ]

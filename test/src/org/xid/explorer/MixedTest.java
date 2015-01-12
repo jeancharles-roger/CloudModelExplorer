@@ -22,6 +22,8 @@ import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MixedTest {
 
@@ -29,23 +31,25 @@ public class MixedTest {
     public void test1() throws Exception {
         // creates description by API for test.
         ModelDescription description = new ModelDescription();
+        List<DslInstanceDescription> instances = new ArrayList<>();
         description.setName("MixedTest.test1");
 
         DslInstanceDescription lambdaInstance = new DslInstanceDescription();
         lambdaInstance.setDsl("explorer.lambda");
         lambdaInstance.setName("one");
         lambdaInstance.setSize(4);
-        lambdaInstance.getParameters().put("class", "org.xid.explorer.LambdaTest");
-        lambdaInstance.getParameters().put("field", "TRANSITION_TEST1_1");
-        description.getInstances().add(lambdaInstance);
+        lambdaInstance.getDslParameters().put("class", "org.xid.explorer.LambdaTest");
+        lambdaInstance.getDslParameters().put("field", "TRANSITION_TEST1_1");
+        instances.add(lambdaInstance);
 
+        description.setInstances(instances);
 
         DslInstanceDescription luaInstance = new DslInstanceDescription();
         luaInstance.setDsl("explorer.lua");
         luaInstance.setName("two");
         luaInstance.setSize(4);
         luaInstance.getResources().add("test1.lua");
-        description.getInstances().add(luaInstance);
+        instances.add(luaInstance);
 
         ResourceResolver resourceResolver = new PathResourceResolver(Paths.get("resource/lua/test1/"));
         TestUtil.explore(ModelInstance.load(description, resourceResolver), null, 121, 231);

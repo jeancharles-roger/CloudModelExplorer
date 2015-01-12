@@ -27,12 +27,16 @@ import java.util.Map;
 public class DslInstanceDescription {
 
     private String dsl;
+
     private String name;
+
     private int size;
 
     private List<String> resources = new ArrayList<>();
 
-    private Map<String, String> parameters = new HashMap<>();
+    private Map<String, String> dslParameters = new HashMap<>();
+
+    private Map<String, Object> instanceParameters;
 
     public String getDsl() {
         return dsl;
@@ -66,11 +70,23 @@ public class DslInstanceDescription {
         this.resources = resources;
     }
 
-    public Map<String, String> getParameters() {
-        return parameters;
+    public Map<String, String> getDslParameters() {
+        return dslParameters;
     }
 
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
+    public void setDslParameters(Map<String, String> dslParameters) {
+        this.dslParameters = dslParameters;
+    }
+
+    public Map<String, Object> getInstanceParameters() {
+        return instanceParameters;
+    }
+
+    public void setInstanceParameters(Map<String, Object> instanceParameters) {
+        this.instanceParameters = instanceParameters;
+    }
+
+    public Object getInstanceParameter(String name) {
+        return instanceParameters.get(name);
     }
 }

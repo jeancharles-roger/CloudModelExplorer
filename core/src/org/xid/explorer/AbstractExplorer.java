@@ -17,7 +17,6 @@
 package org.xid.explorer;
 
 import org.xid.explorer.dsl.DslInstance;
-import org.xid.explorer.dsl.DslInstanceDescription;
 import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
@@ -55,12 +54,7 @@ public abstract class AbstractExplorer implements ExplorationContext {
         return modelInstance;
     }
 
-    @Override
-    public final DslInstanceDescription getInstanceDescription(int id) {
-        // TODO handle wrong id
-        // TODO handle newly created instances
-        return modelInstance.getDescription().getInstances().get(id);
-    }
+
 
     public ModelExploration explore() {
         long start = System.currentTimeMillis();
