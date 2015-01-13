@@ -63,12 +63,10 @@ public final class ModelInstance {
             runtimes.put(runtime.getId(), runtime);
         }
 
-
         List<DslInstanceDescription> instanceDescriptions = description.getInstances();
         if (instanceDescriptions == null || instanceDescriptions.isEmpty()) {
             throw new Exception("No instance declared for model.");
         }
-
 
         DslInstance[] dslInstances = new DslInstance[instanceDescriptions.size()];
         // creates a DslInstance for each DslInstanceDescription

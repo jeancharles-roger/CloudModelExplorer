@@ -18,6 +18,7 @@ package org.xid.explorer;
 
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
+import org.xid.explorer.model.MailboxDescription;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.result.ModelExploration;
@@ -25,6 +26,7 @@ import org.xid.explorer.result.ModelExploration.CompletionStatus;
 import org.xid.explorer.result.ModelExplorationHandler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -75,12 +77,21 @@ public abstract class AbstractExplorer implements ExplorationContext {
     protected abstract void exploreFrom(ModelState initialState);
 
     protected ModelState createInitialState() {
+        // creates DslState for each instance
         DslInstance[] instances = modelInstance.getInstances();
         DslState[] dslStates = new DslState[instances.length];
         for (int i = 0; i < instances.length; i++) {
             dslStates[i] = instances[i].createInitialState();
         }
-        return new ModelState(dslStates, null);
+
+        // initializes mailboxes
+        Mailboxes mailboxes = null;
+        List<MailboxDescription> mailboxDescriptions = modelInstance.getDescription().getMailboxes();
+        if (mailboxDescriptions.size() > 0) {
+            mailboxes = new Mailboxes(new String[mailboxDescriptions.size()][]);
+        }
+
+        return new ModelState(dslStates, mailboxes);
     }
 
     protected void registerTransition(ModelState source, ModelState target) {

@@ -38,7 +38,11 @@ public class ModelDescription {
 
     private List<DslInstanceDescription> instances = new ArrayList<>();
 
-    private transient Map<String, Integer> instanceNameToId = Collections.emptyMap();
+    private List<MailboxDescription> mailboxes = new ArrayList<>();
+
+    private transient Map<String, Integer> instanceToId = Collections.emptyMap();
+
+    private transient Map<String, Integer> mailboxToId = Collections.emptyMap();
 
     public ModelDescription() {
     }
@@ -59,16 +63,16 @@ public class ModelDescription {
         this.instances = instances;
 
         // stores id for each instance name
-        instanceNameToId = new HashMap<>(instances != null ? instances.size() : 0);
+        instanceToId = new HashMap<>(instances != null ? instances.size() : 0);
         if (instances != null) {
             for (int i = 0; i < instances.size(); i++) {
-                instanceNameToId.put(instances.get(i).getName(), i);
+                instanceToId.put(instances.get(i).getName(), i);
             }
         }
     }
 
     public int getInstanceId(String name) {
-        Integer id = instanceNameToId.get(name);
+        Integer id = instanceToId.get(name);
         return id != null ? id : -1;
     }
 
@@ -78,6 +82,33 @@ public class ModelDescription {
         return instances.get(id);
     }
 
+    public List<MailboxDescription> getMailboxes() {
+        return Collections.unmodifiableList(mailboxes);
+    }
+
+    public void setMailboxes(List<MailboxDescription> mailboxes) {
+        this.mailboxes = mailboxes;
+
+        // stores id for each instance name
+        mailboxToId = new HashMap<>(mailboxes != null ? mailboxes.size() : 0);
+        if (mailboxes != null) {
+            for (int i = 0; i < mailboxes.size(); i++) {
+                mailboxToId.put(mailboxes.get(i).getName(), i);
+            }
+        }
+
+    }
+
+    public int getMailboxId(String name) {
+        Integer id = mailboxToId.get(name);
+        return id != null ? id : -1;
+    }
+
+    public final MailboxDescription getMailboxDescription(int id) {
+        // TODO handle newly created mailboxes
+        if (id < 0 || id > mailboxes.size()) return null;
+        return mailboxes.get(id);
+    }
 
     public final <T> T getParameterValue(String instance, String name, Class<T> type, T defaultValue) {
         if (instance == null || name == null) return defaultValue;

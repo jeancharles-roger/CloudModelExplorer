@@ -46,7 +46,7 @@ public class LuaInstance implements DslInstance {
 
         StringBuilder functionString = new StringBuilder();
         functionString.append("return function (");
-        functionString.append("state, mailboxes");
+        functionString.append("context, state, mailboxes");
         functionString.append(");\n");
         functionString.append(script);
         functionString.append("\nend");
@@ -66,7 +66,11 @@ public class LuaInstance implements DslInstance {
     @Override
     public DslTransition[] getTransitions() {
         return new DslTransition[] {
-                (context, state, mailboxes) -> function.call(CoerceJavaToLua.coerce(state), CoerceJavaToLua.coerce(mailboxes))
+                (context, state, mailboxes) -> function.call(
+                        CoerceJavaToLua.coerce(context),
+                        CoerceJavaToLua.coerce(state),
+                        CoerceJavaToLua.coerce(mailboxes)
+                    )
         };
     }
 }

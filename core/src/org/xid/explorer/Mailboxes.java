@@ -16,7 +16,10 @@
 
 package org.xid.explorer;
 
+import org.xid.explorer.model.MailboxDescription;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -257,5 +260,25 @@ public final class Mailboxes {
             }
         }
         return text.toString();
+    }
+
+    public void printOn(List<MailboxDescription> descriptions, StringBuilder text) {
+        if (mailboxes == null) {
+            text.append("empty\n");
+        } else {
+            int size = descriptions.size();
+            for (int i = 0; i < mailboxes.length; i++) {
+                String[] mailbox = mailboxes[i];
+                text.append("- (");
+                if (0 < i && i < size) {
+                    text.append(descriptions.get(i).getName());
+                } else {
+                    text.append(i);
+                }
+                text.append(") ");
+                text.append(mailbox == null ? "empty" : Arrays.toString(mailbox));
+                text.append("\n");
+            }
+        }
     }
 }

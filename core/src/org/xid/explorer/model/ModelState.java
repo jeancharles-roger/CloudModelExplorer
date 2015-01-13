@@ -112,10 +112,10 @@ public final class ModelState {
             text.append("- ");
             text.append(i);
             text.append(":");
-           state.printOn(instance.getInstances()[i], text);
+            state.printOn(instance.getInstances()[i], text);
             text.append("\n");
         }
         text.append("[Mailboxes]\n");
-        text.append(mailboxes);
+        mailboxes.printOn(instance.getDescription().getMailboxes(), text);
     }
 }

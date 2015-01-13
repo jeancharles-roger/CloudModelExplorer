@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
-
-import org.xid.explorer.model.ModelDescription;
-import org.xid.explorer.model.ModelInstance;
+package org.xid.explorer.model;
 
 /**
- * ExplorationContext stores information for a running exploration
+ * Created by j5r on 11/01/2015.
  */
-public interface ExplorationContext {
+public class MailboxDescription {
 
-    ModelInstance getModelInstance();
+    private String name;
 
-    default ModelDescription getModelDescription() {
-        return getModelInstance().getDescription();
+    public MailboxDescription() {
+    }
+
+    public MailboxDescription(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
