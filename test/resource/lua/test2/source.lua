@@ -2,13 +2,14 @@
 -- Starts a target instance and waits to stop
 --
 
-if mailboxes:getMailboxesCount() == 0 then
-    local index = mailboxes:createMailbox();
-    mailboxes:addLast(index, "start");
-    state:setInt(0, index);
+local mailbox = context:getModelDescription():getMailboxId("mailbox")
+local current = state:getInt(0)
+
+if current == 0 then
+    mailboxes:addLast(mailbox, "start");
+    state:setInt(0, 1);
 else
-    local index = state:getInt(0);
-    if mailboxes:removeFirstIfEquals(index, "end") ~= nil then
-        mailboxes:addLast(index, "start");
+    if mailboxes:removeFirstIfEquals(mailbox, "end") ~= nil then
+        mailboxes:addLast(mailbox, "start");
     end
 end

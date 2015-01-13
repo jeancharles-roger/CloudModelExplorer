@@ -59,10 +59,8 @@ public class LambdaTest {
     public static final DslTransition TRANSITION_TEST3_2 = (context, state, mailboxes) -> {
         int count = state.getInt(0);
         if (count == 0) {
-            if (mailboxes.getMailboxesCount() > 0) {
-                String result = mailboxes.removeFirstIf(0, (message) -> "start".equals(message));
-                if (result != null) count = 1;
-            }
+            String result = mailboxes.removeFirstIf(0, (message) -> "start".equals(message));
+            if (result != null) count = 1;
         } else if (count >= 10) {
             count = 0;
             mailboxes.addLast(0, "end");

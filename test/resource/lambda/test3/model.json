@@ -19,5 +19,9 @@
         "field": "TRANSITION_TEST3_2"
       }
     }
+  ],
+
+  "mailboxes": [
+    { "name": "mailbox" }
   ]
 }
