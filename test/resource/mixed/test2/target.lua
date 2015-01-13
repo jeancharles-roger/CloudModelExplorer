@@ -16,16 +16,16 @@
 -- Count from 0 to 10 on a start trigger frm the first mailbox
 --
 
+local mailbox = context:getModelDescription():getMailboxId("mailbox")
+
 local count = state:getInt(0);
 if count == 0 then
-    if mailboxes:getMailboxesCount() > 0 then
-        if mailboxes:removeFirstIfEquals(0, "start") ~= nil then
-            count = 1;
-        end
+    if mailboxes:removeFirstIfEquals(mailbox, "start") ~= nil then
+        count = 1;
     end
 elseif count >= 10 then
     count = 0;
-    mailboxes:addLast(0, "end");
+    mailboxes:addLast(mailbox, "end");
 else
     count = count + 1;
 end

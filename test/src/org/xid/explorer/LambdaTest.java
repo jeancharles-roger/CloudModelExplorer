@@ -45,14 +45,14 @@ public class LambdaTest {
     };
 
     public static final DslTransition TRANSITION_TEST3_1 = (context, state, mailboxes) -> {
-        if (mailboxes.getMailboxesCount() == 0) {
-            int index = mailboxes.createMailbox();
-            mailboxes.addLast(index, "start");
-            state.setInt(0, index);
+        int mailbox = context.getModelDescription().getMailboxId("mailbox");
+        int current = state.getInt(0);
+        if (current == 0) {
+            mailboxes.addLast(mailbox, "start");
+            state.setInt(0, 1);
         } else {
-            int index = state.getInt(0);
-            String result = mailboxes.removeFirstIf(index, (message) -> "end".equals(message));
-            if (result != null) mailboxes.addLast(index, "start");
+            String result = mailboxes.removeFirstIf(mailbox, (message) -> "end".equals(message));
+            if (result != null) mailboxes.addLast(mailbox, "start");
         }
     };
 

@@ -17,5 +17,9 @@
       "size": 4,
       "resources": ["target.lua"]
     }
+  ],
+
+  "mailboxes": [
+    { "name": "mailbox" }
   ]
 }
