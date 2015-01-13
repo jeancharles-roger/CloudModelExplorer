@@ -270,7 +270,7 @@ public final class Mailboxes {
             for (int i = 0; i < mailboxes.length; i++) {
                 String[] mailbox = mailboxes[i];
                 text.append("- (");
-                if (0 < i && i < size) {
+                if (0 <= i && i < size) {
                     text.append(descriptions.get(i).getName());
                 } else {
                     text.append(i);
