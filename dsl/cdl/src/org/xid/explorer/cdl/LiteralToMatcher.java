@@ -27,9 +27,11 @@ import obp.literal.LiteralVisitor;
 import obp.literal.RecordLiteral;
 import obp.literal.StringLiteral;
 import obp.literal.UnionLiteral;
+import org.xid.basics.error.DiagnosticUtil;
 import org.xid.explorer.ExplorationContext;
 import org.xid.explorer.observation.Matcher;
 
+import java.lang.reflect.Field;
 import java.util.Stack;
 
 /**
@@ -105,16 +107,86 @@ public class LiteralToMatcher implements LiteralVisitor {
 
     @Override
     public void visitLiteralField(LiteralField toVisit) {
-
+        // never called, do nothing
     }
 
     @Override
     public void visitRecordLiteral(RecordLiteral toVisit) {
+        try {
+            // TODO what about the package ?
+            String className =toVisit.getTypeName();
+            Class<?> type = getClass().getClassLoader().loadClass(className);
+
+            Matcher[] children = new Matcher[toVisit.getFieldCount()+1];
+            children[0] = Matcher.type(type);
+
+            for ( int i=0; i<toVisit.getFieldCount(); i++ ) {
+                LiteralField field = toVisit.getField(i);
+                field.getValue().accept(this);
+
+                try {
+                    // TODO does it needs naming
+                    String fieldName =field.getName();
+                    Field javaField = type.getField(fieldName);
+
+                    children[i+1] = Matcher.field(javaField, matcherStack.pop());
+
+                } catch (NoSuchFieldException e) {
+                    throw new IllegalArgumentException("Field '"+ field.getName() +"' doesn't exist in type '"+ toVisit.getTypeName() +"'.");
+                }
+            }
+
+            matcherStack.push(Matcher.and(children));
+
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Type '"+ toVisit.getTypeName() +"' doesn't exist.");
+        }
 
     }
 
     @Override
     public void visitUnionLiteral(UnionLiteral toVisit) {
+        try {
+            // TODO what about the package ?
+            String className =toVisit.getTypeName();
+            Class<?> unionType = getClass().getClassLoader().loadClass(className);
+
+            Class<?> type = null;
+            // TODO does it needs naming
+            String constrName =toVisit.getName();
+            for ( Class<?> oneConstrType : unionType.getClasses() ) {
+                if (oneConstrType.getSimpleName().equals(constrName) ) {
+                    type = oneConstrType;
+                    break;
+                }
+            }
+
+            if ( type == null ) {
+                throw new IllegalArgumentException("Constr '"+ toVisit.getName() +"' doesn't exist in union '"+ toVisit.getTypeName() +"'.");
+            }
+
+            Matcher matcher = Matcher.type(type);
+            if ( toVisit.getValue() != null ) {
+                toVisit.getValue().accept(this);
+                Field javaField = type.getField("value");
+
+                Matcher[] children = new Matcher[2];
+                children[0] = matcher;
+                children[1] = Matcher.field(javaField, matcherStack.pop());
+                matcher = Matcher.and(children);
+            }
+
+            matcherStack.push(matcher);
+
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Type '"+ toVisit.getTypeName() +"' doesn't exist.");
+
+        } catch (IllegalArgumentException e) {
+            throw e;
+
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Internal error ("+ DiagnosticUtil.createMessage(e) +").");
+        }
 
     }
 }
