@@ -1,0 +1,19 @@
+{
+  "name": "CDLTest.test1",
+  "instances": [
+    {
+      "dsl": "explorer.cdl",
+      "resources": ["context.cdl"],
+      "dslParameters": {
+        "cdl": "test1"
+      },
+
+      "name": "context",
+      "size": 4
+    }
+  ],
+
+  "mailboxes": [
+    { "name": "process_1" }
+  ]
+}

@@ -53,9 +53,7 @@ public class BinaryDslStateTest {
             state.setInt(0, (int) i);
             assertEquals(i, state.getInt(0));
         }
-
     }
-
 
     @Test
     public void testEquals() {

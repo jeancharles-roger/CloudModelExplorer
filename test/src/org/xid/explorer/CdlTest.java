@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package org.xid.explorer.context;
+package org.xid.explorer;
 
-import org.xid.explorer.dsl.DslInstance;
+import org.junit.Test;
 
-/**
- * Created by j5r on 08/01/2015.
- */
-public interface EnvironmentInstance extends DslInstance {
+public class CdlTest {
+
+    @Test
+    public void test1() throws Exception {
+        TestUtil.explore("resource/cdl/test1/", 2, 1);
+    }
 
 }

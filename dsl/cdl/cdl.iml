@@ -9,17 +9,18 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
     <orderEntry type="module-library">
-      <library name="JUnit4">
+      <library name="cdl">
         <CLASSES>
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.11.jar!/" />
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/hamcrest-core-1.3.jar!/" />
-          <root url="jar://$APPLICATION_HOME_DIR$/lib/hamcrest-library-1.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/basics.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/beaver-rt.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/cdl.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/libs/basics.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/cdl.jar!/" />
+        </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="lua" />
-    <orderEntry type="module" module-name="cdl" />
   </component>
 </module>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 to CloudModelExplorer
+ * Copyright 2015 to CloudModelExplorer authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,13 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
+package org.xid.explorer.environment;
 
-import org.junit.Test;
+import org.xid.explorer.dsl.DslInstanceDescription;
 
-public class LuaTest {
-
-    @Test
-    public void test0() throws Exception {
-        TestUtil.explore("resource/lua/test0/", 3, 3);
-    }
-
-    @Test
-    public void test1() throws Exception {
-        TestUtil.explore("resource/lua/test1/", 1331, 3630);
-    }
-
-    @Test
-    public void test2() throws Exception {
-        TestUtil.explore("resource/lua/test2/", 13, 13);
-    }
+/**
+* DslInstanceDescription contains information to create a DslInstance.
+*/
+public class EnvironmentInstanceDescription extends DslInstanceDescription {
 
 }

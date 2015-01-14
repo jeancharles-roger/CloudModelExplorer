@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CloudModelExplorer.iml" filepath="$PROJECT_DIR$/CloudModelExplorer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dsl/cdl/cdl.iml" filepath="$PROJECT_DIR$/dsl/cdl/cdl.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/dsl/lua/lua.iml" filepath="$PROJECT_DIR$/dsl/lua/lua.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />

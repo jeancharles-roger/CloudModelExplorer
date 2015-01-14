@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package org.xid.explorer.context;
+package org.xid.explorer.environment;
 
-import org.xid.explorer.dsl.DslInstanceDescription;
+import org.xid.explorer.dsl.DslInstance;
+import org.xid.explorer.observation.Evaluator;
 
 /**
-* DslInstanceDescription contains information to create a DslInstance.
-*/
-public class EnvironmentInstanceDescription extends DslInstanceDescription {
+ * Created by j5r on 08/01/2015.
+ */
+public interface EnvironmentInstance extends DslInstance {
 
+    Evaluator[] getInvariants();
 }

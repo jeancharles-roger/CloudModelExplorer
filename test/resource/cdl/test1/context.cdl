@@ -1,0 +1,4 @@
+
+cdl test1 is {
+	main is {event {send "hello" to {process}1}}
+}
