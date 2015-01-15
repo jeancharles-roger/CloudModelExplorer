@@ -20,11 +20,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ModelResultDescription contains
+ * ModelResultDescription contains information that describes a result handler.
  */
 public class ModelResultDescription {
 
     private String type;
+
+    private String path;
 
     private Map<String, String> parameters = new HashMap<>();
 
@@ -34,6 +36,14 @@ public class ModelResultDescription {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public Map<String, String> getParameters() {

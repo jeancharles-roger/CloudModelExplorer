@@ -20,54 +20,37 @@ import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.model.ModelTransition;
 
-import java.io.PrintWriter;
+import java.io.OutputStream;
 
 /**
  * ModelExplorationBinaryWriter generate a binary format from the exploration result.
  */
-public class ModelExplorationBinaryWriter implements ModelExplorationHandler {
+public class ModelResultBinaryWriter implements ModelResultHandler {
 
     private final ModelInstance modelInstance;
 
-    private final PrintWriter writer;
+    private final OutputStream out;
 
-    private final boolean detailed;
-
-    public ModelExplorationBinaryWriter(ModelInstance modelInstance, PrintWriter writer, boolean detailed) {
+    public ModelResultBinaryWriter(ModelInstance modelInstance, OutputStream out) {
         this.modelInstance = modelInstance;
-        this.writer = writer;
-        this.detailed = detailed;
+        this.out = out;
     }
 
     @Override
     public void begin() {
-        writer.println("digraph exploration {");
     }
 
     @Override
     public void state(ModelState state) {
-        writer.print("\t ");
-        writer.print(state.getId());
 
-        if (detailed) {
-            StringBuilder stateText = new StringBuilder();
-            state.printOn(modelInstance, stateText);
-            String label = stateText.toString().replaceAll("\n", "\\\\n");
-            writer.print(" [label=\"" + label + "\"]");
-        }
-
-        writer.println(";");
     }
 
     @Override
     public void transition(ModelState source, ModelTransition transition, ModelState target) {
-        writer.println("\t " + source.getId() + " -> "+ target.getId() + ";");
     }
 
     @Override
     public void end() {
-        writer.println("}");
-        writer.flush();
     }
 
 }

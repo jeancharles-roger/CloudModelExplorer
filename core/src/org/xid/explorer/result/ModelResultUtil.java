@@ -17,7 +17,7 @@
 package org.xid.explorer.result;
 
 import org.xid.explorer.ExplorationContext;
-import org.xid.explorer.result.ModelExplorationHandler.ModelExplorationVisitorComposite;
+import org.xid.explorer.result.ModelResultHandler.ModelResultVisitorComposite;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.ServiceLoader;
  */
 public class ModelResultUtil {
 
-    public static ModelExplorationHandler loadModelExplorationHandler(ExplorationContext context, List<ModelResultDescription> resultDescriptions) throws Exception {
+    public static ModelResultHandler loadModelExplorationHandler(ExplorationContext context, List<ModelResultDescription> resultDescriptions) throws Exception {
         // collects all model result factories declared in classpath.
         Map<String, ModelResultFactory> factories = new HashMap<>();
         for (ModelResultFactory factory : ServiceLoader.load(ModelResultFactory.class)) {
@@ -38,7 +38,7 @@ public class ModelResultUtil {
             }
         }
 
-        ModelExplorationHandler[] results = new ModelExplorationHandler[resultDescriptions != null ? resultDescriptions.size() : 0];
+        ModelResultHandler[] results = new ModelResultHandler[resultDescriptions != null ? resultDescriptions.size() : 0];
         if (resultDescriptions != null) {
             for (int i = 0; i < results.length; i++) {
                 ModelResultDescription resultDescription = resultDescriptions.get(i);
@@ -48,6 +48,6 @@ public class ModelResultUtil {
                 results[i] = factory.createResult(context, resultDescription);
             }
         }
-        return new ModelExplorationVisitorComposite(results);
+        return new ModelResultVisitorComposite(results);
     }
 }

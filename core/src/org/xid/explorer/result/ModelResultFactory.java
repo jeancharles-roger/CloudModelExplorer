@@ -28,5 +28,5 @@ public interface ModelResultFactory {
 
     Set<String> getKnownTypes();
 
-    ModelExplorationHandler createResult(ExplorationContext context, ModelResultDescription description) throws IOException;
+    ModelResultHandler createResult(ExplorationContext context, ModelResultDescription description) throws IOException;
 }

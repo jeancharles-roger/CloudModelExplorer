@@ -19,6 +19,7 @@ package org.xid.explorer.result;
 import org.xid.explorer.ExplorationContext;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -30,7 +31,8 @@ import java.util.Set;
 public class CoreModelModelResultFactory implements ModelResultFactory {
 
     private final static Set<String> KNOWN_TYPES = new HashSet<>(Arrays.asList(
-            "explorer.result.dot"
+            "explorer.result.dot",
+            "explorer.result.kryo"
     ));
 
     @Override
@@ -39,12 +41,16 @@ public class CoreModelModelResultFactory implements ModelResultFactory {
     }
 
     @Override
-    public ModelExplorationHandler createResult(ExplorationContext context, ModelResultDescription description) throws IOException {
+    public ModelResultHandler createResult(ExplorationContext context, ModelResultDescription description) throws IOException {
         switch (description.getType()) {
             case "explorer.result.dot":
                 PrintWriter writer = new PrintWriter(context.getResourceResolver().writeEntry("exploration.dot"));
                 boolean detailed = Boolean.parseBoolean(description.getParameters().get("detailed"));
-                return new ModelExplorationDotPrinter(context.getModelInstance(), writer, detailed);
+                return new ModelResultDotPrinter(context.getModelInstance(), writer, detailed);
+
+            case "explorer.result.kryo":
+                OutputStream out = context.getResourceResolver().writeEntry("exploration.kryo");
+                return new ModelResultBinaryWriter(context.getModelInstance(), out);
 
             default:
                 return null;

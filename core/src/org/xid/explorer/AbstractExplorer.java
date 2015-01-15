@@ -24,8 +24,8 @@ import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.result.ModelExploration;
 import org.xid.explorer.result.ModelExploration.CompletionStatus;
-import org.xid.explorer.result.ModelExplorationHandler;
 import org.xid.explorer.result.ModelResultDescription;
+import org.xid.explorer.result.ModelResultHandler;
 import org.xid.explorer.result.ModelResultUtil;
 
 import java.util.HashMap;
@@ -45,14 +45,14 @@ public abstract class AbstractExplorer implements ExplorationContext {
 
     private final Map<ModelState, ModelState> known = new HashMap<>();
 
-    private ModelExplorationHandler explorationHandler;
+    private ModelResultHandler explorationHandler;
 
     private int transitionCount = 0;
 
     public AbstractExplorer(ModelDescription modelDescription, ResourceResolver resourceResolver) {
         this.modelDescription = modelDescription;
         this.resourceResolver = resourceResolver;
-        this.explorationHandler = ModelExplorationHandler.EMPTY ;
+        this.explorationHandler = ModelResultHandler.EMPTY ;
     }
 
     public void initialize(List<ModelResultDescription> resultDescriptions) throws Exception {

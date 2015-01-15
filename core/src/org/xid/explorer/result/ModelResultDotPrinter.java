@@ -25,7 +25,7 @@ import java.io.PrintWriter;
 /**
  * ModelExplorationDotPrinter generate a dot format from the exploration result.
  */
-public class ModelExplorationDotPrinter implements ModelExplorationHandler {
+public class ModelResultDotPrinter implements ModelResultHandler {
 
     private final ModelInstance modelInstance;
 
@@ -33,7 +33,7 @@ public class ModelExplorationDotPrinter implements ModelExplorationHandler {
 
     private final boolean detailed;
 
-    public ModelExplorationDotPrinter(ModelInstance modelInstance, PrintWriter writer, boolean detailed) {
+    public ModelResultDotPrinter(ModelInstance modelInstance, PrintWriter writer, boolean detailed) {
         this.modelInstance = modelInstance;
         this.writer = writer;
         this.detailed = detailed;
@@ -67,7 +67,7 @@ public class ModelExplorationDotPrinter implements ModelExplorationHandler {
     @Override
     public void end() {
         writer.println("}");
-        writer.flush();
+        writer.close();
     }
 
 }

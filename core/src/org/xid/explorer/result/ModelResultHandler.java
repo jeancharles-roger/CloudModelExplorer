@@ -20,9 +20,9 @@ import org.xid.explorer.model.ModelState;
 import org.xid.explorer.model.ModelTransition;
 
 /**
- * ModelExplorationStream TODO
+ * ModelResultHandler TODO
  */
-public interface ModelExplorationHandler {
+public interface ModelResultHandler {
 
     void begin();
 
@@ -31,7 +31,7 @@ public interface ModelExplorationHandler {
 
     void end();
 
-    public static final ModelExplorationHandler EMPTY = new ModelExplorationHandler() {
+    public static final ModelResultHandler EMPTY = new ModelResultHandler() {
         @Override
         public void begin() { }
 
@@ -45,32 +45,32 @@ public interface ModelExplorationHandler {
         public void end() {}
     };
 
-    public static class ModelExplorationVisitorComposite implements ModelExplorationHandler {
+    public static class ModelResultVisitorComposite implements ModelResultHandler {
 
-        private final ModelExplorationHandler[] children;
+        private final ModelResultHandler[] children;
 
-        public ModelExplorationVisitorComposite(ModelExplorationHandler[] children) {
+        public ModelResultVisitorComposite(ModelResultHandler[] children) {
             this.children = children;
         }
 
         @Override
         public void begin() {
-            for (ModelExplorationHandler child : children) child.begin();
+            for (ModelResultHandler child : children) child.begin();
         }
 
         @Override
         public void state(ModelState state) {
-            for (ModelExplorationHandler child : children) child.state(state);
+            for (ModelResultHandler child : children) child.state(state);
         }
 
         @Override
         public void transition(ModelState source, ModelTransition transition, ModelState target) {
-            for (ModelExplorationHandler child : children) child.transition(source, transition, target);
+            for (ModelResultHandler child : children) child.transition(source, transition, target);
         }
 
         @Override
         public void end() {
-            for (ModelExplorationHandler child : children) child.end();
+            for (ModelResultHandler child : children) child.end();
         }
 
     }
