@@ -19,11 +19,14 @@ package org.xid.explorer;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.model.MailboxDescription;
+import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.result.ModelExploration;
 import org.xid.explorer.result.ModelExploration.CompletionStatus;
 import org.xid.explorer.result.ModelExplorationHandler;
+import org.xid.explorer.result.ModelResultDescription;
+import org.xid.explorer.result.ModelResultUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,21 +37,32 @@ import java.util.Map;
  */
 public abstract class AbstractExplorer implements ExplorationContext {
 
-    protected final ModelInstance modelInstance;
+    protected final ModelDescription modelDescription;
+
+    protected final ResourceResolver resourceResolver;
+
+    protected ModelInstance modelInstance;
 
     private final Map<ModelState, ModelState> known = new HashMap<>();
 
-    private final ModelExplorationHandler explorationHandler;
+    private ModelExplorationHandler explorationHandler;
 
     private int transitionCount = 0;
 
-    public AbstractExplorer(ModelInstance modelInstance) {
-        this(modelInstance, null);
+    public AbstractExplorer(ModelDescription modelDescription, ResourceResolver resourceResolver) {
+        this.modelDescription = modelDescription;
+        this.resourceResolver = resourceResolver;
+        this.explorationHandler = ModelExplorationHandler.EMPTY ;
     }
 
-    public AbstractExplorer(ModelInstance modelInstance, ModelExplorationHandler explorationHandler) {
-        this.modelInstance = modelInstance;
-        this.explorationHandler = explorationHandler == null ? ModelExplorationHandler.EMPTY : explorationHandler;
+    public void initialize(List<ModelResultDescription> resultDescriptions) throws Exception {
+        modelInstance = ModelInstance.load(modelDescription, resourceResolver);
+        for (DslInstance instance : modelInstance.getInstances()) {
+            instance.initialize(this);
+        }
+
+
+        explorationHandler = ModelResultUtil.loadModelExplorationHandler(this, resultDescriptions);
     }
 
     @Override
@@ -56,10 +70,14 @@ public abstract class AbstractExplorer implements ExplorationContext {
         return modelInstance;
     }
 
+    @Override
+    public ResourceResolver getResourceResolver() {
+        return resourceResolver;
+    }
 
-
-    public ModelExploration explore() {
+    public ModelExploration explore() throws Exception {
         long start = System.currentTimeMillis();
+
         ModelState initialState = createInitialState();
 
         explorationHandler.begin();

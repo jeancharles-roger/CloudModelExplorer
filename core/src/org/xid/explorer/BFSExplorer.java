@@ -19,9 +19,8 @@ package org.xid.explorer;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.dsl.DslTransition;
-import org.xid.explorer.model.ModelInstance;
+import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelState;
-import org.xid.explorer.result.ModelExplorationHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +32,8 @@ public class BFSExplorer extends AbstractExplorer {
 
     private List<ModelState> toSee = new ArrayList<>();
 
-    public BFSExplorer(ModelInstance modelInstance) {
-        super(modelInstance);
-    }
-
-    public BFSExplorer(ModelInstance modelInstance, ModelExplorationHandler explorationHandler) {
-        super(modelInstance, explorationHandler);
+    public BFSExplorer(ModelDescription modelDescription, ResourceResolver resourceResolver) {
+        super(modelDescription, resourceResolver);
     }
 
     @Override

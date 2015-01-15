@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
+package org.xid.explorer.result;
 
-import org.xid.explorer.model.ModelDescription;
-import org.xid.explorer.model.ModelInstance;
+import org.xid.explorer.ExplorationContext;
+
+import java.io.IOException;
+import java.util.Set;
 
 /**
- * ExplorationContext stores information for a running exploration
+ * Created by j5r on 14/01/2015.
  */
-public interface ExplorationContext {
+public interface ModelResultFactory {
 
-    ModelInstance getModelInstance();
+    Set<String> getKnownTypes();
 
-    ResourceResolver getResourceResolver();
-
-    default ModelDescription getModelDescription() {
-        return getModelInstance().getDescription();
-    }
+    ModelExplorationHandler createResult(ExplorationContext context, ModelResultDescription description) throws IOException;
 }

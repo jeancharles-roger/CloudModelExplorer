@@ -1,0 +1,11 @@
+
+activity start_end is {
+	event {send "start" to {target}1};
+	event {receive "end" from {target}1}
+
+}
+
+
+cdl twice is {
+	main is { loop 2 start_end }
+}

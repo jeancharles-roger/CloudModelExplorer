@@ -50,6 +50,7 @@ public final class ModelInstance {
 
     /**
      * Loads a ModelInstance from a ModelDescription.
+     *
      * @param description description to load.
      * @param resourceResolver function that take a String and returns an open InputStream (or null).
      * @return a ModelInstance

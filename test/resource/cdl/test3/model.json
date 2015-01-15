@@ -1,0 +1,26 @@
+{
+  "name": "CDLTest.test3",
+  "instances": [
+    {
+      "dsl": "explorer.cdl",
+      "resources": ["context.cdl"],
+      "dslParameters": {
+        "cdl": "twice"
+      },
+
+      "name": "context",
+      "size": 4
+    },
+    {
+      "dsl": "explorer.lua",
+      "name": "target",
+      "size": 4,
+      "resources": ["target.lua"]
+    }
+  ],
+
+  "mailboxes": [
+    { "name": "context" },
+    { "name": "target_1" }
+  ]
+}

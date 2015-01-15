@@ -17,13 +17,12 @@
 package org.xid.explorer;
 
 import org.xid.explorer.model.ModelDescription;
-import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.result.ModelExploration;
-import org.xid.explorer.result.ModelExplorationDotPrinter;
-import org.xid.explorer.result.ModelExplorationHandler;
+import org.xid.explorer.result.ModelResultDescription;
 
-import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -35,13 +34,19 @@ public class TestUtil {
     public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
         ResourceResolver resourceResolver = new PathResourceResolver(Paths.get(modelPath));
         ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
-        ModelInstance modelInstance = ModelInstance.load(description, resourceResolver);
-        ModelExplorationHandler resultHandler = new ModelExplorationDotPrinter(modelInstance, new PrintWriter(resourceResolver.writeEntry("exploration.dot")), true);
-        explore(modelInstance, resultHandler, expectedStates, expectedTransitions);
+        explore(description,resourceResolver, Collections.singletonList(createDotResult()), expectedStates, expectedTransitions);
     }
 
-    public static void explore(ModelInstance model, ModelExplorationHandler resultHandler, int expectedStates, int expectedTransitions) {
-        BFSExplorer explorer = new BFSExplorer(model, resultHandler);
+    private static ModelResultDescription createDotResult() {
+        ModelResultDescription dotResult = new ModelResultDescription();
+        dotResult.setType("explorer.result.dot");
+        dotResult.getParameters().put("detailed", Boolean.TRUE.toString());
+        return dotResult;
+    }
+
+    public static void explore(ModelDescription model, ResourceResolver resourceResolver, List<ModelResultDescription> resultDescriptions, int expectedStates, int expectedTransitions) throws Exception {
+        BFSExplorer explorer = new BFSExplorer(model, resourceResolver);
+        explorer.initialize(resultDescriptions);
         ModelExploration modelExploration = explorer.explore();
 
         System.out.println(modelExploration);

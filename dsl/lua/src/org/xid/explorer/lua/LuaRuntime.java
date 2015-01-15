@@ -16,9 +16,6 @@
 
 package org.xid.explorer.lua;
 
-import org.luaj.vm2.Globals;
-import org.luaj.vm2.lib.jse.JsePlatform;
-import org.luaj.vm2.luajc.LuaJC;
 import org.xid.explorer.ResourceResolver;
 import org.xid.explorer.StreamUtil;
 import org.xid.explorer.dsl.DslInstance;
@@ -42,9 +39,6 @@ public class LuaRuntime implements DslRuntime {
 
     @Override
     public DslInstance createInstance(DslInstanceDescription description, ResourceResolver resourceResolver) throws Exception {
-        Globals lua = JsePlatform.standardGlobals();
-        LuaJC.install(lua);
-
         StringBuilder script = new StringBuilder();
         for (String resource : description.getResources()) {
             InputStream stream = resourceResolver.readEntry(resource);
@@ -52,6 +46,6 @@ public class LuaRuntime implements DslRuntime {
             script.append(StreamUtil.collectStream(stream, Charset.forName(StandardCharsets.UTF_8.name())));
             script.append("\n");
         }
-        return new LuaInstance(description.getName(), description.getSize(), script.toString(), lua);
+        return new LuaInstance(description.getName(), description.getSize(), script.toString());
     }
 }

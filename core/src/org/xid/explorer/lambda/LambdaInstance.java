@@ -16,6 +16,7 @@
 
 package org.xid.explorer.lambda;
 
+import org.xid.explorer.ExplorationContext;
 import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
@@ -36,6 +37,11 @@ public class LambdaInstance implements DslInstance {
         this.name = name;
         this.size = size;
         this.transition = transition;
+    }
+
+    @Override
+    public void initialize(ExplorationContext context) {
+        // nothing to do.
     }
 
     @Override

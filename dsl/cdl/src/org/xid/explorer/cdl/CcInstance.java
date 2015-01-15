@@ -24,7 +24,9 @@ import obp.event.Event;
 import obp.event.Informal;
 import obp.event.Input;
 import obp.event.Output;
+import obp.event.Value;
 import obp.util.CDLUtil;
+import org.xid.explorer.ExplorationContext;
 import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslState;
 import org.xid.explorer.dsl.DslTransition;
@@ -32,6 +34,7 @@ import org.xid.explorer.environment.EnvironmentInstance;
 import org.xid.explorer.observation.Evaluator;
 import org.xid.explorer.observation.Matcher;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -46,15 +49,23 @@ public class CcInstance implements EnvironmentInstance {
 
     private final DslTransition[] transitions;
 
+    private int contextMailboxId;
+
     public CcInstance(ConcreteContext concreteContext) {
         // TODO handle predicates.
         this.concreteContext = concreteContext;
         this.concreteContextStateList = concreteContext.getStateList();
 
         transitions = new DslTransition[concreteContext.getTransitionCount()];
+    }
+
+    @Override
+    public void initialize(ExplorationContext context) throws IOException {
         for (int i = 0; i < transitions.length; i++) {
-            transitions[i] = createTransition(concreteContext.getTransition(i));
+            transitions[i] = createTransition(context, concreteContext.getTransition(i));
         }
+
+        contextMailboxId = context.getModelDescription().getMailboxId(CONTEXT_MAILBOX);
     }
 
     private boolean isInputTransition(final Transition ccTransition) {
@@ -62,8 +73,7 @@ public class CcInstance implements EnvironmentInstance {
         return action != null && action.getReference().getIs() instanceof Input;
     }
 
-    private DslTransition createTransition(/*final ExplorationContext context, */ final Transition ccTransition) {
-
+    private DslTransition createTransition(ExplorationContext explorationContext, Transition ccTransition) {
         // stores source and target information
         final int source = getStateId(ccTransition.getSource());
         final int target = getStateId(ccTransition.getTarget());
@@ -75,9 +85,10 @@ public class CcInstance implements EnvironmentInstance {
                 Output output = (Output) event;
 
                 // FIXME construct message value
-                Object value = "message"; //getMessageValue(output.getMessage(), context);
+                Object value = getMessageValue(explorationContext, output.getMessage());
                 final String mailboxName = CDLUtil.toQueueName(output.getTo());
-                return createOutputObjectSignalTransition(source, target, mailboxName, value);
+                final int mailboxId = explorationContext.getModelDescription().getMailboxId(mailboxName);
+                return createOutputObjectSignalTransition(source, target, mailboxId, value);
 
             } else if ( event instanceof Input) {
                 // FIXME Create event matcher
@@ -100,9 +111,8 @@ public class CcInstance implements EnvironmentInstance {
         }
     }
 
-    private DslTransition createOutputObjectSignalTransition(int source, int target, String mailboxName, Object message) {
+    private DslTransition createOutputObjectSignalTransition(int source, int target, int mailboxId, Object message) {
         return (context, state, mailboxes) -> {
-            final int mailboxId = context.getModelDescription().getMailboxId(mailboxName);
             if (state.getInt(0) == source) {
                 mailboxes.addLast(mailboxId, message.toString());
                 state.setInt(0, target);
@@ -128,11 +138,14 @@ public class CcInstance implements EnvironmentInstance {
     private DslTransition createInputTransition(int source, int target, Matcher eventMatcher) {
         return (context, state, mailboxes) -> {
             if (state.getInt(0) == source) {
-                final int mailboxId = context.getModelDescription().getMailboxId(CONTEXT_MAILBOX);
-                mailboxes.removeFirstIf(mailboxId, (value) -> eventMatcher.match(context, value));
+                mailboxes.removeFirstIf(contextMailboxId, (value) -> eventMatcher.match(context, value));
                 state.setInt(0, target);
             }
         };
+    }
+
+    private Object getMessageValue(ExplorationContext context, Value message) {
+        return LiteralToJavaObject.toJava(message.getLiteral(), context);
     }
 
     @Override

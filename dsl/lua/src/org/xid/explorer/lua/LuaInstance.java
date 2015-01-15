@@ -19,6 +19,9 @@ package org.xid.explorer.lua;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import org.luaj.vm2.lib.jse.JsePlatform;
+import org.luaj.vm2.luajc.LuaJC;
+import org.xid.explorer.ExplorationContext;
 import org.xid.explorer.dsl.BinaryDslState;
 import org.xid.explorer.dsl.DslInstance;
 import org.xid.explorer.dsl.DslState;
@@ -37,12 +40,18 @@ public class LuaInstance implements DslInstance {
 
     private final String script;
 
-    private final LuaValue function;
+    private LuaValue function;
 
-    public LuaInstance(String name, int stateSize, String script, Globals lua) throws IOException {
+    public LuaInstance(String name, int stateSize, String script) {
         this.name = name;
         this.stateSize = stateSize;
         this.script = script;
+    }
+
+    @Override
+    public void initialize(ExplorationContext context) throws IOException {
+        Globals lua = JsePlatform.standardGlobals();
+        LuaJC.install(lua);
 
         StringBuilder functionString = new StringBuilder();
         functionString.append("return function (");

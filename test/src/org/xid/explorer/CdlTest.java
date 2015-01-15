@@ -25,4 +25,16 @@ public class CdlTest {
         TestUtil.explore("resource/cdl/test1/", 2, 1);
     }
 
+
+    @Test
+    public void test2() throws Exception {
+        TestUtil.explore("resource/cdl/test2/", 16, 32);
+    }
+
+
+    @Test
+    public void test3() throws Exception {
+        TestUtil.explore("resource/cdl/test3/", 96, 145);
+    }
+
 }

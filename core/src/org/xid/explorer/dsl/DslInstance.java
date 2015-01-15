@@ -16,6 +16,10 @@
 
 package org.xid.explorer.dsl;
 
+import org.xid.explorer.ExplorationContext;
+
+import java.io.IOException;
+
 /**
  * A DslInstance represents a behavior, it's a transition function from a source DslState to a target one.
  * All DslInstance act independently from the others.
@@ -27,6 +31,12 @@ public interface DslInstance {
      * @return a new DslState considered as the initial instance state.
      */
     DslState createInitialState();
+
+    /**
+     * Initialize the instance.
+     * @param context exploration context.
+     */
+    void initialize(ExplorationContext context) throws IOException;
 
     /**
      * @return the name of the instance.

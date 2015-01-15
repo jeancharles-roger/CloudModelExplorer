@@ -16,9 +16,7 @@
 
 package org.xid.explorer.result;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,44 +24,16 @@ import java.util.Map;
  */
 public class ModelResultDescription {
 
-    private String dsl;
-    private String name;
-    private int size;
-
-    private List<String> resources = new ArrayList<>();
+    private String type;
 
     private Map<String, String> parameters = new HashMap<>();
 
-    public String getDsl() {
-        return dsl;
+    public String getType() {
+        return type;
     }
 
-    public void setDsl(String dsl) {
-        this.dsl = dsl;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public List<String> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<String> resources) {
-        this.resources = resources;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Map<String, String> getParameters() {
