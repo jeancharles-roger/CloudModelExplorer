@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="kryo-3.0.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/kryo/kryo-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/kryo/minlog-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/kryo/objenesis-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/kryo/reflectasm-1.09-shaded.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/kryo/kryo-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
