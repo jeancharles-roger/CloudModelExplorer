@@ -19,17 +19,19 @@ package org.xid.explorer.result;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.model.ModelTransition;
 
+import java.io.IOException;
+
 /**
  * ModelResultHandler TODO
  */
 public interface ModelResultHandler {
 
-    void begin();
+    void begin() throws IOException;
 
     void state(ModelState state);
-    void transition(ModelState source, ModelTransition transition, ModelState target);
+    void transition(ModelTransition transition);
 
-    void end();
+    void end() throws IOException;
 
     public static final ModelResultHandler EMPTY = new ModelResultHandler() {
         @Override
@@ -39,7 +41,7 @@ public interface ModelResultHandler {
         public void state(ModelState state) {}
 
         @Override
-        public void transition(ModelState source, ModelTransition transition, ModelState target) {}
+        public void transition(ModelTransition transition) {}
 
         @Override
         public void end() {}
@@ -54,7 +56,7 @@ public interface ModelResultHandler {
         }
 
         @Override
-        public void begin() {
+        public void begin() throws IOException{
             for (ModelResultHandler child : children) child.begin();
         }
 
@@ -64,12 +66,12 @@ public interface ModelResultHandler {
         }
 
         @Override
-        public void transition(ModelState source, ModelTransition transition, ModelState target) {
-            for (ModelResultHandler child : children) child.transition(source, transition, target);
+        public void transition(ModelTransition transition) {
+            for (ModelResultHandler child : children) child.transition(transition);
         }
 
         @Override
-        public void end() {
+        public void end() throws IOException {
             for (ModelResultHandler child : children) child.end();
         }
 

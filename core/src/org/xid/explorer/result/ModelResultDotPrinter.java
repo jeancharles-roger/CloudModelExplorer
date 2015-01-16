@@ -60,8 +60,8 @@ public class ModelResultDotPrinter implements ModelResultHandler {
     }
 
     @Override
-    public void transition(ModelState source, ModelTransition transition, ModelState target) {
-        writer.println("\t " + source.getId() + " -> "+ target.getId() + ";");
+    public void transition(ModelTransition transition) {
+        writer.println("\t " + transition.getSourceId() + " -> "+ transition.getTargetId() + ";");
     }
 
     @Override

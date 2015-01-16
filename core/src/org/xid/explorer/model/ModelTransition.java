@@ -21,23 +21,28 @@ package org.xid.explorer.model;
  */
 public final class ModelTransition {
 
-    private String[] actions;
+    private final int sourceId;
 
-    private int targetId;
+    private final String[] actions;
+
+    private final int targetId;
+
+    public ModelTransition(int sourceId, String[] actions, int targetId) {
+        this.sourceId = sourceId;
+        this.actions = actions;
+        this.targetId = targetId;
+    }
+
+    public int getSourceId() {
+        return sourceId;
+    }
 
     public String[] getActions() {
         return actions;
-    }
-
-    public void setActions(String[] actions) {
-        this.actions = actions;
     }
 
     public int getTargetId() {
         return targetId;
     }
 
-    public void setTargetId(int targetId) {
-        this.targetId = targetId;
-    }
 }

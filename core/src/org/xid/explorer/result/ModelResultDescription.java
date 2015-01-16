@@ -30,6 +30,13 @@ public class ModelResultDescription {
 
     private Map<String, String> parameters = new HashMap<>();
 
+    public ModelResultDescription() {
+    }
+
+    public ModelResultDescription(String type) {
+        this.type = type;
+    }
+
     public String getType() {
         return type;
     }

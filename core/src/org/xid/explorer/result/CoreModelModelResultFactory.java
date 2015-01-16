@@ -44,16 +44,26 @@ public class CoreModelModelResultFactory implements ModelResultFactory {
     public ModelResultHandler createResult(ExplorationContext context, ModelResultDescription description) throws IOException {
         switch (description.getType()) {
             case "explorer.result.dot":
-                PrintWriter writer = new PrintWriter(context.getResourceResolver().writeEntry("exploration.dot"));
-                boolean detailed = Boolean.parseBoolean(description.getParameters().get("detailed"));
-                return new ModelResultDotPrinter(context.getModelInstance(), writer, detailed);
+                return createDotHandler(context, description);
 
             case "explorer.result.kryo":
-                OutputStream out = context.getResourceResolver().writeEntry("exploration.kryo");
-                return new ModelResultBinaryWriter(context.getModelInstance(), out);
+                return createKryoHandler(context, description);
 
             default:
                 return null;
         }
+    }
+
+    private ModelResultHandler createDotHandler(ExplorationContext context, ModelResultDescription description) throws IOException {
+        String path = description.getPath() != null ? description.getPath() : "exploration.dot";
+        PrintWriter writer = new PrintWriter(context.getResourceResolver().writeEntry(path));
+        boolean detailed = Boolean.parseBoolean(description.getParameters().get("detailed"));
+        return new ModelResultDotPrinter(context.getModelInstance(), writer, detailed);
+    }
+
+    private ModelResultHandler createKryoHandler(ExplorationContext context, ModelResultDescription description) throws IOException {
+        String path = description.getPath() != null ? description.getPath() : "exploration.kryo";
+        OutputStream out = context.getResourceResolver().writeEntry(path);
+        return new ModelResultBinaryWriter(context.getModelInstance(), out);
     }
 }

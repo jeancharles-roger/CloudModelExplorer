@@ -25,6 +25,9 @@ public final class BinaryDslState implements DslState {
 
     private byte[] buffer;
 
+    public BinaryDslState() {
+    }
+
     public BinaryDslState(int size) {
         buffer = new byte[size];
         Arrays.fill(buffer, Byte.MIN_VALUE);

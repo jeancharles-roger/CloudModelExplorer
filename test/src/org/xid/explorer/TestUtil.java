@@ -21,7 +21,7 @@ import org.xid.explorer.result.ModelExploration;
 import org.xid.explorer.result.ModelResultDescription;
 
 import java.nio.file.Paths;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -34,14 +34,17 @@ public class TestUtil {
     public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
         ResourceResolver resourceResolver = new PathResourceResolver(Paths.get(modelPath));
         ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
-        explore(description,resourceResolver, Collections.singletonList(createDotResult()), expectedStates, expectedTransitions);
+        explore(description,resourceResolver, Arrays.asList(createDotResult(), createKryoResult()), expectedStates, expectedTransitions);
     }
 
     private static ModelResultDescription createDotResult() {
-        ModelResultDescription dotResult = new ModelResultDescription();
-        dotResult.setType("explorer.result.dot");
+        ModelResultDescription dotResult = new ModelResultDescription("explorer.result.dot");
         dotResult.getParameters().put("detailed", Boolean.TRUE.toString());
         return dotResult;
+    }
+
+    private static ModelResultDescription createKryoResult() {
+        return new ModelResultDescription("explorer.result.kryo");
     }
 
     public static void explore(ModelDescription model, ResourceResolver resourceResolver, List<ModelResultDescription> resultDescriptions, int expectedStates, int expectedTransitions) throws Exception {

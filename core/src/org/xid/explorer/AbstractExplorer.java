@@ -22,6 +22,7 @@ import org.xid.explorer.model.MailboxDescription;
 import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
+import org.xid.explorer.model.ModelTransition;
 import org.xid.explorer.result.ModelExploration;
 import org.xid.explorer.result.ModelExploration.CompletionStatus;
 import org.xid.explorer.result.ModelResultDescription;
@@ -116,7 +117,8 @@ public abstract class AbstractExplorer implements ExplorationContext {
         transitionCount += 1;
 
         // sends transition to exploration handler
-        explorationHandler.transition(source, null, target);
+        // XXX creates a new object here, maybe reuse could be beneficial
+        explorationHandler.transition(new ModelTransition(source.getId(), null, target.getId()));
     }
 
     protected ModelState registerState(ModelState newState) {

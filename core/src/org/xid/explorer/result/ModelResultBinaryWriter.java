@@ -16,11 +16,15 @@
 
 package org.xid.explorer.result;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Output;
 import org.xid.explorer.model.ModelInstance;
 import org.xid.explorer.model.ModelState;
 import org.xid.explorer.model.ModelTransition;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.zip.DeflaterOutputStream;
 
 /**
  * ModelExplorationBinaryWriter generate a binary format from the exploration result.
@@ -29,11 +33,14 @@ public class ModelResultBinaryWriter implements ModelResultHandler {
 
     private final ModelInstance modelInstance;
 
-    private final OutputStream out;
+    private final Output out;
+
+    private final Kryo kryo;
 
     public ModelResultBinaryWriter(ModelInstance modelInstance, OutputStream out) {
         this.modelInstance = modelInstance;
-        this.out = out;
+        this.out = new Output(new DeflaterOutputStream(out));
+        this.kryo = new Kryo();
     }
 
     @Override
@@ -42,15 +49,19 @@ public class ModelResultBinaryWriter implements ModelResultHandler {
 
     @Override
     public void state(ModelState state) {
-
+        kryo.writeObjectOrNull(out, null, Object.class);
+        kryo.writeObject(out, state);
     }
 
     @Override
-    public void transition(ModelState source, ModelTransition transition, ModelState target) {
+    public void transition(ModelTransition transition) {
+        kryo.writeObject(out, transition);
     }
 
     @Override
-    public void end() {
+    public void end() throws IOException {
+        kryo.writeObjectOrNull(out, null, Object.class);
+        out.close();
     }
 
 }

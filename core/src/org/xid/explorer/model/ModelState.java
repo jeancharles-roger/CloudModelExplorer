@@ -33,6 +33,10 @@ public final class ModelState {
 
     private final Mailboxes mailboxes;
 
+    public ModelState() {
+        this(null, null);
+    }
+
     public ModelState(DslState[] states, Mailboxes mailboxes) {
         this.states = states;
         this.mailboxes = mailboxes == null ? new Mailboxes(null) : mailboxes;
