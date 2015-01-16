@@ -10,6 +10,7 @@ hs_err_pid*
 
 # Exploration result
 exploration.dot
+exploration.kryo
 
 # Everything in out/
 out/**
