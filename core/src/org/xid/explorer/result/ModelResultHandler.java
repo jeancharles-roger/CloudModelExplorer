@@ -22,17 +22,29 @@ import org.xid.explorer.model.ModelTransition;
 import java.io.IOException;
 
 /**
- * ModelResultHandler TODO
+ * ModelResultHandler is a streaming API for exploration graphs. It has hooks for ModelState and ModelTransition.
  */
 public interface ModelResultHandler {
 
+    /** Called when a graph starts. */
     void begin() throws IOException;
 
+    /**
+     * Called when a state is found.
+     * @param state found state.
+     */
     void state(ModelState state);
+
+    /**
+     * Called when a transition is found.
+     * @param transition found transition.
+     */
     void transition(ModelTransition transition);
 
+    /** Called when a graph ends. */
     void end() throws IOException;
 
+    /** Constant for an empty handler */
     public static final ModelResultHandler EMPTY = new ModelResultHandler() {
         @Override
         public void begin() { }
@@ -47,11 +59,12 @@ public interface ModelResultHandler {
         public void end() {}
     };
 
-    public static class ModelResultVisitorComposite implements ModelResultHandler {
+    /** Composite handler that dispatches calls to children. */
+    public static class CompositeModelResultHandler implements ModelResultHandler {
 
         private final ModelResultHandler[] children;
 
-        public ModelResultVisitorComposite(ModelResultHandler[] children) {
+        public CompositeModelResultHandler(ModelResultHandler[] children) {
             this.children = children;
         }
 

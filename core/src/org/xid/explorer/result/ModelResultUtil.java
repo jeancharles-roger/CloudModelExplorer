@@ -17,7 +17,7 @@
 package org.xid.explorer.result;
 
 import org.xid.explorer.ExplorationContext;
-import org.xid.explorer.result.ModelResultHandler.ModelResultVisitorComposite;
+import org.xid.explorer.result.ModelResultHandler.CompositeModelResultHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,11 +25,22 @@ import java.util.Map;
 import java.util.ServiceLoader;
 
 /**
- * Created by j5r on 14/01/2015.
+ * Utility methods for ModelResults.
  */
 public class ModelResultUtil {
 
+    /**
+     * Loads ModelResultHandler from a List of ModelResultDescription.
+     *
+     * @param context the exploration context.
+     * @param resultDescriptions the descriptions to load.
+     * @return a ModelResultHandler that contains all described ones (in a CompositeModelResultHandler if needed).
+     * @throws Exception if a ModelResultHandler can't be instantiated for any reason.
+     */
     public static ModelResultHandler loadModelExplorationHandler(ExplorationContext context, List<ModelResultDescription> resultDescriptions) throws Exception {
+        // handles null and empty
+        if (resultDescriptions == null || resultDescriptions.isEmpty()) return ModelResultHandler.EMPTY;
+
         // collects all model result factories declared in classpath.
         Map<String, ModelResultFactory> factories = new HashMap<>();
         for (ModelResultFactory factory : ServiceLoader.load(ModelResultFactory.class)) {
@@ -38,16 +49,17 @@ public class ModelResultUtil {
             }
         }
 
+        // instantiates all model result handlers.
         ModelResultHandler[] results = new ModelResultHandler[resultDescriptions != null ? resultDescriptions.size() : 0];
         if (resultDescriptions != null) {
             for (int i = 0; i < results.length; i++) {
                 ModelResultDescription resultDescription = resultDescriptions.get(i);
                 ModelResultFactory factory = factories.get(resultDescription.getType());
-                if (factory == null)
-                    throw new Exception("No factory found for type '" + resultDescription.getType() + "'");
+                if (factory == null) throw new Exception("No factory found for type '" + resultDescription.getType() + "'");
                 results[i] = factory.createResult(context, resultDescription);
             }
         }
-        return new ModelResultVisitorComposite(results);
+
+        return results.length == 1 ? results[0] : new CompositeModelResultHandler(results);
     }
 }
