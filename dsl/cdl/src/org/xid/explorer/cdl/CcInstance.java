@@ -84,15 +84,16 @@ public class CcInstance implements EnvironmentInstance {
                 // action is a message send
                 Output output = (Output) event;
 
-                // FIXME construct message value
                 Object value = getMessageValue(explorationContext, output.getMessage());
                 final String mailboxName = CDLUtil.toQueueName(output.getTo());
                 final int mailboxId = explorationContext.getModelDescription().getMailboxId(mailboxName);
                 return createOutputObjectSignalTransition(source, target, mailboxId, value);
 
             } else if ( event instanceof Input) {
-                // FIXME Create event matcher
-                Matcher matcher = Matcher.TRUE;
+                // action is a message receive
+                Input input = (Input) event;
+
+                Matcher matcher = getMessageMatcher(explorationContext, input.getMessage());
                 return createInputTransition(source, target, matcher);
 
             } else if ( event instanceof Informal) {
@@ -146,6 +147,11 @@ public class CcInstance implements EnvironmentInstance {
 
     private Object getMessageValue(ExplorationContext context, Value message) {
         return LiteralToJavaObject.toJava(message.getLiteral(), context);
+    }
+
+
+    private Matcher getMessageMatcher(ExplorationContext context, Value message) {
+        return LiteralToMatcher.toMatcher(message.getLiteral(), context);
     }
 
     @Override
