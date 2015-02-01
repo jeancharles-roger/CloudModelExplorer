@@ -2,6 +2,8 @@
 
 CloudModelExplorer is a project that aim be a flexible and a scalable model explorer.
 
+[![Build Status](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/status.png)](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/latest)
+
 ## The project
 
 I wan’t to build a piece of software that is able to explore a model to check for properties. It will feature:
