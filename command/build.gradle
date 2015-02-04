@@ -1,0 +1,9 @@
+apply plugin: 'java'
+
+dependencies {
+    compile project(':core')
+    compile project(':dsl/cdl')
+    compile project(':dsl/lua')
+
+    compile group: 'io.airlift', name: 'airline', version: '0.7'
+}

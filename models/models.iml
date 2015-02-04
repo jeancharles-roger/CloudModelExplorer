@@ -15,11 +15,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" scope="TEST" />
+    <orderEntry type="module" module-name="dsl_cdl" scope="TEST" />
+    <orderEntry type="module" module-name="dsl_lua" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.11" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.luaj:luaj-jse:3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="module" module-name="dsl_cdl" scope="TEST" />
-    <orderEntry type="module" module-name="dsl_lua" scope="TEST" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.guava:guava:18.0" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="Gradle: _Volumes_diskE_Users_j5r_Documents_Personnel_dev_xid_CloudModelExplorer_models_libs_cdl_jar">
         <CLASSES>

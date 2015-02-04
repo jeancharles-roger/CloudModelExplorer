@@ -26,6 +26,9 @@ subprojects {
     }
 
     dependencies {
+        // uses guava in all modules
+        compile group: 'com.google.guava', name: 'guava', version: '18.0'
+
         testCompile 'junit:junit:4.11'
     }
 }
