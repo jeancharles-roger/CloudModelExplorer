@@ -19,7 +19,7 @@ import io.airlift.airline.Cli.CliBuilder;
 import io.airlift.airline.Help;
 
 /**
- * Created by j5r on 01/02/2015.
+ * CloudModelExplorer command line entry point.
  */
 public class Explorer {
 
@@ -27,7 +27,8 @@ public class Explorer {
         CliBuilder<Runnable> builder = Cli.<Runnable>builder("Explorer");
         builder.withDescription("Explorer startup");
         builder.withDefaultCommand(Help.class);
-        builder.withCommands(Help.class, ExploreCommand.class);
+        builder.withCommand(Help.class);
+        builder.withCommand(ExploreCommand.class);
 
         Cli<Runnable> explorerParser = builder.build();
         explorerParser.parse(args).run();
