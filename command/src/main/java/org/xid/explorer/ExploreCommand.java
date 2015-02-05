@@ -30,7 +30,7 @@ import java.util.List;
 @Command(name = "explore", description = "Explore a model")
 public class ExploreCommand extends ExplorerCommand
 {
-    @Arguments(description = "Models to explore")
+    @Arguments(description = "Paths to model to explore.")
     public List<String> models;
 
     @Override
@@ -42,16 +42,21 @@ public class ExploreCommand extends ExplorerCommand
             for (String model : models) {
                 Path modelPath = Paths.get(model);
                 if (Files.exists(modelPath)) {
-                    ResourceResolver resourceResolver = new PathResourceResolver(modelPath);
                     try {
-                        info("Loading model '"+ model +"'");
+                        info("--- Loading model '"+ model +"' ---");
+                        // prepares the model to explore
+                        ResourceResolver resourceResolver = ResolverUtil.createResourceResolver(modelPath);
                         ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
+
+                        // prepares the explorer
                         BFSExplorer explorer = new BFSExplorer(description, resourceResolver);
                         explorer.initialize(null);
                         ModelExploration modelExploration = explorer.explore();
+
+                        // prints the result
                         info(modelExploration.toString());
                     } catch (Exception e) {
-                        error("Couldn't explorer model '" + model +"'", e);
+                        error("Couldn't explore model '" + model +"'", e);
                     }
 
                 } else {
@@ -59,8 +64,6 @@ public class ExploreCommand extends ExplorerCommand
                 }
             }
         }
-
-
     }
 
 }

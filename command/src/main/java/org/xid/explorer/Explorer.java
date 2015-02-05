@@ -23,16 +23,13 @@ import io.airlift.airline.Help;
  */
 public class Explorer {
 
-    public static void main(String[] args)
-    {
-
+    public static void main(String[] args) {
         CliBuilder<Runnable> builder = Cli.<Runnable>builder("Explorer");
         builder.withDescription("Explorer startup");
         builder.withDefaultCommand(Help.class);
         builder.withCommands(Help.class, ExploreCommand.class);
 
         Cli<Runnable> explorerParser = builder.build();
-
         explorerParser.parse(args).run();
     }
 

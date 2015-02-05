@@ -15,14 +15,12 @@ package org.xid.explorer;/*
  */
 
 import io.airlift.airline.Option;
-import io.airlift.airline.OptionType;
 
 /**
 * Created by j5r on 01/02/2015.
 */
-public abstract class ExplorerCommand implements Runnable
-{
-    @Option(type = OptionType.GLOBAL, name = "-v", description = "Verbose mode")
+public abstract class ExplorerCommand implements Runnable {
+    @Option(name = "-v", description = "Verbose mode")
     public boolean verbose;
 
     public void log(String message) {
