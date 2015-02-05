@@ -1,4 +1,4 @@
-package org.xid.explorer;/*
+/*
  * Copyright 2015 to org.xid.explorer.CloudModelExplorer authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@ package org.xid.explorer;/*
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.xid.explorer;
 
 import io.airlift.airline.Arguments;
 import io.airlift.airline.Command;
