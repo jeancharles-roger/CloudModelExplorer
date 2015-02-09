@@ -29,8 +29,8 @@ import java.util.List;
 * Created by j5r on 01/02/2015.
 */
 @Command(name = "explore", description = "Explore a model")
-public class ExploreCommand extends ExplorerCommand
-{
+public class ExploreCommand extends ExplorerCommand {
+
     @Arguments(description = "Paths to model to explore.")
     public List<String> models;
 

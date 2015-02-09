@@ -30,6 +30,8 @@ public class Explorer {
         builder.withDefaultCommand(Help.class);
         builder.withCommand(Help.class);
         builder.withCommand(ExploreCommand.class);
+        builder.withCommand(MasterCommand.class);
+        builder.withCommand(SlaveCommand.class);
 
         Cli<Runnable> explorerParser = builder.build();
         explorerParser.parse(args).run();

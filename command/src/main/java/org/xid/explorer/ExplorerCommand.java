@@ -21,6 +21,7 @@ import io.airlift.airline.Option;
 * Created by j5r on 01/02/2015.
 */
 public abstract class ExplorerCommand implements Runnable {
+
     @Option(name = "-v", description = "Verbose mode")
     public boolean verbose;
 
@@ -43,7 +44,7 @@ public abstract class ExplorerCommand implements Runnable {
     public void fatalError(String message, int status, Throwable e) {
         System.err.println("[Explorer] Fatal Error " + message + ".");
         if (e != null && verbose) e.printStackTrace();
-        System.err.println("Exiting Explorer");
+        System.err.println("- Exiting Explorer -");
         System.exit(status);
     }
 }
