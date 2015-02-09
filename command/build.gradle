@@ -6,4 +6,6 @@ dependencies {
     compile project(':dsl/lua')
 
     compile group: 'io.airlift', name: 'airline', version: '0.7'
+    compile group: 'com.hazelcast', name: 'hazelcast', version: '3.4'
+
 }
