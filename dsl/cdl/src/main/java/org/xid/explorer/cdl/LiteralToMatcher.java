@@ -51,7 +51,7 @@ public class LiteralToMatcher implements LiteralVisitor {
     }
 
     private final ExplorationContext context;
-    private final Stack<Matcher> matcherStack = new Stack<Matcher>();
+    private final Stack<Matcher> matcherStack = new Stack<>();
 
     private LiteralToMatcher(ExplorationContext context) {
         // protects constructor
@@ -87,8 +87,6 @@ public class LiteralToMatcher implements LiteralVisitor {
         if (dotIndex >= 0) {
             instanceName = name.substring(0, dotIndex);
             parameterName = name.substring(dotIndex+1, name.length());
-        } else {
-            parameterName = null;
         }
         Object value = context.getModelDescription().getParameterValue(instanceName, parameterName, Object.class, null);
         if (value == null) throw new IllegalArgumentException("Constant '"+ name +"' doesn't exist.");

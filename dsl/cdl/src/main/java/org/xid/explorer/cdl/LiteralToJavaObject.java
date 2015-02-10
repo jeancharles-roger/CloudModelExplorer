@@ -49,7 +49,7 @@ public class LiteralToJavaObject implements LiteralVisitor {
 	}
 	
 	private final ExplorationContext context;
-	private final Stack<Object> objectStack = new Stack<Object>();
+	private final Stack<Object> objectStack = new Stack<>();
 	
 	private LiteralToJavaObject(ExplorationContext context) {
 		this.context = context;
@@ -84,8 +84,6 @@ public class LiteralToJavaObject implements LiteralVisitor {
 		if (dotIndex >= 0) {
 			instanceName = name.substring(0, dotIndex);
 			parameterName = name.substring(dotIndex+1, name.length());
-		} else {
-			parameterName = null;
 		}
 		Object value = context.getModelDescription().getParameterValue(instanceName, parameterName, Object.class, null);
 		if (value == null) throw new IllegalArgumentException("Constant '"+ name +"' doesn't exist.");
@@ -95,7 +93,7 @@ public class LiteralToJavaObject implements LiteralVisitor {
 	@Override
 	public void visitArrayLiteral(ArrayLiteral toVisit) {
 		try {
-			Object value = null;
+			Object value;
 			if ( "integer".equals(toVisit.getTypeName()) ) {
 				value = Array.newInstance(int.class, toVisit.getValueCount());
 			} else if ( "boolean".equals(toVisit.getTypeName()) ) {

@@ -38,7 +38,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by j5r on 31/12/2014.
+ * Concrete context instance representation.
  */
 public class CcInstance implements EnvironmentInstance {
 
