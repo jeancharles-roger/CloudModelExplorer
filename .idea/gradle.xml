@@ -9,10 +9,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/command" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/dsl/cdl" />
             <option value="$PROJECT_DIR$/dsl/lua" />
+            <option value="$PROJECT_DIR$/explorer" />
             <option value="$PROJECT_DIR$/models" />
           </set>
         </option>

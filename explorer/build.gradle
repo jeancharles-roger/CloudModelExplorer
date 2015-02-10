@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin:'application'
 
 dependencies {
     compile project(':core')
@@ -7,5 +8,7 @@ dependencies {
 
     compile group: 'io.airlift', name: 'airline', version: '0.7'
     compile group: 'com.hazelcast', name: 'hazelcast', version: '3.4'
-
+    compile group: 'io.vertx', name: 'vertx-core', version: '2.1.5'
 }
+
+mainClassName = 'org.xid.explorer.Explorer'

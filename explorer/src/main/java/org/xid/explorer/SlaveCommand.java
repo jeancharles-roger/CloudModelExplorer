@@ -20,8 +20,6 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IQueue;
 import io.airlift.airline.Command;
-import org.xid.explorer.message.SlaveMessage;
-import org.xid.explorer.message.SlaveMessage.Status;
 
 import java.util.concurrent.ConcurrentMap;
 
@@ -41,14 +39,15 @@ public class SlaveCommand extends ClusterCommand {
         if (sharedProperties.get("master") == null) {
             fatalError("Cluster '"+ cluster +"' has no master", 1, null);
         }
-
+        /*
         final IQueue<SlaveMessage> slaveStatusQueue = instance.getQueue("slave-status-queue");
         slaveStatusQueue.add(new SlaveMessage(Status.Started));
 
-        try { Thread.sleep(3000); } catch (InterruptedException e) {}
-
-
         slaveStatusQueue.add(new SlaveMessage(Status.Stopped));
+        */
+
+        final IQueue<ExploreCommand> commands = instance.getQueue(instance.getCluster().getLocalMember().getUuid());
+
     }
 
 }

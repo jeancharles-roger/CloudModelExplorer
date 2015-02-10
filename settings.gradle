@@ -20,5 +20,5 @@ include 'dsl/lua'
 
 include 'models'
 
-include 'command'
+include 'explorer'
 

@@ -17,16 +17,10 @@ package org.xid.explorer;
 
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IQueue;
-import com.hazelcast.core.ItemEvent;
-import com.hazelcast.core.ItemListener;
 import io.airlift.airline.Command;
-import org.xid.explorer.message.SlaveMessage;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -34,9 +28,6 @@ import java.util.concurrent.ConcurrentMap;
 */
 @Command(name = "master", description = "Starts a master explorer, it handles distributed exploration")
 public class MasterCommand extends ClusterCommand {
-
-    /** Thread safe list of running slaves. */
-    private final List<String> runningSlaves = new Vector<>();
 
     @Override
     public void run() {
@@ -55,32 +46,6 @@ public class MasterCommand extends ClusterCommand {
         } catch (UnknownHostException e) {
             fatalError("Can't determinate local host address", 1, e);
         }
-
-        // listener on slave activity
-        final IQueue<SlaveMessage> slaveStatusQueue = instance.getQueue("slave-status-queue");
-        slaveStatusQueue.addItemListener(new ItemListener<SlaveMessage>() {
-            @Override
-            public void itemAdded(ItemEvent<SlaveMessage> item) {
-                //waits for slaves to register
-                String uuid = item.getMember().getUuid();
-                switch (item.getItem().getStatus()) {
-                case Started:
-                    info("Slave '"+ uuid +"' started");
-                    runningSlaves.add(uuid);
-                    break;
-                case Stopped:
-                    info("Slave '" + uuid +"' stopped");
-                    runningSlaves.remove(uuid);
-                    break;
-                }
-                slaveStatusQueue.remove(item.getItem());
-            }
-
-            @Override
-            public void itemRemoved(ItemEvent<SlaveMessage> item) {
-                // nothing to do
-            }
-        }, true);
 
 
 

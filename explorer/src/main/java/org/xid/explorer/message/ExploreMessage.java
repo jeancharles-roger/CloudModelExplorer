@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-subprojects {
-    apply plugin: 'java'
+package org.xid.explorer.message;
 
-    sourceCompatibility = 1.8
+import org.xid.explorer.model.ModelDescription;
 
-    version = '0.1a'
+/**
+ * An ExploreMessage contains an exploration order for a slave
+ */
+public class ExploreMessage {
 
-    repositories {
-        mavenCentral()
+    private final ModelDescription modelDescription;
+
+    public ExploreMessage(ModelDescription modelDescription) {
+        this.modelDescription = modelDescription;
     }
 
-    dependencies {
-        // uses guava in all modules
-        compile group: 'com.google.guava', name: 'guava', version: '18.0'
+    public ModelDescription getModelDescription() {
+        return modelDescription;
+    }
 
-        testCompile 'junit:junit:4.11'
+    @Override
+    public String toString() {
+        return "[" + getClass().getSimpleName() + "]" + modelDescription;
     }
 }

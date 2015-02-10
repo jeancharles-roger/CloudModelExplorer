@@ -3,10 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CloudModelExplorer.iml" filepath="$PROJECT_DIR$/CloudModelExplorer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/command/command.iml" filepath="$PROJECT_DIR$/command/command.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/dsl/cdl/dsl_cdl.iml" filepath="$PROJECT_DIR$/dsl/cdl/dsl_cdl.iml" />
       <module fileurl="file://$PROJECT_DIR$/dsl/lua/dsl_lua.iml" filepath="$PROJECT_DIR$/dsl/lua/dsl_lua.iml" />
+      <module fileurl="file://$PROJECT_DIR$/explorer/explorer.iml" filepath="$PROJECT_DIR$/explorer/explorer.iml" />
       <module fileurl="file://$PROJECT_DIR$/models/models.iml" filepath="$PROJECT_DIR$/models/models.iml" />
     </modules>
   </component>
