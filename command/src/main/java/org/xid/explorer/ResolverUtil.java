@@ -31,8 +31,8 @@ public class ResolverUtil {
      * The files to write are put in the given file directory.
      *
      * @param modelPath path from which to create the ResourceResolver.
-     * @return a ResourceResolver or null if path isn't a directory nor a regular file.
-     * @throws IOException if path is a file which can't be read as a zip.
+     * @return a ResourceResolve.
+     * @throws IOException if path is a file which can't be read as a zip or if path isn't a directory nor a regular file
      */
     public static ResourceResolver createResourceResolver(Path modelPath) throws IOException {
         if (Files.isDirectory(modelPath)) {
@@ -41,6 +41,6 @@ public class ResolverUtil {
         if (Files.isRegularFile(modelPath)) {
             return new ZipResourceResolver(modelPath, modelPath.getParent());
         }
-        return null;
+        throw new IOException("Path '"+ modelPath +"' isn't readable");
     }
 }
