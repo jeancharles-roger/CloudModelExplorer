@@ -1,8 +1,11 @@
 # Project
 
-org.xid.explorer.CloudModelExplorer is a project that aim be a flexible and a scalable model explorer.
+CloudModelExplorer is a project that aim be a flexible and a scalable model explorer.
 
-[![Build Status](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/status.png)](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/latest)
+[![Build Status](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/status.png)](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/latest) 
+
+[Download nighlty build](https://drone.io/github.com/jeancharles-roger/CloudModelExplorer/files/explorer/build/distributions/explorer-0.1a.zip)
+
 
 ## The project
 
@@ -13,7 +16,7 @@ I wan’t to build a piece of software that is able to explore a model to check 
 - cloud platform support to benefit from vast resources.
 - complete batch-able API (over REST probably).
 - HTML5 base UI to present results.
-- complete open-source code ([GitHub Project page](https://github.com/jeancharles-roger/org.xid.explorer.CloudModelExplorer "GitHub Project page"))
+- complete open-source code ([GitHub Project page](https://github.com/jeancharles-roger/CloudModelExplorer "GitHub Project page"))
 There are some other features I have in mind but it’ll come in time.
 
 The explorer will be implemented using Java SE 8. The cloud platform will probably by OpenStack.
