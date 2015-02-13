@@ -1,0 +1,9 @@
+image: bradrydzewski/java:oraclejdk8
+env:
+  - GOPATH=/var/cache/drone
+script:
+  - ./gradlew distZip
+notify:
+  email:
+    recipients:
+      - jeancharles.roger@me.com
