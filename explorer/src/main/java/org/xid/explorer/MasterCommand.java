@@ -15,13 +15,7 @@
  */
 package org.xid.explorer;
 
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
 import io.airlift.airline.Command;
-
-import java.net.Inet4Address;
-import java.net.UnknownHostException;
-import java.util.concurrent.ConcurrentMap;
 
 /**
 * Created by j5r on 01/02/2015.
@@ -31,23 +25,6 @@ public class MasterCommand extends ClusterCommand {
 
     @Override
     public void run() {
-        HazelcastInstance instance = Hazelcast.newHazelcastInstance(createConfig());
-
-
-        ConcurrentMap<String, String> sharedProperties = instance.getMap("shared-properties");
-
-        // declares master in the shared properties
-        String host;
-        try {
-            host = Inet4Address.getLocalHost().getHostAddress();
-            if (sharedProperties.putIfAbsent("master", host) != null) {
-                fatalError("Cluster '" + cluster + "' already as a master", 1, null);
-            }
-        } catch (UnknownHostException e) {
-            fatalError("Can't determinate local host address", 1, e);
-        }
-
-
 
     }
 

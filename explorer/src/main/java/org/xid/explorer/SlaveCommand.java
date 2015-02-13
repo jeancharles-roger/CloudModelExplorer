@@ -16,12 +16,8 @@
 
 package org.xid.explorer;
 
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IQueue;
 import io.airlift.airline.Command;
-
-import java.util.concurrent.ConcurrentMap;
+import io.airlift.airline.Option;
 
 /**
 * Created by j5r on 01/02/2015.
@@ -29,24 +25,11 @@ import java.util.concurrent.ConcurrentMap;
 @Command(name = "slave", description = "Starts a agent explorer, it explores models ordered by a master")
 public class SlaveCommand extends ClusterCommand {
 
+    @Option(name = {"-m", "--master"}, description = "Master address")
+    public String cluster = "explorer";
+
     @Override
     public void run() {
-        HazelcastInstance instance = Hazelcast.newHazelcastInstance(createConfig());
-
-        ConcurrentMap<String, String> sharedProperties = instance.getMap("shared-properties");
-
-        // checks if master is present
-        if (sharedProperties.get("master") == null) {
-            fatalError("Cluster '"+ cluster +"' has no master", 1, null);
-        }
-        /*
-        final IQueue<SlaveMessage> slaveStatusQueue = instance.getQueue("slave-status-queue");
-        slaveStatusQueue.add(new SlaveMessage(Status.Started));
-
-        slaveStatusQueue.add(new SlaveMessage(Status.Stopped));
-        */
-
-        final IQueue<ExploreCommand> commands = instance.getQueue(instance.getCluster().getLocalMember().getUuid());
 
     }
 

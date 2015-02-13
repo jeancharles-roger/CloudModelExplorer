@@ -16,31 +16,6 @@
 
 package org.xid.explorer;
 
-import com.hazelcast.config.Config;
-import com.hazelcast.config.SerializationConfig;
-import com.hazelcast.config.SerializerConfig;
-import io.airlift.airline.Option;
-import org.xid.explorer.message.KryoSerializer;
-import org.xid.explorer.message.SlaveMessage;
-
 public abstract class ClusterCommand extends ExplorerCommand {
 
-    @Option(name = {"-c", "-cluster"}, description = "Cluster name to shared informations with agent")
-    public String cluster = "explorer";
-
-    public Config createConfig() {
-        Config config = new Config();
-        config.setInstanceName(cluster);
-
-        SerializationConfig serializationConfig = config.getSerializationConfig();
-        serializationConfig.addSerializerConfig(createSerializerConfig(SlaveMessage.class));
-        return config;
-    }
-
-    private SerializerConfig createSerializerConfig(Class<SlaveMessage> typeClass) {
-        SerializerConfig serializerConfig = new SerializerConfig();
-        serializerConfig.setTypeClass(typeClass);
-        serializerConfig.setImplementation(new KryoSerializer<>(typeClass));
-        return serializerConfig;
-    }
 }

@@ -19,19 +19,9 @@
     <orderEntry type="module" module-name="core" exported="" />
     <orderEntry type="module" module-name="dsl_cdl" exported="" />
     <orderEntry type="module" module-name="dsl_lua" exported="" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.guava:guava:18.0" level="project" />
     <orderEntry type="library" exported="" name="Gradle: io.airlift:airline:0.7" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.google.code.findbugs:annotations:2.0.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.google.guava:guava:18.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.hazelcast:hazelcast:3.4" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: net.sourceforge.findbugs:annotations:1.3.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.eclipsesource.minimal-json:minimal-json:0.9.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: io.vertx:vertx-core:2.1.5" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.slf4j:slf4j-api:1.6.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-databind:2.2.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-core:2.2.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: io.netty:netty-all:4.0.21.Final" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: log4j:log4j:1.2.16" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.fasterxml.jackson.core:jackson-annotations:2.2.2" level="project" />
   </component>
 </module>
