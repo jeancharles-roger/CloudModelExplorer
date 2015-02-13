@@ -7,8 +7,7 @@ dependencies {
     compile project(':dsl/lua')
 
     compile group: 'io.airlift', name: 'airline', version: '0.7'
-    //compile group: 'com.hazelcast', name: 'hazelcast', version: '3.4'
-    //compile group: 'com.sparkjava', name: 'spark-core', version: '2.1'
+    compile group: 'io.undertow', name: 'undertow-core', version: '1.1.2.Final'
 }
 
 mainClassName = 'org.xid.explorer.Explorer'
