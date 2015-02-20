@@ -16,12 +16,17 @@
 package org.xid.explorer;
 
 import io.airlift.airline.Command;
+import io.airlift.airline.Option;
 
 /**
 * Created by j5r on 01/02/2015.
 */
-@Command(name = "master", description = "Starts a master explorer, it handles distributed exploration")
-public class MasterCommand extends ClusterCommand {
+@Command(name = "daemon", description = "Starts an explorer daemon, it handles distributed exploration")
+public class DaemonCommand extends NetworkCommand {
+
+
+    @Option(name = {"-m", "--master"}, description = "Master for daemon, if none the daemon is a master")
+    public String master = null;
 
     @Override
     public void run() {

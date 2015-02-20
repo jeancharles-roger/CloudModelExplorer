@@ -16,6 +16,22 @@
 
 package org.xid.explorer;
 
-public abstract class ClusterCommand extends ExplorerCommand {
+import io.airlift.airline.Command;
+import io.airlift.airline.Option;
+
+/**
+* Created by j5r on 01/02/2015.
+*/
+@Command(name = "server", description = "Starts a web server")
+public class ServerCommand extends NetworkCommand {
+
+
+    @Option(name = {"-m", "--master"}, description = "Master to connect to", required = true)
+    public String master;
+
+    @Override
+    public void run() {
+
+    }
 
 }

@@ -16,21 +16,11 @@
 
 package org.xid.explorer;
 
-import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 
-/**
-* Created by j5r on 01/02/2015.
-*/
-@Command(name = "slave", description = "Starts a agent explorer, it explores models ordered by a master")
-public class SlaveCommand extends ClusterCommand {
+public abstract class NetworkCommand extends ExplorerCommand {
 
-    @Option(name = {"-m", "--master"}, description = "Master address")
-    public String cluster = "explorer";
-
-    @Override
-    public void run() {
-
-    }
+    @Option(name = {"-p", "--port"}, description = "Port for service")
+    public int port = 9091;
 
 }
