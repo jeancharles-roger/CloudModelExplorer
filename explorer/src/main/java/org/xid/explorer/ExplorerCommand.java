@@ -36,6 +36,7 @@ public abstract class ExplorerCommand implements Runnable {
     public void error(String message) {
         error(message, null);
     }
+
     public void error(String message, Throwable e) {
         System.err.println("[Explorer] Error " + message + ".");
         if (e != null && verbose) e.printStackTrace();

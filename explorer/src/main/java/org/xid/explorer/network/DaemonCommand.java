@@ -13,8 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.xid.explorer;
+package org.xid.explorer.network;
 
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
@@ -22,12 +21,12 @@ import io.airlift.airline.Option;
 /**
 * Created by j5r on 01/02/2015.
 */
-@Command(name = "server", description = "Starts a web server")
-public class ServerCommand extends NetworkCommand {
+@Command(name = "daemon", description = "Starts an explorer daemon, it handles distributed exploration")
+public class DaemonCommand extends NetworkCommand {
 
 
-    @Option(name = {"-m", "--master"}, description = "Master to connect to", required = true)
-    public String master;
+    @Option(name = {"-m", "--master"}, description = "Master for daemon, if none the daemon is a master")
+    public String master = null;
 
     @Override
     public void run() {

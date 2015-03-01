@@ -14,3 +14,7 @@ exploration.kryo
 
 # Everything in out/
 out/**
+
+
+# Ignore runtime test
+runtime/**

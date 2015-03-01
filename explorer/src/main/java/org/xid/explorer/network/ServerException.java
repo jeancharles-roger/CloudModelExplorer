@@ -14,13 +14,25 @@
  * limitations under the License.
  */
 
-package org.xid.explorer;
+package org.xid.explorer.network;
 
-import io.airlift.airline.Option;
+import io.undertow.util.StatusCodes;
 
-public abstract class NetworkCommand extends ExplorerCommand {
+/**
+ * ServerException used by exception handler
+ */
+public class ServerException extends Exception {
 
-    @Option(name = {"-p", "--port"}, description = "Port for service")
-    public int port = 9091;
+    public static final ServerException NOT_FOUND = new ServerException("Not found", StatusCodes.NOT_FOUND);
 
+    private final int code;
+
+    public ServerException(String message, int code) {
+        super(message);
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }

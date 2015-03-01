@@ -18,6 +18,8 @@ package org.xid.explorer;
 import io.airlift.airline.Cli;
 import io.airlift.airline.Cli.CliBuilder;
 import io.airlift.airline.Help;
+import org.xid.explorer.network.DaemonCommand;
+import org.xid.explorer.network.ServerCommand;
 
 /**
  * CloudModelExplorer command line entry point.
