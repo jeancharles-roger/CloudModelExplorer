@@ -19,15 +19,16 @@ package org.xid.explorer.network;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;
 import io.undertow.Undertow;
+import io.undertow.io.Sender;
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import org.xid.explorer.network.data.FileModelDataBase;
 import org.xid.explorer.network.data.ModelDataBase;
-import org.xid.explorer.network.data.User;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
 * Created by j5r on 01/02/2015.
@@ -48,38 +49,100 @@ public class ServerCommand extends NetworkCommand {
 
         modelDataBase = new FileModelDataBase(Paths.get(data));
 
+        // TODO Commented handlers are to be implemented
         Map<String, HttpHandler> handlers = new HashMap<>();
-        handlers.put("/rest/{user}", this::handleUserRequest);
-        handlers.put("/rest/{user}/model/{model}", this::handleModelRequest);
-        handlers.put("/rest/{user}/model/{model}/exploration/{exploration}", this::handleExplorationRequest);
-        handlers.put("/rest/{user}/model/{model}/exploration/{exploration}/state/{state}", this::handleStateRequest);
+        handlers.put("/{user}", this::handleUserRequest);
+        handlers.put("/{user}/models", this::handleAllModelsRequest);
+        handlers.put("/{user}/models/{model}", this::handleModelRequest);
+        //handlers.put("/{user}/models/{model}/resources", this::handleModelAllResourcesRequest);
+        handlers.put("/{user}/models/{model}/resources/{resource}", this::handleModelResourceRequest);
+        //handlers.put("/{user}/models/{model}/explorations", this::handleModelAllExplorationsRequest);
+        handlers.put("/{user}/models/{model}/explorations/{exploration}", this::handleModelExplorationRequest);
+        //handlers.put("/{user}/models/{model}/explorations/{exploration}/states", this::handleExplorationAllStatesRequest);
+        handlers.put("/{user}/models/{model}/explorations/{exploration}/states/{state}", this::handleExplorationStateRequest);
         Undertow server = createServer(handlers);
         server.start();
     }
 
 
-    private User getUser(final HttpServerExchange exchange) throws Exception {
-        String userLogin = exchange.getQueryParameters().get("user").element();
-        User user = modelDataBase.getUser(userLogin);
-        if (user == null) throw ServerException.NOT_FOUND;
-        return user;
+    private void handleUserRequest(final HttpServerExchange exchange) throws Exception {
+        dispatchGetPutDelete(exchange,
+                // GET
+                () -> send(exchange, () -> modelDataBase.getReadUserChannel(getParameter(exchange, "user"))),
+
+                // PUT
+                () -> {
+                },
+
+                // DELETE
+                () -> {
+                }
+        );
     }
 
-    private void handleUserRequest(final HttpServerExchange exchange) throws Exception {
-        User user = getUser(exchange);
-        exchange.getResponseSender().send(user.getName());
+    private void handleAllModelsRequest(final HttpServerExchange exchange) throws Exception {
+        String userId = getParameter(exchange, "user");
+        Sender sender = exchange.getResponseSender();
+        dispatchGetPost(exchange,
+                // GET
+                () -> {
+                    sender.send("{" + modelDataBase.getAllModelIds(userId).map(id -> '"' + id + '"').collect(Collectors.joining(",")) + "}");
+                },
+
+                // POST
+                () -> {
+                    /* TODO Implements new model creation */
+                }
+        );
     }
 
     private void handleModelRequest(final HttpServerExchange exchange) throws Exception {
-        System.out.println("Model: " + exchange.getQueryParameters());
+        exchange.dispatch(() -> {
+            String userId = getParameter(exchange, "user");
+            String modelId = getParameter(exchange, "model");
+
+            dispatchGetPutDelete(exchange,
+                    // GET
+                    () -> send(exchange, () -> modelDataBase.getReadModelChannel(userId, modelId)),
+
+                    // PUT
+                    () -> write(exchange, () -> modelDataBase.getWriteModelChannel(userId, modelId, false)),
+
+                    // DELETE
+                    () -> {
+                    }
+            );
+        });
     }
 
-    private void handleExplorationRequest(final HttpServerExchange exchange) throws Exception {
+    private void handleModelResourceRequest(final HttpServerExchange exchange) throws Exception {
+        // dispatch send to IO thread.
+        exchange.dispatch(() -> {
+            String userId = getParameter(exchange, "user");
+            String modelId = getParameter(exchange, "model");
+            String resourceId = getParameter(exchange, "resource");
+
+            dispatchGetPutDelete(exchange,
+                    // GET
+                    () -> send(exchange, () -> modelDataBase.getReadModelResourceChannel(userId, modelId, resourceId)),
+
+                    // PUT
+                    () -> write(exchange, () -> modelDataBase.getWriteModelResourceChannel(userId, modelId, resourceId, false)),
+
+                    // DELETE
+                    () -> {
+                    }
+            );
+        });
+    }
+
+    private void handleModelExplorationRequest(final HttpServerExchange exchange) throws Exception {
         System.out.println("Exploration: " + exchange.getQueryParameters());
     }
 
-    private void handleStateRequest(final HttpServerExchange exchange) throws Exception {
+    private void handleExplorationStateRequest(final HttpServerExchange exchange) throws Exception {
         // How to randomly access state for read and write in constant time ?
+        // By using a cache for loaded exploration results
         System.out.println("State: " + exchange.getQueryParameters());
     }
 
