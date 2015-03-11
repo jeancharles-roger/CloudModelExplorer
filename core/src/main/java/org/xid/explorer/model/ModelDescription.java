@@ -16,6 +16,7 @@
 
 package org.xid.explorer.model;
 
+import net.minidev.json.JSONValue;
 import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.xid.explorer.dsl.DslInstanceDescription;
@@ -124,6 +125,11 @@ public class ModelDescription {
         return type.cast(value);
     }
 
+    @Override
+    public String toString() {
+        return JSONValue.toJSONString(this);
+    }
+
     public static ModelDescription loadDescription(InputStream stream) throws IOException {
         try {
             JSONParser parser = new JSONParser(JSONParser.MODE_RFC4627);
@@ -134,6 +140,7 @@ public class ModelDescription {
             stream.close();
         }
     }
+
 }
 
 
