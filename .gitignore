@@ -1,6 +1,10 @@
 # Created by .gitignore support plugin (hsz.mobi)
 
 
+## System files
+.DS_store
+
+
 ### Java template
 *.class
 
