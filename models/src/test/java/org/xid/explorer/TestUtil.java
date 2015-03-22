@@ -50,7 +50,7 @@ public class TestUtil {
     public static void explore(ModelDescription model, ResourceResolver resourceResolver, List<ModelResultDescription> resultDescriptions, int expectedStates, int expectedTransitions) throws Exception {
         BFSExplorer explorer = new BFSExplorer(model, resourceResolver);
         explorer.initialize(resultDescriptions);
-        ModelExploration modelExploration = explorer.explore();
+        ModelExploration modelExploration = explorer.explore(ActionMonitor.EMPTY);
 
         System.out.println(modelExploration);
 

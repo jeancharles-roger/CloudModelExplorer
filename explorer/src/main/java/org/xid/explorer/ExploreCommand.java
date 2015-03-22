@@ -52,7 +52,7 @@ public class ExploreCommand extends ExplorerCommand {
                         // prepares the explorer
                         BFSExplorer explorer = new BFSExplorer(description, resourceResolver);
                         explorer.initialize(null);
-                        ModelExploration modelExploration = explorer.explore();
+                        ModelExploration modelExploration = explorer.explore(ActionMonitor.EMPTY);
 
                         // prints the result
                         info(modelExploration.toString());

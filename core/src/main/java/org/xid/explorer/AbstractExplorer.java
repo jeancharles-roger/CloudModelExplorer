@@ -62,7 +62,6 @@ public abstract class AbstractExplorer implements ExplorationContext {
             instance.initialize(this);
         }
 
-
         explorationHandler = ModelResultUtil.loadModelExplorationHandler(this, resultDescriptions);
     }
 
@@ -76,7 +75,7 @@ public abstract class AbstractExplorer implements ExplorationContext {
         return resourceResolver;
     }
 
-    public ModelExploration explore() throws Exception {
+    public ModelExploration explore(ActionMonitor monitor) throws Exception {
         long start = System.currentTimeMillis();
 
         ModelState initialState = createInitialState();
