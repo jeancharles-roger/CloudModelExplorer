@@ -16,13 +16,13 @@
 
 package org.xid.explorer.model;
 
-import net.minidev.json.JSONValue;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
+import org.boon.Boon;
+import org.xid.explorer.StreamUtil;
 import org.xid.explorer.dsl.DslInstanceDescription;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -127,18 +127,12 @@ public class ModelDescription {
 
     @Override
     public String toString() {
-        return JSONValue.toJSONString(this);
+        return Boon.toJson(this);
     }
 
     public static ModelDescription loadDescription(InputStream stream) throws IOException {
-        try {
-            JSONParser parser = new JSONParser(JSONParser.MODE_RFC4627);
-            return parser.parse(stream, ModelDescription.class);
-        } catch (ParseException e) {
-            throw new IOException(e.getMessage());
-        } finally {
-            stream.close();
-        }
+        String content = StreamUtil.collectStream(stream, StandardCharsets.UTF_8);
+        return Boon.fromJson(content, ModelDescription.class);
     }
 
 }

@@ -15,7 +15,7 @@
  */
 
 dependencies {
-    compile group: 'net.minidev', name: 'json-smart', version: '2.1.0'
+    compile group: 'io.fastjson', name: 'boon', version: '0.30'
 
     // kryo from mavencentral is flawed
     //compile group: 'com.esotericsoftware', name: 'kryo', version: '3.0.0'
