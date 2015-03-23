@@ -20,6 +20,7 @@ import org.xid.explorer.model.ModelDescription;
 import org.xid.explorer.result.ModelExploration;
 import org.xid.explorer.result.ModelResultDescription;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
@@ -31,8 +32,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class TestUtil {
 
+    public final static Path OUTPUT_PATH = Paths.get("tmp");
+
     public static void explore(String modelPath, int expectedStates, int expectedTransitions) throws Exception {
-        ResourceResolver resourceResolver = new PathResourceResolver(Paths.get(modelPath));
+        ResourceResolver resourceResolver = new ClassPathResourceResolver(modelPath);
         ModelDescription description = ModelDescription.loadDescription(resourceResolver.readEntry("model.json"));
         explore(description,resourceResolver, Arrays.asList(createDotResult(), createKryoResult()), expectedStates, expectedTransitions);
     }

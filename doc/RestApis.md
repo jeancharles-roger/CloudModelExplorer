@@ -4,24 +4,34 @@
 
 ## Server 
 
+### `/{user}`
 
-### REST
-`rest/`:
+**GET**
+
+**POST**
+
+**UPDATE**
 
 
-### Web
+### `/{user}/models`
 
-Web files to manage exploration and results.
 
-`/`, `static/`:
+### `/{user}/models/{model}`
 
+### `/{user}/models/{model}/resources`
+
+### `/{user}/models/{model}/resources/{resource}`
+
+### `/{user}/models/{model}/explorations`
+
+### `/{user}/models/{model}/explorations/{exploration}`
+
+### `/{user}/models/{model}/explorations/{exploration}/states`
+
+### `/{user}/models/{model}/explorations/{exploration}/states/{state}`
 
 
 ## Daemon
 
-`daemon/status`:
-
-`daemon/explore`:
-
-`daemon/result`:
-
+`/explorations`
+`/explorations/{exploration}[?resources={resources}]`

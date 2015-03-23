@@ -86,7 +86,7 @@ public class ModelDescriptionTest {
         for (int k = 0; k < n; k++) {
             for (int i = 0; i < m; i++) {
                 for (int j = 0; j < i * 5; j++) {
-                    int value = description.getParameterValue("instance"+ i, "p"+j, Integer.class, -1);
+                    int value = description.getIntParameterValue("instance"+ i, "p"+j, -1);
                     Assert.assertEquals(j, value);
                     count += 1;
                 }

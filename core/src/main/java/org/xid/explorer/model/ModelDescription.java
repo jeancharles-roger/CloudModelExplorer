@@ -62,7 +62,10 @@ public class ModelDescription {
 
     public void setInstances(List<DslInstanceDescription> instances) {
         this.instances = instances;
+        initializeInstanceIds();
+    }
 
+    private void initializeInstanceIds() {
         // stores id for each instance name
         instanceToId = new HashMap<>(instances != null ? instances.size() : 0);
         if (instances != null) {
@@ -89,7 +92,10 @@ public class ModelDescription {
 
     public void setMailboxes(List<MailboxDescription> mailboxes) {
         this.mailboxes = mailboxes;
+        initializeMailboxesId();
+    }
 
+    private void initializeMailboxesId() {
         // stores id for each instance name
         mailboxToId = new HashMap<>(mailboxes != null ? mailboxes.size() : 0);
         if (mailboxes != null) {
@@ -97,7 +103,6 @@ public class ModelDescription {
                 mailboxToId.put(mailboxes.get(i).getName(), i);
             }
         }
-
     }
 
     public int getMailboxId(String name) {
@@ -109,6 +114,10 @@ public class ModelDescription {
         // TODO handle newly created mailboxes
         if (id < 0 || id > mailboxes.size()) return null;
         return mailboxes.get(id);
+    }
+
+    public final int getIntParameterValue(String instance, String name, int defaultValue) {
+        return getParameterValue(instance, name, Number.class, defaultValue).intValue();
     }
 
     public final <T> T getParameterValue(String instance, String name, Class<T> type, T defaultValue) {
@@ -132,7 +141,10 @@ public class ModelDescription {
 
     public static ModelDescription loadDescription(InputStream stream) throws IOException {
         String content = StreamUtil.collectStream(stream, StandardCharsets.UTF_8);
-        return Boon.fromJson(content, ModelDescription.class);
+        ModelDescription description = Boon.fromJson(content, ModelDescription.class);
+        description.initializeInstanceIds();
+        description.initializeMailboxesId();
+        return description;
     }
 
 }

@@ -22,7 +22,7 @@ import org.xid.explorer.dsl.DslTransition;
 public class LambdaTest {
 
     public static final DslTransition TRANSITION_TEST0_1 = (context, state, mailboxes) -> {
-        int n = context.getModelDescription().getParameterValue("one", "n", Integer.class, 0);
+        int n = context.getModelDescription().getIntParameterValue("one", "n", 0);
         int count = state.getInt(0);
         int newCount = count < n ? count + 1 : 0;
         state.setInt(0, newCount);

@@ -20,7 +20,6 @@ import org.junit.Test;
 import org.xid.explorer.dsl.DslInstanceDescription;
 import org.xid.explorer.model.ModelDescription;
 
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,8 @@ public class MixedTest {
         luaInstance.getResources().add("test1.lua");
         instances.add(luaInstance);
 
-        ResourceResolver resourceResolver = new PathResourceResolver(Paths.get("lua/test1/"));
+        String modelPath = "lua/test1/";
+        ResourceResolver resourceResolver = new ClassPathResourceResolver(modelPath);
         TestUtil.explore(description, resourceResolver, null, 121, 231);
     }
 
