@@ -22,3 +22,6 @@ out/**
 
 # Ignore runtime test
 runtime/**
+
+**/build
+.gradle/*
